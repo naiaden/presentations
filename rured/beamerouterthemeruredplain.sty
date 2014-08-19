@@ -1,0 +1,136 @@
+\RequirePackage{calc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{ifthen}
+
+\newif\ifbeamer@official
+\beamer@officialfalse
+\DeclareOptionBeamer{official}[false]{\csname beamer@official#1\endcsname}
+
+\newcommand{\dept}{none}
+\DeclareOptionBeamer{department}{\renewcommand{\dept}{#1}}
+
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\newcommand{\ruredbackgroundtemplate}{
+    \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\paperheight}
+                                % Do some clipping first
+                                % Very annoying otherwise with psnup
+        \normalsize\selectfont
+        % white surface right of diagonal line
+        \pgfsetcolor{white}
+        \pgfpathmoveto{\pgfpoint{\the\paperwidth-3.25cm}{0cm}}
+        \pgfpathlineto{\pgfpoint{\the\paperwidth-0.4cm}{\the\paperheight}}
+        \pgfpathlineto{\pgfpoint{\the\paperwidth}{\the\paperheight}}
+        \pgfpathlineto{\pgfpoint{\the\paperwidth}{0cm}}
+        \pgfusepath{fill}
+
+        \pgfsetcolor{rured}
+        % red surface at top of the slide
+        \pgfpathmoveto{\pgfpoint{0cm}{\the\paperheight-2.4cm}}
+        \pgfpathlineto{\pgfpoint{\the\paperwidth-1.11cm}{\the\paperheight-2.4cm}}
+        \pgfpathlineto{\pgfpoint{\the\paperwidth-0.40cm}{\the\paperheight}}
+        \pgfpathlineto{\pgfpoint{0cm}{\the\paperheight}}
+        \pgfusepath{fill}
+
+        \ifbeamer@official
+            % horizontal line
+            \pgfpathmoveto{\pgfpoint{0cm}{\the\paperheight-2.4cm}}
+            \pgfpathlineto{\pgfpoint{\the\paperwidth}{\the\paperheight-2.4cm}}
+            \pgfpathlineto{\pgfpoint{\the\paperwidth}{\the\paperheight-2.39cm}}
+            \pgfpathlineto{\pgfpoint{0}{\the\paperheight-2.39cm}}
+            \pgfusepath{fill}
+            % RU logo
+            \pgftext[at=\pgfpoint{\the\paperwidth-4.06cm}{0.32cm},left,base]{%
+              \includegraphics[height=0.79cm]{rulogo}
+            }
+        \else
+          \pgfsetcolor{white}
+          \pgfpathrectangle{\pgfpoint{0cm}{0cm}}{\pgfpoint{\the\paperwidth}{\the\paperheight-1.1cm}}
+          \pgfusepath{fill}
+          % horizontal line
+          \pgfsetcolor{rured}
+          \pgfpathmoveto{\pgfpoint{0cm}{\the\paperheight-1.1cm}}
+          \pgfpathlineto{\pgfpoint{\the\paperwidth}{\the\paperheight-1.1cm}}
+          \pgfpathlineto{\pgfpoint{\the\paperwidth}{\the\paperheight-1.09cm}}
+          \pgfpathlineto{\pgfpoint{0}{\the\paperheight-1.09cm}}
+          \pgfusepath{fill}
+          % page number
+          \ifnum\thepage=1\relax\else
+            \pgftext[at=\pgfpoint{\the\paperwidth-0.25cm}{\the\paperheight-0.97cm},right,base]{\tiny\thepage}%
+          \fi
+
+          % RU logo
+          \pgftext[at=\pgfpoint{\the\paperwidth-5cm}{0.15cm},left,base]{%
+            \includegraphics[height=0.79cm]{rulogo}
+          }
+        \fi
+
+          \ifbeamer@official
+            % diagonal line
+            \pgfsetcolor{rured}
+            \pgfpathmoveto{\pgfpoint{\the\paperwidth-3.25cm}{0cm}}
+            \pgfpathlineto{\pgfpoint{\the\paperwidth-0.41cm}{\the\paperheight}}
+            \pgfpathlineto{\pgfpoint{\the\paperwidth-0.39cm}{\the\paperheight}}
+            \pgfpathlineto{\pgfpoint{\the\paperwidth-3.23cm}{0cm}}
+            \pgfusepath{fill}
+            % page number
+            \ifnum\thepage=1\relax\else
+              \pgftext[at=\pgfpoint{\the\paperwidth-0.76cm}{\the\paperheight-2.3cm},left,base]{\tiny\thepage}%
+            \fi
+          \fi
+
+        \ifthenelse{\equal{\dept}{fnwi}}{\renewcommand{\dept}{/\fontfamily{zmb}\selectfont\bfseries\,Faculteit        Natuurkunde, Wiskunde \& Informatica}}{}
+
+        \ifthenelse{\equal{\dept}{none}}{\renewcommand{\dept}{}}{}
+
+        \pgftext[at=\pgfpoint{0.44cm}{0.44cm},left,base]{%
+          \color{rured}\fontfamily{zlo}\selectfont%
+            \tiny\dept}%
+        \pgfsetcolor{black}
+        \pgfpathrectangle{\pgfpoint{0cm}{0cm}}{\pgfpoint{\the\paperwidth}{\the\paperheight}}
+        \pgfusepath{stroke}
+
+    \end{pgfpicture}%
+}
+
+\usebackgroundtemplate{\ruredbackgroundtemplate}
+
+\useheadtemplate{}
+
+\usefoottemplate{}
+
+\useitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}}
+\usesubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}\textbullet}}
+\usesubsubitemizeitemtemplate{\tiny\raise1.5pt\hbox{\color{beamerstructure}\textbullet}}
+
+\setbeamersize{text margin left=0.5cm, text margin right=0.5cm}
+
+\newlength{\frametitlewidth}
+\newlength{\frametitleheight}
+
+\setbeamercolor{frametitle}{fg=white,bg=rured}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamertemplate{frametitle}
+{
+\setlength{\frametitlewidth}{10cm}
+\setlength{\frametitleheight}{4.5cm}
+\ifbeamer@official
+\setlength{\frametitleheight}{2.5cm}
+\fi
+\vspace*{-\frametitleheight}\begin{minipage}[t][\frametitleheight-1cm][b]{\frametitlewidth}
+\raggedright\insertframetitle\par
+\end{minipage}\vspace{.25cm}
+}
+
+\setbeamertemplate{headline}
+{
+  \ifbeamer@official
+    \vspace{2.6cm}
+  \else
+    \vspace{1.3cm}
+  \fi
+}
+
+\mode<all>
