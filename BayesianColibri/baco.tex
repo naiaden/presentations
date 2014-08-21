@@ -18,13 +18,94 @@
 \renewcommand{\emph}[1]{\textcolor{rured}{#1}}
 
 \author{Louis Onrust}
-\title{Bayesian Language Modelling with Skipgrams}
+\title{$p(\text{conclusions} | \text{Skipping \{*2*\}})$}
+\subtitle{Bayesian Language Modelling with Skipgrams}
 \date{}
 \begin{document}
+
 \begin{frame}
 	\titlepage
 \end{frame}
 
 \begin{frame}
+    \frametitle{The topics for today}
+    \begin{itemize}
+        \item Bayesian non-parametrics
+        \item Language modelling
+        \item Chinese restaurants
+        \item Poor results
+        \item Skipgrams
+        \item The future
+    \end{itemize}
+\end{frame}
+
+First we have to explain some things:
+Bayesian non-parametrics
+    The basic motivation for non-parametrics is the idea that in many statistical inference problems we expect that structures or patterns will continue to emerge as data accrue, perhaps ad infinitum, and that when we find ourselves in such situations we may wish to consider a modeling framework that supplies a growing, unbounded number of degrees of freedom to the data analysis. And of course, as in all statistical inference problems, if we allow degrees of freedom to accrue too quickly, we risk finding structures that are statistical artifacts: that is, we overfit. Since this is a serious problem, it motivates the Bayesian aspect of Bayesian non-parametrics. It is by no means immune to overfitting, but provides a natural resilience to overfitting. (Bernardo and Smith, 1994: Bayesian Theory)
+
+Nonparametric does not mean that there are no parameters, but it means not parametric, which has the interpretation that we do not assume a parametric model in which the number of parameters is fixed once and for all. It is not opposed to parameters, quite to the contrary, the framework can be viewed as allowing an infinite number of parameters.
+
+\begin{frame}
+    \frametitle{Bayesian Non-Parametrics}
+    
+\end{frame}
+
+Second, a quick word on the Dirichlet Process. It has been the centrepiece of Bayesian non-parametrics since its introduction in the seminal paper by Ferguson (1973). It can be viewed as an infinite-dimensional analog of the classical Dirichlet Distribution, which plays an important role in Bayesian statistics as a conjugate distribution to the multinomial.
+
+\begin{frame}
+
+\end{frame}
+
+\begin{frame}
+Chinese Restaurant Process
+Chinese Restaurant Franchise
+\end{frame}
+
+\end{document}
+\begin{frame}
+Bayesian Language Models
+(Discrete) Bayesian Non-Parametrics
+\end{frame}
+
+\begin{frame}
+So, how do we get non-parametrics?
+
+General Stick-breaking prior:
+\[ P(\cdot) = \sum_{k=1}^N p_k\delta_{Z_k}(\cdot) \]
+The generating values $Z_k$ come from $H$, and the weights are assigned 
+\[ p_k = \prod_{i=1}^{k-1}(1-V_i)V_k\]
+with $V_k \sim \operatorname{Beta}(a_k, b_k)$
+
+Pitman-Yor distribution (PYD), or the two-parameter Poisson-Dirichlet distribution, is a special case,
+\[ \operatorname{PY}(a,b,H), a\in[0,1), b>-a \] 
+s.t. $V_k \sim \operatorname{Beta}(1-a, a+bk)$, and the weights ${p_k}^{k=1}^N$ induce a power-law distribution:
+\[ P(n_w)\propto n_w^{1(1+a)}\]
+\end{frame}
+
+\begin{frame}
+So why does the PYD induce a power-law?
+If you think of the proportions broken off a remaining stick:
+\[ V_k \sim \operatorname{Beta}(1-a, b+ka)\]
+then the expected value is:
+\[ E[V_k] = \frac{1-a}{1+b+(k-1)a \]
+
+Setting $a=0$, reduces the PYP to a DP.
+\end{frame}
+
+\begin{frame}
+Pitman-Yor Processes
+Hierarchical Pitman-Yor Processes
+\end{frame}
+
+\begin{frame}
+\frametitle{Adding Bayesiawesomeness to Colibri}
+Colibri Core
+
+Skipgrams
+\end{frame}
+
+\begin{frame}
+\frametitle{Pointers for future work}
+Double Hierarchical Pitman-Yor Processes
 \end{frame}
 \end{document}
