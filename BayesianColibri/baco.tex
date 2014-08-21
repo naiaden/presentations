@@ -47,37 +47,81 @@ Nonparametric does not mean that there are no parameters, but it means not param
 
 \begin{frame}
     \frametitle{Bayesian Non-Parametrics}
-    
+
 \end{frame}
 
 Second, a quick word on the Dirichlet Process. It has been the centrepiece of Bayesian non-parametrics since its introduction in the seminal paper by Ferguson (1973). It can be viewed as an infinite-dimensional analog of the classical Dirichlet Distribution, which plays an important role in Bayesian statistics as a conjugate distribution to the multinomial.
 
+A standard Bayesian model for clustering involves assuming that each data point is assigned to one K clusters, with the assignment to cluster k occuring with probability w_k, for k=1,2,...,K and sum_k=1ˆK w_k=1, and a Dirichlet prior placed on the probabilities {w_k}. We can try to arrive at the DP by taking K to infinity, but that is not the BNP approach. Instead we take a combined combinatorial and statistical approach to the clustering problems, by treating the problem as one of iferring the partition underlying the data. From a Bayesian pov, this requieres placing probability distributions on paritions. We use a particular probability distribution known as the CRP.
+
+KMeans clustering as frequentist and parametric approach.
+
 \begin{frame}
+    \frametitle{Clustering and the First Formulae}
+\end{frame}
+
+The Bayesian approach is model-based, in that we first specify a model by which the data are assumed to be generated.
+
+Let's denote a partition of N points as \pi_{[N]}. This is a set of subsets of N points, where each points belongs to exactly one subset. EXAMPLE We refer to these subsets as clusters. Note that the ordering os ubsets and the ordering of points within subsets is arbitrary.
+
+The CRP is a probability distribution on partitions. The distribtuion is built up in a sequential manner, where one point at a time is added to an existing set of clusters. The CRP described this process using the metaphor of  arestaurant, with points corrsponding to customers and clusters corresponding to tables. The process goes as follows: The first customer is seated alone. Each subsequent customer is either seated at one of the already occupied tables, with probability proportional to the number of customers sitting at that table, or with probability proportional to a fixed constant alpha, the customer starts a new table. EXAMPLE
+
+(CRF?)
+
+\begin{frame}
+    \frametitle{Clusteling with a Chinese Lestaulant Plocess}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
+    \frametitle{Finally, Language Models}
+\end{frame}
+
+
+PYP
+CRF
+\begin{frame}
+    \frametitle{Hierarchical Two-Parameter Poisson-Dirichlet Processes Language Model}
+\end{frame}
+
+
+
+Colibri Core
+Skipgrams
+\begin{frame}
+    \frametitle{Adding Bayesiawesomeness to Colibri}
 
 \end{frame}
 
-\begin{frame}
-Chinese Restaurant Process
-Chinese Restaurant Franchise
-\end{frame}
 
+
+
+Double Hierarchical Pitman-Yor Processes
+\begin{frame}
+    \frametitle{Pointers for future work}
+\end{frame}
 \end{document}
-\begin{frame}
-Bayesian Language Models
-(Discrete) Bayesian Non-Parametrics
-\end{frame}
+
+
+
+
+
 
 \begin{frame}
 So, how do we get non-parametrics?
 
 General Stick-breaking prior:
 \[ P(\cdot) = \sum_{k=1}^N p_k\delta_{Z_k}(\cdot) \]
-The generating values $Z_k$ come from $H$, and the weights are assigned 
+The generating values $Z_k$ come from $H$, and the weights are assigned
 \[ p_k = \prod_{i=1}^{k-1}(1-V_i)V_k\]
 with $V_k \sim \operatorname{Beta}(a_k, b_k)$
 
 Pitman-Yor distribution (PYD), or the two-parameter Poisson-Dirichlet distribution, is a special case,
-\[ \operatorname{PY}(a,b,H), a\in[0,1), b>-a \] 
+\[ \operatorname{PY}(a,b,H), a\in[0,1), b>-a \]
 s.t. $V_k \sim \operatorname{Beta}(1-a, a+bk)$, and the weights ${p_k}^{k=1}^N$ induce a power-law distribution:
 \[ P(n_w)\propto n_w^{1(1+a)}\]
 \end{frame}
@@ -92,20 +136,5 @@ then the expected value is:
 Setting $a=0$, reduces the PYP to a DP.
 \end{frame}
 
-\begin{frame}
-Pitman-Yor Processes
-Hierarchical Pitman-Yor Processes
-\end{frame}
 
-\begin{frame}
-\frametitle{Adding Bayesiawesomeness to Colibri}
-Colibri Core
-
-Skipgrams
-\end{frame}
-
-\begin{frame}
-\frametitle{Pointers for future work}
-Double Hierarchical Pitman-Yor Processes
-\end{frame}
 \end{document}
