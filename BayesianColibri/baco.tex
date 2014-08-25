@@ -195,7 +195,7 @@ The CRP is a probability distribution on partitions. The distribtuion is built u
 }
 
 \begin{frame}
-    \frametitle{\normalsize Hierarchical Two-Parameter Poisson-Dirichlet Processes}
+    \frametitle{Two-Parameter Poisson-Dirichlet Processes}
 
     \begin{block}{Why Pitman-Yor Processes?}
         \begin{itemize}
@@ -248,52 +248,99 @@ The CRP is a probability distribution on partitions. The distribtuion is built u
 %    We use $n$-gram LM which use the conditional distributions of each word given a context of $n-1$ words: \[ P(\mathbf{w})\aprox\prod_{i}P(w_i|w_{i-n+1}^{i-1}) \]
 
     \begin{block}{Unigram LM with PYP}
-        $W$ is a fixed vocabulary of $V$ words. For each $w\in W$ let $G(w)$ be the probability of $w$, and $G=[G(w)]_{w\in W}$ the vector of word probabilities. Uniform prior with $G_0(w) = \frac{1}{V}$.
-We can then place a PYP prior on $G$: \[ G \sim \operatorname{PYP}(\alpha, \sigma, G_0). \] 
+        $W$ is a fixed vocabulary of $V$ words. For each $w\in W$ let $G(w)$ be the probability of $w$, and $G=[G(w)]_{w\in W}$ the vector of word probabilities. 
+        %Uniform prior with $G_0(w) = \frac{1}{V}$.
+%We can then place a PYP prior on $G$: 
+\[ G \sim \operatorname{PYP}(\alpha, \sigma, G_0). \] 
+    \end{block}
+
+    \begin{block}{Inference for our Unigram LM}
+        \begin{itemize}
+            \item Training data $\mathcal{D}$ consists of occurrence counts $c_{w}$.
+            \item We are interested in the posterior distribution $P(G,\Theta|\mathcal{D}) = P(G,\Theta,\mathcal{D})/P(\mathcal{D})$.
+            \begin{itemize}
+                \item The CRP marginalises out $G$, replacing it with the seating arrangement $S$
+                \item The new posterior is then: $P(S,\Theta|\mathcal{D})=P(S,\Theta,\mathcal{D})/P(\mathcal{D})$.
+                \item Predictive probability: $p(w|\mathcal{D})=\int P(w|S,\Theta)P(S,\Theta|\mathcal{D})\text{d}(S,\sigma)$.
+                \begin{itemize}
+                    \item $P(w|S,\Theta) = \frac{c_w-\sigma t_w}{\alpha+c_\cdot} + \frac{\alpha+\sigma t_\cdot}{\alpha+c_\cdot}$.
+                \end{itemize}
+            \end{itemize}
+        \end{itemize}
+    \end{block}
+
+%    \begin{block}{The Generative Strategy to produce $x_1,x_2,\ldots$}
+%        \begin{itemize}
+%            \item Notice that we can treat $G$ and $G_0$ as distributions over $W$;
+%            \item Let $x1,x2,\ldots$ be a sequence over words drawn i.i.d. from $G$.
+%            \item We marginalise over $G$ by relating $x_1,x_2,\ldots$ to i.i.d. draws $y_1,y_2,\ldots$ from $G_0$.
+%            \item $x_1$ is assigned the value of $y_1$, and $t$ the current number of draws
+%            \item $c_k$ the number of words assigned the value of draw $y_k$ and $c_\cdot=\sum_{k=1}^tc_k$ the number of draws from $G$.
+%            \item For each subsequent word $x_{c_\cdot+1}$, we assign it the value of a previous draw $y_k$ with probability $\frac{c_k-\alpha}{\sigma+c_\cdot}$, or assign it the value of a new draw from $G_0$ with probability $\frac{\sigma+\alpha t}{\sigma+c_\cdot}$.
+%        \end{itemize}
+%    \end{block}
+
+\end{frame}
+\note{
+
+        Suppose we have training data $\mathcal{D}$ comprising the number of occurrences $c_{w}$. This corresponds to observing word $w$ drawn $c_{w}$ times from $G$. We are interested in the posterior $P(G, \Theta|\mathcal{D}) = P(G,\Theta,\mathcal{D})/P(\mathcal{D})$. With the CRP we can marginalise out $G$, replacing it with the seating arrangement $S$. So we are interested in the equivalent posterior: $P(S,\Theta|\mathcal{D}) = P(S,\Theta,\mathcal{D})/p(\mathcal{D})$.
+}
+
+
+\begin{frame}
+    \frametitle{Hierarchical PYP}
+
+    \begin{block}{HPYLM}
+        Given a context $\mathbf{u}$, let $G_{\mathbf{u}}(w)$ be the probability of the current word taking on value $w$. 
+        The HPYP has a prior for $G_{\mathbf{u}} \sim \operatorname{PYP}(\alpha_{|\mathbf{u}|},\sigma_{|\mathbf{u}|},G_{\pi(\mathbf{u})})$, with $\pi(\mathbf{u})$ being the suffix of $\mathbf{u}$ of all but the first word. 
+        $G_{\pi(\mathbf{u})}$ is also unknown, so we place a recursive prior over it, with parameters $\alpha_{|\pi(\mathbf{u})|}, \sigma_{|\pi(\mathbf{u})|}$ 
+        and mean vector $G_{\pi(\pi(\mathbf{u}))}$; $G_\varnothing$ being the empty context, which is the same as for the unigram LM.
+
+        Interpolated Kneser-Ney can be considered to be an approximate inference of HPYLM.
     \end{block}
 
     \begin{block}{Chinese Restaurant Franchise}
         \begin{itemize}
             \item A Chinese Restaurant Franchise consists of Chinese Restaurants
-            \item A Chinese Restaurant has an unbounded number of tables
             \item There is a global menu with an unbounded number of dishes
         \end{itemize}
     \end{block}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Hierarchical PYP}
-\end{frame}
-
-
-\end{document}
-
-
-
-
-
-
-
-
-
-Colibri Core
-Skipgrams
-\begin{frame}
     \frametitle{Adding Bayesiawesomeness to Colibri}
+    
+    Existing Bayesian language models\ldots
+        \begin{itemize}
+            \item are merely an algorithmic showcase without real LM aspirations;
+            \item cannot handle really big datasets.
+        \end{itemize}
 
+    \begin{block}{Colibri}
+        \begin{itemize}
+            \item C++ and Python library for basic linguistic constructions
+            \item Generates $n$-grams, skipgrams, and flexgrams
+            \item \url{http://proycon.github.io/colibri-core/}
+        \end{itemize}
+    \end{block}
+    \vspace{-0.25cm}
+    \begin{block}{Bayesian Colibri}
+        \begin{itemize}
+            \item We extend the C++ library for NBP with PYP (\url{https://github.com/redpony/cpyp})
+            \item BaCo is available at \url{https://github.com/naiaden/cococpyp}
+        \end{itemize}
+    \end{block}
 \end{frame}
 
-
-
-
-Double Hierarchical Pitman-Yor Processes
 \begin{frame}
-    \frametitle{Pointers for future work}
+    \frametitle{From $n$-gram to $Y$-gram}
+
+    here some numbers from the grams in different corpora
+
 \end{frame}
-\end{document}
 
+\begin{frame}
+    \frametitle{Future work}
 
-
-
-
-
+    DHPYPLM
+\end{frame}
