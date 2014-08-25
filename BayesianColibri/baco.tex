@@ -11,11 +11,15 @@
 \usepackage{palatino}
 \usepackage{color}
 \usepackage{tikz}
+\usetikzlibrary{positioning}
 \usepackage{mathptmx}
 \usepackage[scaled=.90]{helvet}
 \usepackage{courier}
 \usepackage[T1]{fontenc}
 \renewcommand{\emph}[1]{\textcolor{rured}{#1}}
+\usepackage{biblatex}
+
+\bibliography{baco}
 
 \author{Louis Onrust}
 \title{$p(\text{conclusions} | \text{Skipping \{*2*\}})$}
@@ -39,40 +43,207 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Bayesian Non-Parametrics}
+
+    \begin{block}{Motivation for BNP}
+        \begin{itemize}
+            \item As the data grows, more patterns emerge:
+            \begin{itemize}
+                \item this implies a growing, unbounded number of degrees of freedom;
+                \item risk of overfitting.
+            \end{itemize}
+        \end{itemize}   
+    \end{block}
+
+    \begin{block}{Non-parametric with parameters}
+        \begin{itemize}
+            \item Non-parametric does not mean there are no parameters:
+            \begin{itemize}
+                \item instead, the number of parameters is not fixed.
+                \item ``Allows an infinite number of parameters.''
+            \end{itemize}
+        \end{itemize}
+    \end{block}
+\end{frame}
+\note{
 First we have to explain some things:
 Bayesian non-parametrics
     The basic motivation for non-parametrics is the idea that in many statistical inference problems we expect that structures or patterns will continue to emerge as data accrue, perhaps ad infinitum, and that when we find ourselves in such situations we may wish to consider a modeling framework that supplies a growing, unbounded number of degrees of freedom to the data analysis. And of course, as in all statistical inference problems, if we allow degrees of freedom to accrue too quickly, we risk finding structures that are statistical artifacts: that is, we overfit. Since this is a serious problem, it motivates the Bayesian aspect of Bayesian non-parametrics. It is by no means immune to overfitting, but provides a natural resilience to overfitting. (Bernardo and Smith, 1994: Bayesian Theory)
 
 Nonparametric does not mean that there are no parameters, but it means not parametric, which has the interpretation that we do not assume a parametric model in which the number of parameters is fixed once and for all. It is not opposed to parameters, quite to the contrary, the framework can be viewed as allowing an infinite number of parameters.
-
-\begin{frame}
-    \frametitle{Bayesian Non-Parametrics}
-
-\end{frame}
-
-Second, a quick word on the Dirichlet Process. It has been the centrepiece of Bayesian non-parametrics since its introduction in the seminal paper by Ferguson (1973). It can be viewed as an infinite-dimensional analog of the classical Dirichlet Distribution, which plays an important role in Bayesian statistics as a conjugate distribution to the multinomial.
-
-A standard Bayesian model for clustering involves assuming that each data point is assigned to one K clusters, with the assignment to cluster k occuring with probability w_k, for k=1,2,...,K and sum_k=1ˆK w_k=1, and a Dirichlet prior placed on the probabilities {w_k}. We can try to arrive at the DP by taking K to infinity, but that is not the BNP approach. Instead we take a combined combinatorial and statistical approach to the clustering problems, by treating the problem as one of iferring the partition underlying the data. From a Bayesian pov, this requieres placing probability distributions on paritions. We use a particular probability distribution known as the CRP.
-
-KMeans clustering as frequentist and parametric approach.
+}
 
 \begin{frame}
     \frametitle{Clustering and the First Formulae}
-\end{frame}
 
+    \begin{block}{Dirichlet Process}
+        \begin{itemize}
+            \item Centrepiece of BNP: Introduced by Ferguson\footfullcite{Ferguson73}. 
+            \item Infinite-dimensional analog of the Dirichlet distribution.
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Clustering}
+        \begin{itemize}
+            \item Each data point $x_i$ is assigned to one of $K$ clusters
+            \begin{itemize}
+                \item with probability $w_k$, for $k=1,2,\ldots,K$ and $\sum_{k=1}^Kw_k=1$ and a Dirichlet prior placed on the probabilities $\{w_k\}$.
+            \end{itemize}
+            \item Treat clustering problem as inferring partitions
+            \begin{itemize}
+                \item by placing probability distributions on partitions;
+                \item Chinese Restaurant Process
+            \end{itemize}
+        \end{itemize}
+    \end{block}
+\end{frame}
+\note{
+Second, a quick word on the Dirichlet Process. It has been the centrepiece of Bayesian non-parametrics since its introduction in the seminal paper by Ferguson (1973). It can be viewed as an infinite-dimensional analog of the classical Dirichlet Distribution, which plays an important role in Bayesian statistics as a conjugate distribution to the multinomial.
+
+A standard Bayesian model for clustering involves assuming that each data point is assigned to one $K$ clusters, with the assignment to cluster $k$ occuring with probability $w_k$, for $k=1,2,...,K$ and $sum_k=1^K w_k=1$, and a Dirichlet prior placed on the probabilities ${w_k}$. We can try to arrive at the DP by taking K to infinity, but that is not the BNP approach. Instead we take a combined combinatorial and statistical approach to the clustering problems, by treating the problem as one of iferring the partition underlying the data. From a Bayesian pov, this requieres placing probability distributions on paritions. We use a particular probability distribution known as the CRP.
+
+KMeans clustering as frequentist and parametric approach.
+}
+
+\begin{frame}
+    \frametitle{Clusteling with a Chinese Lestaulant Plocess}
+    
+    \begin{block}{Partitions and Clusters}
+        \begin{itemize}
+            \item A partition of $N$ points is denoted as $\pi_\{[N]\}$
+            \begin{itemize}
+                \item $\pi_{[10]} = \{\{3,5\},\{1,2,9,10\},\{4,6,7\},\{8\}\}$
+                \item $\pi_{[N]}$ is a set of subsets, where subsets are clusters
+            \end{itemize}
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Chinese Restaurant Process}
+        \begin{itemize}
+            \item CRP is a probability distribution on partitions.
+            \item Restaurant metaphor: points are customers, clusters are tables.
+            \item Sequential process: each point at a time is added to an existing set of clusters.
+            \begin{itemize}
+                \item The first customer is seated alone;
+                \item Each subsequent customer is either:
+                \begin{itemize}
+                    \item seated at one of the already occupied tables (with probability proportional to the number of customers sitting at that table), or
+                    \item starting a new table (with probability proportional to a fixed constant).
+                \end{itemize}
+            \end{itemize}   
+        \end{itemize}
+    \end{block}
+\end{frame}
+\note{
 The Bayesian approach is model-based, in that we first specify a model by which the data are assumed to be generated.
 
-Let's denote a partition of N points as \pi_{[N]}. This is a set of subsets of N points, where each points belongs to exactly one subset. EXAMPLE We refer to these subsets as clusters. Note that the ordering os ubsets and the ordering of points within subsets is arbitrary.
+Let's denote a partition of N points as $\pi_{[N]}$. This is a set of subsets of N points, where each points belongs to exactly one subset. EXAMPLE We refer to these subsets as clusters. Note that the ordering os ubsets and the ordering of points within subsets is arbitrary.
 
 The CRP is a probability distribution on partitions. The distribtuion is built up in a sequential manner, where one point at a time is added to an existing set of clusters. The CRP described this process using the metaphor of  arestaurant, with points corrsponding to customers and clusters corresponding to tables. The process goes as follows: The first customer is seated alone. Each subsequent customer is either seated at one of the already occupied tables, with probability proportional to the number of customers sitting at that table, or with probability proportional to a fixed constant alpha, the customer starts a new table. EXAMPLE
 
 (CRF?)
+}
 
 \begin{frame}
-    \frametitle{Clusteling with a Chinese Lestaulant Plocess}
+    \[
+        P(\text{customer }n+1\text{ joins table }c|\pi_{[n]}) = 
+          \begin{cases}
+           \frac{|c|}{\alpha+n} & \text{if } c \in \pi_{[n]}, \\
+           \frac{\alpha}{\alpha+n}       & \text{otherwise.}
+          \end{cases}
+    \]
+    
+    The seating pattern after $N$ customers defines a set of clusters: 
+    \[
+        \pi_{[N]} \sim \operatorname{CRP}(\alpha, N)
+    \]
+
+    \begin{block}{Example for $\{\{1,2,5\},\{3,4\},\{6\}\}$}
+        \begin{center}
+            \begin{tikzpicture}
+                \node[draw, circle] (t1) {};
+                \node[draw, circle, right=of t1] (t2) {};
+                \node[draw, circle, right=of t2] (t3) {};
+                \node[circle, right=of t3] (tdots) {$\ldots$};
+                \node[draw, circle, right=of tdots] (t4) {};
+
+                \onslide<2->{\node[node distance=0.1cm,above right=of t1] (c1) {1};}
+                \onslide<4->{\node[node distance=0.1cm,above left=of t1] (c2) {2};}
+                \onslide<6->{\node[node distance=0.1cm,above right=of t2] (c3) {3};}
+                \onslide<8->{\node[node distance=0.1cm,above left=of t2] (c4) {4};}
+                \onslide<10->{\node[node distance=0.1cm,below right=of t1] (c5) {5};}
+                \onslide<12->{\node[node distance=0.1cm,below right=of t3] (c6) {6};}
+            \end{tikzpicture}
+        \end{center}            
+
+        $P=\uncover<3->{\frac{\alpha}{\alpha}\uncover<5->{\frac{1}{\alpha+1}\uncover<7->{\frac{\alpha}{\alpha+2}\uncover<9->{\frac{\alpha}{\alpha+3}\uncover<11->{\frac{2}{\alpha+4}\uncover<13->{\frac{\alpha}{\alpha+5}$}}}}}} \uncover<14->{$\rightarrow P(\pi_{[N]}) = \frac{\alpha^K}{\alpha^{(N)}}\prod_{c\in\pi_{[N]}}(|c|-1)!$}
+    \end{block}
+\end{frame}
+\note{
+    We can capture these rules in a formula, where $|c|$ is the cardinality of cluster $c$, as well as the number of customers sitting at table $c$.
+
+    Now consider an infinte number of unlabelled tables, and when a customer is assigned to a new table, one of the unlabelled tables is chosen arbitrarily. 
+
+    After $N$ customers have arrived, their seating pattern defines a set of clusters and thus a partition. This distribution is denoted as follows. For each value of $N$ we have a different distribution, making the CRP a family of distributions.
+
+    The order in which the customers come in does not matter, the CRP has the property of exchangeability. I will not proof it here, but after an example, you can see why, and we can reconstruct the top formula in retrospect.
+
+    $P(\text{customer }n+1\text{ joins table }c|\pi_{[n]}) = \frac{P(\pi'_{[n+1]}}{P(\pi_{[n]}}=\frac{\alpha^{(n)}}{\alpha^{(n+1)}}|c| = \frac{|c|}{\alpha+n}$
+    
+    $P(\text{customer }n+1\text{ starts new table }c|\pi_{[n]})=\frac{P(\pi'_{[n+1]})}{P(\pi_{[n]})}=\frac{\alpha^{K+1}}{\alpha^{(n+1)}}\frac{\alpha^{(n)}}{\alpha^K} = \frac{\alpha}{\alpha+n}$
+}
+
+\begin{frame}
+    \frametitle{\normalsize Hierarchical Two-Parameter Poisson-Dirichlet Processes}
+
+    \begin{block}{Why Pitman-Yor Processes?}
+        \begin{itemize}
+            \item DP generates an infinite number of atoms, with a relatively slow rate.
+            \item Many real-world phenomena have a power-law growth.
+            \item The DP cannot generate such power-laws, hence we use PYP.
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{PYP as generalisation of the CRP}
+        \begin{itemize}
+            \item With DP the rate for selecting a new table is $\frac{\alpha}{\alpha+N}$, and choosing an occupied table goes to $\frac{N}{\alpha+N}$:
+            \begin{itemize}
+                \item $\sum_{n=1}^N\frac{\alpha}{\alpha+n}\asymp\log(N)$
+            \end{itemize}
+            \item PYP allows $\alpha$ to grow, with the rate of a discount parameter $\sigma$
+            \item PYP reduces to DP with $\sigma=0$.
+        \end{itemize}
+    \end{block}
+    
+\end{frame}
+\note[itemize]{
+                \item The latter quickly dominates the former, and few new tables emerge as N becomes large;
+}
+
+\begin{frame}
+    \frametitle{PYCRP}
+
+    \[
+        P(\text{customer }n+1\text{ joins table }c|\pi_{[n]}) = 
+          \begin{cases}
+           \frac{|c|-\sigma}{\alpha+n} & \text{if } c \in \pi_{[n]}, \\
+           \frac{\alpha+\sigma K_n}{\alpha+n}       & \text{otherwise.}
+          \end{cases}
+    \]
+    \begin{itemize}
+        \item The probability of joining an existing table is reduced by an amount proportional to $\sigma$ relative to the CRP.
+        \item Reductions are added to the probability of starting a new table.
+    \end{itemize}
+
+    The seating pattern after $N$ customers defines a set of clusters: $\pi_{[N]}\sim\operatorname{PYP}(\alpha,\sigma,N)$
+    \[
+        P(\pi_{[N]}) = \frac{\alpha(\alpha+\sigma)\cdots(\alpha+\sigma(K_N-1))}{\alpha^{(N)}}\prod_{c\in\pi_{[N]}}(1-\sigma)(2-\sigma)\cdots(|c|-1-\sigma).
+    \]
+
 \end{frame}
 
-
+\end{document}
 
 
 
@@ -82,11 +253,6 @@ The CRP is a probability distribution on partitions. The distribtuion is built u
 \end{frame}
 
 
-PYP
-CRF
-\begin{frame}
-    \frametitle{Hierarchical Two-Parameter Poisson-Dirichlet Processes Language Model}
-\end{frame}
 
 
 
