@@ -2,7 +2,7 @@
 \usetheme{rured}
 \setbeamertemplate{navigation symbols}{}
 \usepackage{graphicx}
-\setbeameroption{hide notes}
+\setbeameroption{show notes}
 \usepackage[english]{babel}
 \usepackage{listings,amsmath}
 \usepackage{algorithm2e}
@@ -30,6 +30,16 @@
 \begin{frame}
 	\titlepage
 \end{frame}
+\note[itemize]{
+    \item Gentle introduction to show what I've been working with
+    \item If you are familiar with skipgrams, you know that the title can mean either
+    \begin{itemize}
+        \item Skipping to some conclusions
+        \item Skipping apple pie conclusions
+        \item Skipping without any conclusions
+    \end{itemize}
+    \item Let's see what's on the menu today
+}
 
 \begin{frame}
     \frametitle{The topics for today}
@@ -42,6 +52,11 @@
         \item The future
     \end{itemize}
 \end{frame}
+\note[itemize]{
+    \item It seems like we've got a very varied menu
+    \item It's in no particular order
+    \item But we will take them all anyway
+}
 
 \begin{frame}
     \frametitle{Bayesian Non-Parametrics}
@@ -66,21 +81,25 @@
         \end{itemize}
     \end{block}
 \end{frame}
-\note{
-First we have to explain some things:
-Bayesian non-parametrics
-    The basic motivation for non-parametrics is the idea that in many statistical inference problems we expect that structures or patterns will continue to emerge as data accrue, perhaps ad infinitum, and that when we find ourselves in such situations we may wish to consider a modeling framework that supplies a growing, unbounded number of degrees of freedom to the data analysis. And of course, as in all statistical inference problems, if we allow degrees of freedom to accrue too quickly, we risk finding structures that are statistical artifacts: that is, we overfit. Since this is a serious problem, it motivates the Bayesian aspect of Bayesian non-parametrics. It is by no means immune to overfitting, but provides a natural resilience to overfitting. (Bernardo and Smith, 1994: Bayesian Theory)
+\note[itemize]{
+    \item Basic motivation is the idea that in many stat.inf.prob.\ we expect that structures or pattern continue to emerge as data accrue, perhaps ad infinitum
+    \item We want a modelling framework that supplies a growing, unbounded number of d.o.f.\ to the data analysis
+    \item However, if we allow d.o.f.\ to accrue too quickly, we risk finding structures that are statistical artifacts: that is, we overfit.
+    \item Overfitting is a serious problem, and it motivates the Bayesian aspect of non-parametrics
+    \item Bayesian methods are by no means immune to overfitting, but provide a natural resilience
 
-Nonparametric does not mean that there are no parameters, but it means not parametric, which has the interpretation that we do not assume a parametric model in which the number of parameters is fixed once and for all. It is not opposed to parameters, quite to the contrary, the framework can be viewed as allowing an infinite number of parameters.
+    \item NP does not mean there are no parameters
+    \item not parametric, the numbers of parameters is not fixed once and for all
+    \item So it's not opposed to parameters, to the contrary: the framework can be viewed as allowing an infinite number of parameters
 }
 
-\begin{frame}
+\begin{frame}[label=dirichletprocess]
     \frametitle{Clustering and the First Formulae}
 
     \begin{block}{Dirichlet Process}
         \begin{itemize}
             \item Centrepiece of BNP: Introduced by Ferguson\footfullcite{Ferguson73}. 
-            \item Infinite-dimensional analog of the Dirichlet distribution.
+            \item Infinite-dimensional analog of the \hyperlink{dirichletsupplemental}{Dirichlet distribution}. 
         \end{itemize}
     \end{block}
 
@@ -98,12 +117,18 @@ Nonparametric does not mean that there are no parameters, but it means not param
         \end{itemize}
     \end{block}
 \end{frame}
-\note{
-Second, a quick word on the Dirichlet Process. It has been the centrepiece of Bayesian non-parametrics since its introduction in the seminal paper by Ferguson (1973). It can be viewed as an infinite-dimensional analog of the classical Dirichlet Distribution, which plays an important role in Bayesian statistics as a conjugate distribution to the multinomial.
-
-A standard Bayesian model for clustering involves assuming that each data point is assigned to one $K$ clusters, with the assignment to cluster $k$ occuring with probability $w_k$, for $k=1,2,...,K$ and $sum_k=1^K w_k=1$, and a Dirichlet prior placed on the probabilities ${w_k}$. We can try to arrive at the DP by taking K to infinity, but that is not the BNP approach. Instead we take a combined combinatorial and statistical approach to the clustering problems, by treating the problem as one of iferring the partition underlying the data. From a Bayesian pov, this requieres placing probability distributions on paritions. We use a particular probability distribution known as the CRP.
-
-KMeans clustering as frequentist and parametric approach.
+\note[itemize]{
+    \item Now we laid some ground for our BNP framework
+    \item Dirichlet distribution plays an important role in Bay.stat.\ as conjugate distribution to the multinomial and categorical.
+    
+    \item A standard Bay.\ model for clustering involves assuming each data point is assigned to one of $K$ clusters
+    \item The probability of being in cluster $k$ is $w_k$ for each cluster, and the probability vector is normalised.
+    \item We place a dirichlet prior on the prob vector $\{w_k\}$
+    \item As an infinite-dimensional analog, you would expect to take $K$ to infinity to derive at the DP
+    \item But that is not the BNP approach: instead we take a combined combinatorial and statistical approach to the clustering problems
+    \item where we want to infer the partition underlying the data
+    \item From a Bayesian p.o.v., this requires placing a prob dist on partitions: in particular, the CRP
+    \item KMeans
 }
 
 \begin{frame}
@@ -128,21 +153,25 @@ KMeans clustering as frequentist and parametric approach.
                 \item The first customer is seated alone;
                 \item Each subsequent customer is either:
                 \begin{itemize}
-                    \item seated at one of the already occupied tables (with probability proportional to the number of customers sitting at that table), or
-                    \item starting a new table (with probability proportional to a fixed constant).
+                    \item seated at one of the already occupied tables, or
+                    \item starting a new table.
                 \end{itemize}
             \end{itemize}   
         \end{itemize}
     \end{block}
 \end{frame}
-\note{
-The Bayesian approach is model-based, in that we first specify a model by which the data are assumed to be generated.
+\note[itemize]{
+    \item Bayesian approach is model-based, which means that we first have to specify a generative model
+    \item Let's denote a partition of $N$ points as $\pi_{[N]}$
+    \item this is a set of $N$ points, where each point belongs to exactly one subset
+    \item subsets are clusters, and the ordering of clusters and points within clusters is arbitrary
 
-Let's denote a partition of N points as $\pi_{[N]}$. This is a set of subsets of N points, where each points belongs to exactly one subset. EXAMPLE We refer to these subsets as clusters. Note that the ordering os ubsets and the ordering of points within subsets is arbitrary.
+    \item CRP is a probability distribution over partitions
+    \item distribution is built up in a sequential manner: one point at a time is added to an existing set of clusters
+    \item metaphore of a restaurant
 
-The CRP is a probability distribution on partitions. The distribtuion is built up in a sequential manner, where one point at a time is added to an existing set of clusters. The CRP described this process using the metaphor of  arestaurant, with points corrsponding to customers and clusters corresponding to tables. The process goes as follows: The first customer is seated alone. Each subsequent customer is either seated at one of the already occupied tables, with probability proportional to the number of customers sitting at that table, or with probability proportional to a fixed constant alpha, the customer starts a new table. EXAMPLE
-
-(CRF?)
+    \item sits at a already occupied table with probability proportional to the number of customers sitting at that table;
+    \item starts a new table with probability proportional to a fixed constant.
 }
 
 \begin{frame}
@@ -154,7 +183,7 @@ The CRP is a probability distribution on partitions. The distribtuion is built u
           \end{cases}
     \]
     
-    The seating pattern after $N$ customers defines a set of clusters: 
+    The seating pattern after $N$ customers \hyperlink{crpsupplemental}{defines} a set of clusters: 
     \[
         \pi_{[N]} \sim \operatorname{CRP}(\alpha, N)
     \]
@@ -177,21 +206,20 @@ The CRP is a probability distribution on partitions. The distribtuion is built u
             \end{tikzpicture}
         \end{center}            
 
-        $P=\uncover<3->{\frac{\alpha}{\alpha}\uncover<5->{\frac{1}{\alpha+1}\uncover<7->{\frac{\alpha}{\alpha+2}\uncover<9->{\frac{\alpha}{\alpha+3}\uncover<11->{\frac{2}{\alpha+4}\uncover<13->{\frac{\alpha}{\alpha+5}$}}}}}} \uncover<14->{$\rightarrow P(\pi_{[N]}) = \frac{\alpha^K}{\alpha^{(N)}}\prod_{c\in\pi_{[N]}}(|c|-1)!$}
+        $\uncover<3->{P=\frac{\alpha}{\alpha}\uncover<5->{\frac{1}{\alpha+1}\uncover<7->{\frac{\alpha}{\alpha+2}\uncover<9->{\frac{\alpha}{\alpha+3}\uncover<11->{\frac{2}{\alpha+4}\uncover<13->{\frac{\alpha}{\alpha+5}$}}}}}} \uncover<14->{$\rightarrow P(\pi_{[N]}) = \frac{\alpha^K}{\alpha^{(N)}}\prod_{c\in\pi_{[N]}}(|c|-1)!$}
     \end{block}
 \end{frame}
-\note{
-    We can capture these rules in a formula, where $|c|$ is the cardinality of cluster $c$, as well as the number of customers sitting at table $c$.
+\note[itemize]{
+    \item So, a new customer joins a table $c$, if $c$ is already a cluster, with prob prop to the number of customers already sitting at that table
+    \item otherwise starts a new table, with a prob prop to fixed constant $\alpha$
+    \item The seating pattern after $N$ customers thus defines a set of clusters
 
-    Now consider an infinte number of unlabelled tables, and when a customer is assigned to a new table, one of the unlabelled tables is chosen arbitrarily. 
+    \item Now for an example, imagine an infinite number of unlabelled tables
+    \item when a customer starts a new table, one of the unlabelled tables is chosen arbitrarily
+    \item So after $N$ customers have arrived, their seating pattern defines a set of clusters, and thus a partition.
+    \item For each value of $N$, we have a different CRP, and thus a different distribution, making the CRP a family of distributions
 
-    After $N$ customers have arrived, their seating pattern defines a set of clusters and thus a partition. This distribution is denoted as follows. For each value of $N$ we have a different distribution, making the CRP a family of distributions.
-
-    The order in which the customers come in does not matter, the CRP has the property of exchangeability. I will not proof it here, but after an example, you can see why, and we can reconstruct the top formula in retrospect.
-
-    $P(\text{customer }n+1\text{ joins table }c|\pi_{[n]}) = \frac{P(\pi'_{[n+1]}}{P(\pi_{[n]}}=\frac{\alpha^{(n)}}{\alpha^{(n+1)}}|c| = \frac{|c|}{\alpha+n}$
-    
-    $P(\text{customer }n+1\text{ starts new table }c|\pi_{[n]})=\frac{P(\pi'_{[n+1]})}{P(\pi_{[n]})}=\frac{\alpha^{K+1}}{\alpha^{(n+1)}}\frac{\alpha^{(n)}}{\alpha^K} = \frac{\alpha}{\alpha+n}$
+    \item The order in which the customers come in does not matter, the CRP has the property of exchangeability. I will not proof it here, but after an example, you can see why, and we can reconstruct the top formula in retrospect.
 }
 
 \begin{frame}
@@ -218,7 +246,15 @@ The CRP is a probability distribution on partitions. The distribtuion is built u
     
 \end{frame}
 \note[itemize]{
-                \item The latter quickly dominates the former, and few new tables emerge as N becomes large;
+    \item Now to the heart of the presentation
+    \item So the DP generates an infinite number of atoms, which is nice, but does so at a relatively slow rate
+    \item We know of many real-world phenomena that do not match this rate, but follow a power-law growth
+    \item The DP does not seem to be the tool we want?
+
+    \item So we introduce yet another generalisation: the Pitman-Yor process
+    \item The rate of atoms (tables) is asymptotically growing with the log of customers
+    \item The latter quickly dominates the former, and few new tables emerge as N becomes large;
+    \item We generalise the DP by adding a dicscount parameter $\sigma$
 }
 
 \begin{frame}
@@ -240,8 +276,15 @@ The CRP is a probability distribution on partitions. The distribtuion is built u
     \[
         P(\pi_{[N]}) = \frac{\alpha(\alpha+\sigma)\cdots(\alpha+\sigma(K_N-1))}{\alpha^{(N)}}\prod_{c\in\pi_{[N]}}(1-\sigma)(2-\sigma)\cdots(|c|-1-\sigma).
     \]
-
 \end{frame}
+\note[itemize]{
+    \item Although discounts in the restaurant are generally nice, in this case it means that you act as if there are less people on the table
+    \item This is especially noticeable in the beginning, when $|c|$ is small
+    \item all the discounts you saved by not joining a table, are used for the new table
+
+    \item The seating pattern is thus defined as such
+    \item and again we have exchangeability
+}
 
 \begin{frame}
     \frametitle{Finally, Language Models}
@@ -249,8 +292,6 @@ The CRP is a probability distribution on partitions. The distribtuion is built u
 
     \begin{block}{Unigram LM with PYP}
         $W$ is a fixed vocabulary of $V$ words. For each $w\in W$ let $G(w)$ be the probability of $w$, and $G=[G(w)]_{w\in W}$ the vector of word probabilities. 
-        %Uniform prior with $G_0(w) = \frac{1}{V}$.
-%We can then place a PYP prior on $G$: 
 \[ G \sim \operatorname{PYP}(\alpha, \sigma, G_0). \] 
     \end{block}
 
@@ -281,11 +322,16 @@ The CRP is a probability distribution on partitions. The distribtuion is built u
 %    \end{block}
 
 \end{frame}
-\note{
+\note[itemize]{
+    \item Notice that first we had $\operatorname{PYP}(\alpha, \sigma, N)$, now we have a distribution over some probability space $\Theta$, which are the words
+    \item $G_0$ being the uniform prior: $G_0(w) = \frac{1}{V}$
+    \item So now we can put a PYP prior on G
 
-        Suppose we have training data $\mathcal{D}$ comprising the number of occurrences $c_{w}$. This corresponds to observing word $w$ drawn $c_{w}$ times from $G$. We are interested in the posterior $P(G, \Theta|\mathcal{D}) = P(G,\Theta,\mathcal{D})/P(\mathcal{D})$. With the CRP we can marginalise out $G$, replacing it with the seating arrangement $S$. So we are interested in the equivalent posterior: $P(S,\Theta|\mathcal{D}) = P(S,\Theta,\mathcal{D})/p(\mathcal{D})$.
+    \item Although we can play two games, a generative game and an inference game, the second is more closely related to our idea of query likelihood
+    \item The seating arrangment is the partition we saw earlier, with customers sitting at a table with the dish being the word, and the cardinality of $c$ is the count
+    \item tough integral, which typically for Bayesian stuff we cannot compute (because of being an infinite sum)
+    \item our focus is on $P(w|S,\Theta)$ with a computation that must look similar to the ones we saw earlier for the PYP.
 }
-
 
 \begin{frame}
     \frametitle{Hierarchical PYP}
@@ -346,4 +392,68 @@ The CRP is a probability distribution on partitions. The distribtuion is built u
 
     DHPYPLM
 \end{frame}
+
+\appendix
+\begin{frame}[label=dirichletsupplemental]
+    \frametitle{Dirichlet Distribution}
+
+    \begin{block}{Informal introduction\footfullcite{Frigyk2010}}
+        \begin{itemize}
+            \item Dirichlet distribution can model the randomness of pmfs
+            \begin{itemize}
+                \item We have a dictionary of $k$ possible words
+                \item Each document can be represented by a pmf of length $k$ by normalising the empirical frequency of its words
+                \item A group of documents produces a collections of pmfs, and we use the Dirichlet distribution to capture the variability
+            \end{itemize}
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Formal introduction}
+        Let $Q = [Q_1, Q_2,\ldots,Q_k]$ be a random pmf with $k$ components, that is $Q_i \geq 0$ for $i=1,2,\ldots,k$ and $\sum_{i=1}^k Q_i = 1$
+        \[ f(q;\boldsymbol\alpha) = \frac{\Gamma(\alpha_0)}{\prod_{i=1}^k\Gamma(\alpha_i)}\prod_{i=1}^kq_i^{\alpha_i-1}. \]
+    \end{block}
+Back to the \hyperlink{dirichletprocess}{Dirichlet Process}.
+\end{frame}
+\note[itemize]{
+    \item Example of a pmf is an ordinary six-sided die
+    \item To sample from it you roll the die and produce a number one to six
+    \item Real dice are not exactly uniformly weighted (physics, manufactoring, \&c.)
+    \item A bag of 100 real dice is an example of a random pmf
+    \item To sample from it you put your hand in the bag and draw out a die, you draw a pmf
+    \item Dice from 100 years ago will likely have probs that deviate wildly from uniform, new sota dice Las Vegas casinos may have barely perceptible imperfections
+    \item The Dirichlet distribution can model the randomness of pmfs
+
+    \item Dirichlet distribution is particularly useful in modelling word distributions
+    \item $q$ is a pmf, and here a realisation of a random pmf $Q\sim\operatorname{Dir}(\alpha)$
+    \item $\boldsymbol\alpha$ is the parameter of the Dirichlet distribution, $\boldsymbol\alpha=[1,1,\ldots,1]$ is uniform over the simplex
+
+    
+}
+
+\begin{frame}[label=crpsupplemental]
+    \frametitle{Note on exchangeability and customer seating}
+
+    \begin{block}{de Finetti's theorem}
+        \begin{itemize}
+            \item The therom states why exchangeable observation are conditionally independent given some latent variable
+            \begin{itemize}
+                \item Assume we use the following conditional with $G$ marginalised out:
+                \[ \theta_{n+1}|\theta_1,\ldots,\theta_n\sim\frac{1}{\alpha+n}\left(\alpha H+\sum_{i=1}^n\delta_{\theta_i}\right) \]
+                \item For every $n$, the probability of generating $\theta_1,\ldots,\theta_n$ is equal to the probability of drawing them in any alternative order.
+                \item More precisely, given any permutation $\sigma$ on $1,\ldots,n$ we have        
+    \[ P(\theta_1,\ldots,\theta_n) = P(\theta_{\sigma(1)},\ldots,\theta_{\sigma(n)}) \]
+            \end{itemize}
+            \item So we have a exchangeable sequence of customers, and while the customers themselves are not independent and identically distributed
+        \end{itemize}
+    \end{block}
+
+
+
+    $P(\text{customer }n+1\text{ joins table }c|\pi_{[n]}) = \frac{P(\pi'_{[n+1]}}{P(\pi_{[n]}}=\frac{\alpha^{(n)}}{\alpha^{(n+1)}}|c| = \frac{|c|}{\alpha+n}$
+    
+    $P(\text{customer }n+1\text{ starts new table }c|\pi_{[n]})=\frac{P(\pi'_{[n+1]})}{P(\pi_{[n]})}=\frac{\alpha^{K+1}}{\alpha^{(n+1)}}\frac{\alpha^{(n)}}{\alpha^K} = \frac{\alpha}{\alpha+n}$
+   
+    Back to the \hyperlink{crpexample}{CRP example}. 
+\end{frame}
+
 \end{document}
