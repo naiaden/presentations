@@ -352,6 +352,16 @@
         \end{itemize}
     \end{block}
 \end{frame}
+\note[itemize]{
+    \item We all know unigram LM do not perform very well: ngram as the hierarchical generalisation of unigrams, HPYP as the hierarchical generalisation of PYP, CRF as the hierarchical generalisation of CRP
+    \item So now we have to model the context: $\mathbf{u}$, and we estimate the probability $G_{\mathbf{u}}(w)$.
+    \item Similar to drawing $G$ from PYP with $G_0$ as base distribution, we now draw $G_{\mathbf{u}}$ from PYP with $G_{\pi(\mathbf{u})}$ as base distribution.
+    \item $\pi(\mathbf{u})$ is the suffix of all but the first word of $\mathbf{u}$.
+    \item This prior is also unknown, so we put a recursive prior on it, with the unigram model from last slide as the base case, the empty context.
+    
+    \item IKN can be considered to be an approximate inference of HPYP
+    \item MKN cannot because the values are not between 0 and 1
+}
 
 \begin{frame}
     \frametitle{Adding Bayesiawesomeness to Colibri}
@@ -377,6 +387,10 @@
         \end{itemize}
     \end{block}
 \end{frame}
+\note[itemize]{
+    \item Now we have a framework for a Bayesian $n$-gram language model
+    \item But we want to extend it
+}
 
 \begin{frame}
     \frametitle{From $n$-gram to $Y$-gram}
