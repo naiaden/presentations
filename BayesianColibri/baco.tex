@@ -7,9 +7,13 @@
 \usepackage{listings,amsmath}
 \usepackage{algorithm2e}
 \usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
 \usepackage{ulem}
 \usepackage{palatino}
 \usepackage{color}
+\usepackage{colortbl}
+\usepackage{multirow}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 \usepackage{mathptmx}
@@ -18,6 +22,7 @@
 \usepackage[T1]{fontenc}
 \renewcommand{\emph}[1]{\textcolor{rured}{#1}}
 \usepackage{biblatex}
+\newcolumntype{R}{@{\extracolsep{3cm}}r@{\extracolsep{0pt}}}%
 
 \bibliography{baco}
 
@@ -397,9 +402,105 @@
 
     We want to beat a MKN approach with skipgrams\footfullcite{Pickhardt14}.
 
-    here some numbers from the grams in different corpora
+    \begin{block}{Comparison}
+        \begin{itemize}
+            \item Compare with existing systems
+            \item Compare the performance of backoff methods
+            \item Compare the within and cross domain performance
+            \item Compare the ngram and skipgram performance
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Data}
+        \begin{itemize}
+            \item JRC-Acquis
+            \item Google 1 Billion Word Corpus
+            \item EMEA (European Medicines Agency)
+        \end{itemize}
+    \end{block}
 
 \end{frame}
+\note[itemize]{
+    \item Iets zeggen over Pickhardt's achterlijke testset.
+}
+
+\begin{frame}
+    \frametitle{Comparison with existing systems}
+
+    \begin{block}{$n$-grams}
+    {\small
+        \begin{tabular}{rrrrm{0.01cm}rrrm{0.01cm}rrr}
+            & \multicolumn{3}{c}{baco} & & \multicolumn{3}{c}{srilm} & & \multicolumn{3}{c}{cpyp} \\
+                  & jrc & 1bw  & emea & & jrc  & 1bw  & emea & & jrc & 1bw  & emea \\ \cline{2-4}\cline{6-8}\cline{10-12}
+            jrc   & 13  & 1195 & 961  & & 22   & 1664 & 1310 & & 13  & 1536 & 1098 \\
+            1bws  & 768 & 158  & 946  & & 1460 & 211  & 1516 & & 785 & 155  & 987 \\
+            emea  & 600 & 1143 & 4    & & 1115 & 1745 & 10   & & 794 & 1597 & 4
+        \end{tabular}
+    }
+    \end{block}
+    
+    \begin{block}{skipgrams}
+    {\small
+        \begin{tabular}{rrrrm{0.01cm}rrr}
+            & \multicolumn{3}{c}{baco} & & \multicolumn{3}{c}{srilm} \\
+                  & jrc & 1bw  & emea & & jrc  & 1bw  & emea  \\ \cline{2-4}\cline{6-8}
+            jrc   & 13  & 1162 & 939 & &      &      &       \\
+            1bws  &     &      &     & &      &      &       \\
+            emea  & 581 & 1155 & 4   & &      &      &      
+        \end{tabular}
+    }
+    \end{block}
+
+\end{frame}
+\note[itemize]{
+    \item As expected, the first thing that catches the eye, is the good performance on the diagonals
+    \item Second, our performance is similar to cpyp. It should be, because the only thing that differs is the BOS and EOS marker
+    \item We outperform traditional MKN by a fair margin
+
+    \item skipgrams results?
+}
+
+\begin{frame}
+    \frametitle{Influence of backoff method}
+
+    \begin{block}{$n$-grams}
+    {\small
+        \begin{tabular}{rrrrr}
+                                  &       & jrc & 1bw  & emea \\ \cline{3-5}
+            \multirow{2}{*}{jrc}  & ngram & 13  & 1510 & 1081 \\
+                                  & glm   & 69  & 1195 & 961  \\
+            \multirow{2}{*}{1bws} & ngram & 768 & 158  & 946  \\
+                                  & glm   & 801 & 264  & 1039 \\ 
+            \multirow{2}{*}{emea} & ngram & 769 & 1552 & 4    \\   
+                                  & glm   & 600 & 1143 & 32
+        \end{tabular}
+    }
+    \end{block}
+
+    \begin{block}{skipgrams}
+    {\small
+        \begin{tabular}{rrrrr}
+                                  &       & jrc & 1bw  & emea \\ \cline{3-5}
+            \multirow{2}{*}{jrc}  & ngram & 13  & 1510 & 1081 \\
+                                  & glm   & 65  & 1195 & 961  \\
+            \multirow{2}{*}{1bws} & ngram &     &      &      \\
+                                  & glm   &     &      &      \\ 
+            \multirow{2}{*}{emea} & ngram & 969 & 2089 & 4    \\   
+                                  & glm   & 581 & 1155 & 32
+        \end{tabular}
+    }
+    \end{block}
+
+\end{frame}
+\note[itemize]{
+    \item We compared two backoff methods
+    \begin{description}
+        \item[ngram] only backoffs to the patterns in the model. Although perhaps confusing, in the lower example the model is trained on skipgrams as well, and there it backoffs to skipgrams of a strict lower order as well
+        \item[glm] backoffs to all possible patterns, $n$-grams and skipgrams
+    \end{description}
+
+    \item ngram appears to be better within domain, whereas glm seems to be better cross domain
+}
 
 \begin{frame}
     \frametitle{Future work}
