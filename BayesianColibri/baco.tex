@@ -16,7 +16,7 @@
 \usepackage{colortbl}
 \usepackage{multirow}
 \usepackage{tikz}
-\usetikzlibrary{positioning}
+\usetikzlibrary{positioning,shapes.geometric}
 \usepackage{mathptmx}
 \usepackage[scaled=.90]{helvet}
 \usepackage{courier}
@@ -129,10 +129,11 @@
     \item Now we laid some ground for our BNP framework
     \item Dirichlet distribution plays an important role in Bay.stat.\ as conjugate distribution to the multinomial and categorical.
     \item The DP is a distribution over probability measures, which are functions with certain special properties which allow them to be interpreted as distributions over some probabily space $\Theta$. A draw from a DP can thus be interpreted as random distributions.
+    \item Called DP because it has Dir. distri. finite-dimensional marginal distributions
     
     \item A standard Bay.\ model for clustering involves assuming each data point is assigned to one of $K$ clusters
-    \item The probability of being in cluster $k$ is $w_k$ for each cluster, and the probability vector is normalised.
-    \item We place a dirichlet prior on the prob vector $\{w_k\}$
+    \item The probability of being in cluster $k$ is $w_k$ for each cluster, and the probability vector is normalised. We place a dirichlet prior on the prob vector $\{w_k\}$
+
     \item As an infinite-dimensional analog, you would expect to take $K$ to infinity to derive at the DP
     \item But that is not the BNP approach (Infinite Mixture Model): instead we take a combined combinatorial and statistical approach to the clustering problems (DP mixture model)
     \item where we want to infer the partition underlying the data
@@ -215,6 +216,14 @@
             \end{tikzpicture}
         \end{center}            
         \note[item]<1>{1}
+        \note[item]<1>{ So, a new customer joins a table $c$, if $c$ is already a cluster, with prob prop to the number of customers already sitting at that table}
+        \note[item]<1>{ otherwise starts a new table, with a prob prop to fixed constant $\alpha$}
+        \note[item]<1>{ The seating pattern after $N$ customers thus defines a set of clusters}
+
+        \note[item]<1>{ Now for an example, imagine an infinite number of unlabelled tables}
+        \note[item]<1>{ when a customer starts a new table, one of the unlabelled tables is chosen arbitrarily}
+        \note[item]<1>{ So after $N$ customers have arrived, their seating pattern defines a set of clusters, and thus a partition.}
+        \note[item]<1>{ For each value of $N$, we have a different CRP, and thus a different distribution, making the CRP a family of distributions}
         \note[item]<2>{2}
         \note[item]<3>{3}
         \note[item]<4>{4}
@@ -228,18 +237,10 @@
         \note[item]<12>{12}
         \note[item]<13>{13}
 
-        $\uncover<3->{P=\frac{\alpha}{\alpha}\uncover<5->{\frac{1}{\alpha+1}\uncover<7->{\frac{\alpha}{\alpha+2}\uncover<9->{\frac{\alpha}{\alpha+3}\uncover<11->{\frac{2}{\alpha+4}\uncover<13->{\frac{\alpha}{\alpha+5}$}}}}}} \uncover<14->{$\rightarrow P(\pi_{[N]}) = \frac{\alpha^K}{\alpha^{(N)}}\prod_{c\in\pi_{[N]}}(|c|-1)!$}
+        $\uncover<3->{P=\frac{\alpha}{\alpha}\uncover<5->{\frac{1}{\alpha+1}\uncover<7->{\frac{\alpha}{\alpha+2}\uncover<9->{\frac{1}{\alpha+3}\uncover<11->{\frac{2}{\alpha+4}\uncover<13->{\frac{\alpha}{\alpha+5}$}}}}}} \uncover<14->{$\rightarrow P(\pi_{[N]}) = \frac{\alpha^K}{\alpha^{(N)}}\prod_{c\in\pi_{[N]}}(|c|-1)!$}
     \end{block}
 \end{frame}
 \note[itemize]{
-    \item So, a new customer joins a table $c$, if $c$ is already a cluster, with prob prop to the number of customers already sitting at that table
-    \item otherwise starts a new table, with a prob prop to fixed constant $\alpha$
-    \item The seating pattern after $N$ customers thus defines a set of clusters
-
-    \item Now for an example, imagine an infinite number of unlabelled tables
-    \item when a customer starts a new table, one of the unlabelled tables is chosen arbitrarily
-    \item So after $N$ customers have arrived, their seating pattern defines a set of clusters, and thus a partition.
-    \item For each value of $N$, we have a different CRP, and thus a different distribution, making the CRP a family of distributions
 
     \item As you can see people don't have anything to eat here yet.
     \item Luckily, this posterior distribution, can solve this for us, by means of De Finetti's theorem
@@ -297,7 +298,7 @@
         \item Reductions are added to the probability of starting a new table.
     \end{itemize}
 
-    The seating pattern after $N$ customers defines a set of clusters: $\pi_{[N]}\sim\operatorname{PYP}(\alpha,\sigma,N)$
+    The seating pattern after $N$ customers defines a set of clusters: \[\pi_{[N]}\sim\operatorname{PYP}(\alpha,\sigma,N)\]
     \[
         P(\pi_{[N]}) = \frac{\alpha(\alpha+\sigma)\cdots(\alpha+\sigma(K_N-1))}{\alpha^{(N)}}\prod_{c\in\pi_{[N]}}(1-\sigma)(2-\sigma)\cdots(|c|-1-\sigma).
     \]
@@ -407,7 +408,7 @@
     \vspace{-0.25cm}
     \begin{block}{Bayesian Colibri}
         \begin{itemize}
-            \item We extend the C++ library for NBP with PYP (\url{https://github.com/redpony/cpyp})
+            \item We extend the C++ library for BNP with PYP (\url{https://github.com/redpony/cpyp})
             \item BaCo is available at \url{https://github.com/naiaden/cococpyp}
         \end{itemize}
     \end{block}
@@ -459,17 +460,40 @@
     }
     \end{block}
     
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
     \begin{block}{skipgrams}
     {\small
-        \begin{tabular}{rrrrm{0.01cm}rrr}
-            & \multicolumn{3}{c}{baco} & & \multicolumn{3}{c}{srilm} \\
-                  & jrc & 1bw  & emea & & jrc  & 1bw  & emea  \\ \cline{2-4}\cline{6-8}
-            jrc   & 13  & 1162 & 939 & &      &      &       \\
-            1bws  &     &      &     & &      &      &       \\
-            emea  & 581 & 1155 & 4   & &      &      &      
+        \begin{tabular}{rrrr}
+            & \multicolumn{3}{c}{baco} \\
+                  & jrc & 1bw  & emea \\ \cline{2-4}
+            jrc   & 13  & 1162 & 939  \\
+            1bws  & 751 & 162  & 921  \\
+            emea  & 581 & 1155 & 4    
         \end{tabular}
     }
     \end{block}
+
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+    \begin{block}{Relative change in perplexity}
+    {\small
+        \begin{tabular}{rrrr}
+            & \multicolumn{3}{c}{} \\
+                  & jrc  & 1bw  & emea \\ \cline{2-4}
+            jrc   & \cellcolor{red!25}{2.03}   & \cellcolor{green!25}{2.80} & \cellcolor{green!25}{2.30} \\
+            1bws  & \cellcolor{green!25}{2.23} & \cellcolor{red!25}{2.38}   & \cellcolor{green!25}{2.63} \\
+            emea  & \cellcolor{green!25}{3.20} & \cellcolor{red!25}{1.09}   & \cellcolor{red!25}{0.67}    
+        \end{tabular}
+    }
+    \end{block}
+\end{column}%
+\end{columns}
+
+
+
+
 
 \end{frame}
 \note[itemize]{
@@ -483,33 +507,57 @@
 \begin{frame}
     \frametitle{Influence of backoff method}
 
+\begin{columns}[T] % align columns
+\begin{column}{.5\textwidth}
     \begin{block}{$n$-grams}
     {\small
         \begin{tabular}{rrrrr}
                                   &       & jrc & 1bw  & emea \\ \cline{3-5}
-            \multirow{2}{*}{jrc}  & ngram & 13  & 1510 & 1081 \\
-                                  & glm   & 69  & 1195 & 961  \\
-            \multirow{2}{*}{1bws} & ngram & 768 & 158  & 946  \\
+            \multirow{3}{*}{jrc}  & ngram & \cellcolor{green!25}{13}  & 1510 & 1081 \\
+                                  & bobaco& 14  & 1477 & 1122 \\
+                                  & glm   & 69  & \cellcolor{green!25}{1195} & \cellcolor{green!25}{961}  \\
+ &&&& \\
+            \multirow{3}{*}{1bws} & ngram & \cellcolor{green!25}{768} & \cellcolor{green!25}{158}  & \cellcolor{green!25}{946}  \\
+                                  & bobaco& 815 & 185  & 1025 \\
                                   & glm   & 801 & 264  & 1039 \\ 
-            \multirow{2}{*}{emea} & ngram & 769 & 1552 & 4    \\   
-                                  & glm   & 600 & 1143 & 32
+ &&&& \\ 
+            \multirow{3}{*}{emea} & ngram & 769 & 1552 & \cellcolor{green!25}{4}    \\   
+                                  & bobaco& 779 & 1385 & \cellcolor{green!25}{4}    \\
+                                  & glm   & \cellcolor{green!25}{600} & \cellcolor{green!25}{1143} & 32
         \end{tabular}
     }
     \end{block}
 
+\end{column}%
+\hfill%
+\begin{column}{.5\textwidth}
     \begin{block}{skipgrams}
     {\small
         \begin{tabular}{rrrrr}
                                   &       & jrc & 1bw  & emea \\ \cline{3-5}
-            \multirow{2}{*}{jrc}  & ngram & 13  & 1510 & 1081 \\
-                                  & glm   & 65  & 1195 & 961  \\
-            \multirow{2}{*}{1bws} & ngram &     &      &      \\
-                                  & glm   &     &      &      \\ 
-            \multirow{2}{*}{emea} & ngram & 969 & 2089 & 4    \\   
-                                  & glm   & 581 & 1155 & 32
+            \multirow{3}{*}{jrc}  & ngram & \cellcolor{green!25}{13}  & 1843 & 1295 \\
+                                  & bobaco& \cellcolor{green!25}{13}  & 1542 & 1149 \\
+                                  & glm   & 65  & \cellcolor{green!25}{1195} & \cellcolor{green!25}{939}  \\
+ &&&& \\
+            \multirow{3}{*}{1bws} & ngram & 879 & 163  & 1105 \\
+                                  & bobaco& \cellcolor{green!25}{751} & \cellcolor{green!25}{162}  & \cellcolor{green!25}{921}  \\
+                                  & glm   & 768 & 252  & 988  \\ 
+ &&&& \\
+            \multirow{3}{*}{emea} & ngram & 969 & 2089 & \cellcolor{green!25}{4}    \\   
+                                  & bobaco& 838 & 1655 & \cellcolor{green!25}{4}    \\
+                                  & glm   & \cellcolor{green!25}{581} & \cellcolor{green!25}{1155} & 32
         \end{tabular}
     }
     \end{block}
+\end{column}%
+\end{columns}
+
+\begin{description}
+    \item[ngram] only backoff to shorter $n$-grams
+    \item[bobaco] backoff to all patterns $\leq n$, until match
+    \item[glm] backoff to all patterns $\leq n$
+\end{description}
+
 
 \end{frame}
 \note[itemize]{
@@ -525,7 +573,22 @@
 \begin{frame}
     \frametitle{Future work}
 
-    DHPYPLM
+    \begin{block}{Monday}
+        \begin{itemize}
+            \item Further investigate clues cross domain language modelling
+            \item Further investigate comparison to state-of-the-art skipgram language modelling
+            \item Influence of size training data
+            \item Test hypotheses on more corpora
+            \item Get up to date on (Bayesian) statistical significance tests
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Someday}
+        \begin{itemize}
+            \item Create language models of multiple domains: DHPYPLM
+            \item Skipgrams versus flexgrams
+        \end{itemize}
+    \end{block}
 \end{frame}
 \note{
 
@@ -594,6 +657,31 @@ Back to the \hyperlink{dirichletprocess}{Dirichlet Process}.
     $P(\text{customer }n+1\text{ starts new table }c|\pi_{[n]})=\frac{P(\pi'_{[n+1]})}{P(\pi_{[n]})}=\frac{\alpha^{K+1}}{\alpha^{(n+1)}}\frac{\alpha^{(n)}}{\alpha^K} = \frac{\alpha}{\alpha+n}$
    
     Back to the \hyperlink{crpexample}{CRP example}. 
+\end{frame}
+\note{
+
+}
+
+\begin{frame}
+    \frametitle{This is a dice}
+\scalebox{6}{\begin{tikzpicture}[diceface/.style={diamond, inner sep=3pt, shape aspect=2,
+rounded corners=3pt, scale=2}]
+% Corner at (0,0)
+\fill[gray!10!white] (-0.3, -0.3) rectangle (0.3, 0.3);
+% TOP (one)
+\fill (0,0) node[fill=white, diceface, anchor=south, draw=white] (topface) {};
+\fill[red, yscale=0.7] (topface.center) circle(4pt);
+% RIGHT (three)
+\fill (0,0) node[fill=gray!15!white, diceface, anchor=south, rotate=-120, draw=white] (rightface) {};
+\fill (rightface.center) circle(2pt);
+\fill (rightface.center)+(0.15,0.2) circle(2pt);
+\fill (rightface.center)+(-0.15,-0.2) circle(2pt);
+
+% LEFT (two)
+\fill (0,0) node[fill=gray!30!white, diceface, anchor=south, rotate=120,draw=white] (leftface) {};
+\fill (leftface.center)+(0.13,0.1) circle(2pt);
+\fill (leftface.center)+(-0.13,-0.1) circle(2pt);
+\end{tikzpicture}}
 \end{frame}
 \note{
 
