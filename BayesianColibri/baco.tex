@@ -92,7 +92,9 @@
     \item We want a modelling framework that supplies a growing, unbounded number of d.o.f.\ to the data analysis
     \item However, if we allow d.o.f.\ to accrue too quickly, we risk finding structures that are statistical artifacts: that is, we overfit.
     \item Overfitting is a serious problem, and it motivates the Bayesian aspect of non-parametrics
+    \item The BNP approach is an alternative to parametric modelling and selection.
     \item Bayesian methods are by no means immune to overfitting, but provide a natural resilience
+    \item By using a model with an unbounded complexity, underfitting is migitated, and computing, or approximating, the full posterior over parameters migitates overfitting.
 
     \item NP does not mean there are no parameters
     \item not parametric, the numbers of parameters is not fixed once and for all
@@ -126,12 +128,13 @@
 \note[itemize]{
     \item Now we laid some ground for our BNP framework
     \item Dirichlet distribution plays an important role in Bay.stat.\ as conjugate distribution to the multinomial and categorical.
+    \item The DP is a distribution over probability measures, which are functions with certain special properties which allow them to be interpreted as distributions over some probabily space $\Theta$. A draw from a DP can thus be interpreted as random distributions.
     
     \item A standard Bay.\ model for clustering involves assuming each data point is assigned to one of $K$ clusters
     \item The probability of being in cluster $k$ is $w_k$ for each cluster, and the probability vector is normalised.
     \item We place a dirichlet prior on the prob vector $\{w_k\}$
     \item As an infinite-dimensional analog, you would expect to take $K$ to infinity to derive at the DP
-    \item But that is not the BNP approach: instead we take a combined combinatorial and statistical approach to the clustering problems
+    \item But that is not the BNP approach (Infinite Mixture Model): instead we take a combined combinatorial and statistical approach to the clustering problems (DP mixture model)
     \item where we want to infer the partition underlying the data
     \item From a Bayesian p.o.v., this requires placing a prob dist on partitions: in particular, the CRP
     \item KMeans
@@ -174,7 +177,7 @@
 
     \item CRP is a probability distribution over partitions
     \item distribution is built up in a sequential manner: one point at a time is added to an existing set of clusters
-    \item metaphore of a restaurant
+    \item metaphore of a restaurant, coined by Lester Dubins and Jim Pitman in the early 80's
 
     \item sits at a already occupied table with probability proportional to the number of customers sitting at that table;
     \item starts a new table with probability proportional to a fixed constant.
@@ -238,6 +241,9 @@
     \item So after $N$ customers have arrived, their seating pattern defines a set of clusters, and thus a partition.
     \item For each value of $N$, we have a different CRP, and thus a different distribution, making the CRP a family of distributions
 
+    \item As you can see people don't have anything to eat here yet.
+    \item Luckily, this posterior distribution, can solve this for us, by means of De Finetti's theorem
+    \item Any infinitely exchangeable sequence can be written as a random mixture of independent random variables. So here we had a ``serial'' approach; the ``parallel'' approach is sampling first some latent object that renders all sequence elements conditionally independent. Now we can do iid sampling to get conditionally independent sequences
     \item The order in which the customers come in does not matter, the CRP has the property of exchangeability. I will not proof it here, but after an example, you can see why, and we can reconstruct the top formula in retrospect.
 }
 
@@ -554,6 +560,8 @@ Back to the \hyperlink{dirichletprocess}{Dirichlet Process}.
     \item To sample from it you put your hand in the bag and draw out a die, you draw a pmf
     \item Dice from 100 years ago will likely have probs that deviate wildly from uniform, new sota dice Las Vegas casinos may have barely perceptible imperfections
     \item The Dirichlet distribution can model the randomness of pmfs
+    
+    \item $\alpha$ is the concentration parameters, or inverse variance. Larger $\alpha$, the smaller the variance, and more mass concentrated around mean
 
     \item Dirichlet distribution is particularly useful in modelling word distributions
     \item $q$ is a pmf, and here a realisation of a random pmf $Q\sim\operatorname{Dir}(\alpha)$
