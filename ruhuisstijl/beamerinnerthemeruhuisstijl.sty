@@ -1,0 +1,26 @@
+\mode<presentation>
+
+\setbeamertemplate{background}{
+  %\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-slide.pdf}
+  \ifnum\thepage>1\relax%
+    \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-slide.pdf}
+    \fi
+%  \begin{tikzpicture}
+%  \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+%    \node at (0,0) {\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{ruhuisstijl2014-43-slide.pdf}};
+%  \ifnum\thepage>1\relax%
+%   \fill[white,opacity=1] (0,0) rectangle(\the\paperwidth,\the\paperheight);
+%   \fi
+%  \end{tikzpicture}
+}
+
+\defbeamertemplate*{title page}{ruhuisstijl}[1][]
+{
+    \hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
+%    \begin{tikzpicture}
+%    \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+%    \node[at=(current page.south east),anchor=south east,inner sep=0pt] {\includegraphics[width=4cm,height=3cm,keepaspectratio]{ruhuisstijl2014-169-front.pdf}};
+%    \end{tikzpicture}
+}
+
+\mode<all>
