@@ -33,12 +33,16 @@
 {
     \vspace{1cm}
     \ifbeamer@official
-    \begin{textblock}{12}(3.5,3.5)
-        \usebeamerfont{frametitle} hoi \par%
+    \begin{textblock}{12}(1.25,1.25)
+        \begin{beamercolorbox}{frametitle}
+            \insertframetitle\par%
+        \end{beamercolorbox}
     \end{textblock}
     \else%
     \begin{textblock}{12}(1.5,1.5)
-        \usebeamerfont{frametitle}hola\insertframetitle\par%
+        \begin{beamercolorbox}{frametitle}
+            \insertframetitle\par%
+        \end{beamercolorbox}
     \end{textblock}
     \fi%    
 
