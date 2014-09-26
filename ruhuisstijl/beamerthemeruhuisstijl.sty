@@ -1,10 +1,23 @@
-\mode<presentation>
-
+\RequirePackage{ifthen}
 \RequirePackage{tikz}
+
+\DeclareOptionBeamer{official}
+{\PassOptionsToPackage{official=#1}{beamerouterthemeruhuisstijl}}
+
+\ProcessOptionsBeamer
+
+\mode<presentation>
 
 \useinnertheme{ruhuisstijl}
 \useoutertheme{ruhuisstijl}
 \usecolortheme{ruhuisstijl}
+\usefonttheme{ruhuisstijl}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ruhuisstijlrood,
+    urlcolor=ruhuisstijlrood,
+}
 
 \setbeamertemplate{navigation symbols}{}
 %\setbeamertemplate{blocks}

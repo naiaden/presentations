@@ -1,14 +1,47 @@
+\RequirePackage{calc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{ifthen}
+
+\newif\ifbeamer@official
+\beamer@officialfalse
+\DeclareOptionBeamer{official}[false]{\csname beamer@official#1\endcsname}
+
+\ProcessOptionsBeamer
+
 \mode<presentation>
 
-    \setbeamercolor{frametitle}{fg=ruhuisstijlrood}
+\setbeamertemplate{block begin}
+{%
+    \insertblocktitle\par%
+}
+\setbeamertemplate{block end}{}
+
+\ifbeamer@official
+    \setbeamersize{text margin left=1cm}
+    \setbeamertemplate{itemize item}[circle]
+    \setbeamertemplate{itemize subitem}{--}
+    \setbeamertemplate{itemize subsubitem}[triangle]
+    
+    \setbeamercolor{itemize item}{fg=ruhuisstijlzwart}
+    \setbeamercolor{itemize subitem}{fg=ruhuisstijlzwart}
+    \setbeamercolor{itemize subsubitem}{fg=ruhuisstijlzwart}
+\else%
+    \relax
+\fi%
 
 \defbeamertemplate*{frametitle}{ruhuisstijl}[1][]
 {
-    
-
-    \begin{textblock}{12}(1.5,1.5)
-        \usebeamerfont{frametitle}\insertframetitle\par%
+    \vspace{1cm}
+    \ifbeamer@official
+    \begin{textblock}{12}(3.5,3.5)
+        \usebeamerfont{frametitle} hoi \par%
     \end{textblock}
+    \else%
+    \begin{textblock}{12}(1.5,1.5)
+        \usebeamerfont{frametitle}hola\insertframetitle\par%
+    \end{textblock}
+    \fi%    
+
 }
 
 \mode<all>
