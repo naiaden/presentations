@@ -1,6 +1,7 @@
 \RequirePackage{calc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{ifthen}
+\RequirePackage{enumitem}
 
 \newif\ifbeamer@official
 \beamer@officialfalse
@@ -10,17 +11,35 @@
 
 \mode<presentation>
 
+
 \setbeamertemplate{block begin}
 {%
-    \insertblocktitle\par%
+   {\bfseries\insertblocktitle}\par%\vspace{-0.2cm}%
 }
 \setbeamertemplate{block end}{}
 
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamerfont{blocktitle}{series=\bfseries}
+
 \ifbeamer@official
+
     \setbeamersize{text margin left=1cm}
     \setbeamertemplate{itemize item}[circle]
     \setbeamertemplate{itemize subitem}{--}
     \setbeamertemplate{itemize subsubitem}[triangle]
+\setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
+    \usebeamercolor[fg]{itemize item}
+    \usebeamertemplate{itemize item}, nosep}
+\setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
+    \usebeamercolor[fg]{itemize item}
+    \usebeamertemplate{itemize item}, nosep}
+\setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
+    \usebeamercolor[fg]{itemize subitem}
+    \usebeamertemplate{itemize subitem}, nosep}
+\setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
+    \usebeamercolor[fg]{itemize subsubitem}
+    \usebeamertemplate{itemize subsubitem}, nosep}
     
     \setbeamercolor{itemize item}{fg=ruhuisstijlzwart}
     \setbeamercolor{itemize subitem}{fg=ruhuisstijlzwart}
