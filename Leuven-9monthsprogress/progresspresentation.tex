@@ -12,9 +12,19 @@
 \begin{frame}
     \frametitle{Overview}
 
+    %\tableofcontents
+    \begin{itemize}
+        \item Scope of the project
+        \item Bayesian language models
+        \item Results
+        \item Research plan
+        \item Side projects
+        \item Formalities
+    \end{itemize}
+
 \end{frame}
 
-\begin{frame}
+\begin{frame}\section{Scope of the project}
     \frametitle{Scope of the project}
 
     \begin{block}{Scope}
@@ -43,6 +53,142 @@
     \end{block}
 \end{frame}
 
-\
+\begin{frame}\section{Bayesian Language Model}
+    \frametitle{Bayesian Language Model}
+
+    \begin{itemize}
+        \item The goal is to derive the partition underlying the data
+        \item But we only have the word counts
+    \end{itemize}
+
+    \begin{block}{Clustering}
+        \begin{itemize}
+            \item Each $n$-gram is a cluster
+            \item Each $n$ is a layer
+            \item Each history is in a cluster at the $(n-1)$th layer
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Hierarchical Pitman-Yor Chinese Restaurant Process}
+        \begin{itemize}
+            \item CRP and DPCRP give logarithmic growth
+            \item Language manifests typically in power law growth
+            \item PYCRP as generalisation of CRP and DPCRP
+                \begin{description}
+                    \item[CRP] No parameters
+                    \item[DPCRP] Concentration parameter $\alpha$
+                    \item[PYCRP] Concentration parameter $\alpha$ and discount parameter $\gamma$
+                \end{description}
+            \item HPYCRP to model inherent hierarchical structure $n$-gram
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}\section{Results}
+    \frametitle{Results}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Data}
+                \begin{itemize}
+                    \item JRC English
+                    \item Google 1 billion word
+                    \item EMEA English
+                \end{itemize}
+            \end{block}
+        \end{column}    
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Backoff methods}
+                \begin{itemize}
+                    \item $n$-gram backoff
+                    \item Limited recursive backoff
+                    \item Full recursive backoff
+                \end{itemize}
+            \end{block}
+        \end{column}    
+    \end{columns}
+
+    \begin{itemize}
+        \item Intrinsic evaluation with perplexity
+    \end{itemize}
+
+    \begin{block}{Summary}
+        \begin{itemize}
+            \item Within domain evaluation yields best performance
+            \item Adding skipgrams increases performance on cross domain evaluation
+            \item For generic corpora, limited recursive backoff performs best
+            \item Seems to outperform Generalised Language Model
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}\section{Research Plan}
+    \frametitle{Research Plan}
+
+    \begin{block}{Focus}
+        \begin{itemize}
+            \item Cross domain language modelling with skipgrams
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Experiments}
+        \begin{itemize}
+            \item Validate significance by testing multiple languages
+            \item Investigate influence skipgrams
+            \item When we find a more substantial drop in perplexity:
+                \begin{itemize}
+                    \item Machine translation experiments
+                    \item Automated speech recognition experiments
+                \end{itemize}
+            \item Investigate multi-domain language models
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}\section{Side Projects}
+    \frametitle{Side Projects}
+
+    \begin{block}{Parsimonious Language Models}
+
+    \end{block}
+
+    \begin{block}{Realistic Motif Detection}
+
+    \end{block}
+\end{frame}
+
+\begin{frame}\section{Formalities}
+    \frametitle{Formalities}
+
+    \begin{block}{Teaching and Supervision}
+        \begin{itemize}
+            \item Supervision of master students in a competition on sentiment analysis
+            \item Supervision of a master student for a task to predict reduction in speech
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Training and Education}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{block}{Participated}
+                    \begin{itemize}
+                        \item Academic writing
+                        \item Research methods and methodology
+                        \item Applied Bayesian statistics school on Bayesian non-parametrics
+                    \end{itemize}
+                \end{block}
+            \end{column}    
+            \begin{column}{0.5\textwidth}
+                \begin{block}{To participate in}
+                    \begin{itemize}
+                        \item Mathematical methods
+                        \item Presentation skills
+                        \item Any relevant event
+                    \end{itemize}
+                \end{block}
+            \end{column}    
+        \end{columns}
+    \end{block}
+\end{frame}
 
 \end{document}
