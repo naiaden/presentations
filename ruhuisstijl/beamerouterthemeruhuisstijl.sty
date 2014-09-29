@@ -12,17 +12,20 @@
 \mode<presentation>
 
 
-\setbeamertemplate{block begin}
-{%
-   {\bfseries\insertblocktitle}\par%\vspace{-0.2cm}%
-}
-\setbeamertemplate{block end}{}
 
 \setbeamerfont{frametitle}{size=\large}
 \setbeamerfont{frametitle}{series=\bfseries}
 \setbeamerfont{blocktitle}{series=\bfseries}
 
 \ifbeamer@official
+%{caption}[numbered]
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+\setbeamertemplate{block begin}
+{%
+   {\bfseries\insertblocktitle}\par%\vspace{-0.2cm}%
+}
+\setbeamertemplate{block end}{\vskip\smallskipamount}
 
     \setbeamersize{text margin left=1cm}
     \setbeamertemplate{itemize item}[circle]
@@ -30,16 +33,16 @@
     \setbeamertemplate{itemize subsubitem}[triangle]
 \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
     \usebeamercolor[fg]{itemize item}
-    \usebeamertemplate{itemize item}, nosep}
+    \usebeamertemplate{itemize item}, nosep, noitemsep}
 \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
     \usebeamercolor[fg]{itemize item}
-    \usebeamertemplate{itemize item}, nosep}
+    \usebeamertemplate{itemize item}, nosep, labelsep=0pt,leftmargin=0.5em} %labelsep is the space between the bullet and the text
 \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
     \usebeamercolor[fg]{itemize subitem}
-    \usebeamertemplate{itemize subitem}, nosep}
+    \usebeamertemplate{itemize subitem}, nosep, labelsep=0.5em}
 \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
     \usebeamercolor[fg]{itemize subsubitem}
-    \usebeamertemplate{itemize subsubitem}, nosep}
+    \usebeamertemplate{itemize subsubitem}, nosep, noitemsep}
     
     \setbeamercolor{itemize item}{fg=ruhuisstijlzwart}
     \setbeamercolor{itemize subitem}{fg=ruhuisstijlzwart}
@@ -50,9 +53,9 @@
 
 \defbeamertemplate*{frametitle}{ruhuisstijl}[1][]
 {
-    \vspace{1cm}
+    \vspace{1.25cm}
     \ifbeamer@official
-    \begin{textblock}{12}(1.25,1.25)
+    \begin{textblock}{12}(1.25,1.05)
         \begin{beamercolorbox}{frametitle}
             \insertframetitle\par%
         \end{beamercolorbox}

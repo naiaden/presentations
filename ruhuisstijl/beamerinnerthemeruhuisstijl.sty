@@ -2,6 +2,8 @@
 
 \RequirePackage[overlay,absolute]{textpos}
 
+\newenvironment{tussenpagina}[2]{\begin{frame}\vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}\begin{textblock}{12}(1.5,1.5)\usebeamerfont{title}{\Huge #1}\par\vspace{0.25cm}\usebeamerfont{subtitle} #2\par\end{textblock}\vspace{-5cm}}{\end{frame}}
+
 \setbeamertemplate{background}{
   %\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-slide.pdf}
   \ifnum\thepage>1\relax%

@@ -1,10 +1,30 @@
-\documentclass[t]{beamer}
+\documentclass[xcolor=table,10pt,t]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \title{RU Beamer}
 \subtitle{Gebruiksvoorwaarden \& sjablonen (juli 2014)}
 \date{\today}
 \author{lama-fan}
+
+\makeatletter
+% http://tex.stackexchange.com/questions/26360/how-to-color-the-font-of-a-single-row-in-a-table
+\newcommand*{\@rowstyle}{}
+
+\newcommand*{\rowstyle}[1]{% sets the style of the next row
+  \gdef\@rowstyle{#1}%
+  \@rowstyle\ignorespaces%
+}
+
+\newcolumntype{=}{% resets the row style
+  >{\gdef\@rowstyle{}}%
+}
+
+\newcolumntype{+}{% adds the current row style to the next column
+  >{\@rowstyle}%
+}
+
+\makeatother
+
 
 %\usetheme[official=false]{ruhuisstijl}
 \usetheme[official=true]{ruhuisstijl}
@@ -76,31 +96,39 @@
 \begin{frame}
     \frametitle{Sjablonen}
     
-    Alle gebruikte sjablonen zijn aangemaakt in het basisdocument. \\
-    U vindt de sjablonen onder Dia's > indelingen.
+    \begin{block}{}
+        Alle gebruikte sjablonen zijn aangemaakt in het basisdocument. \\
+        U vindt de sjablonen onder Dia's > indelingen.
+    \end{block}
 
-    Gebruik sjablonen uit de mappen:
-    \begin{itemize}
-        \item Dia's > Indelingen > \textcolor{ruhuisstijlrood}{RU Tekstpagina's}
-        \item Dia's > Indelingen > \textcolor{ruhuisstijlrood}{RU Titelpagina's}
-    \end{itemize}
-
+    \begin{block}{}
+        Gebruik sjablonen uit de mappen:
+        \begin{itemize}
+            \item Dia's > Indelingen > \textcolor{ruhuisstijlrood}{RU Tekstpagina's}
+            \item Dia's > Indelingen > \textcolor{ruhuisstijlrood}{RU Titelpagina's}
+        \end{itemize}
+    \end{block}
     \vspace{1em}
 
     {\tiny Hierna volgen enkele voorbeeldpagina's, de paginatitels zijn gelijk aan de naam van het sjabloon}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Tussenpagina}
-
-\end{frame}
+\begin{tussenpagina}{Tussenpagina}{Op een tussenpagina mag wel extra beeld toegevoegd worden.}
+        \includegraphics[width=0.5\textwidth]{image.png}
+\end{tussenpagina}
+%\begin{frame}
+%    \frametitle{Tussenpagina}
+%
+%\end{frame}
 
 \begin{frame}
     \frametitle{Titel en object}
 
     \begin{block}{Dit is een tussenkop}
     Rectiatem sunto bla velesti berestrupta conseria quam quae commo et eaquam quo dolent omnistis estion cuptatet duciendae dolorunt ipit, omnimus trumqui ommolor simporuntium fugit eicatem quis autem eatemquiam nissum eatum facerit inciis voluptas quae aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapid.
+    \end{block}
 
+    \begin{block}{}
     Een opsomming:
     \begin{itemize}
         \item que volore non etur aut laborum, te repudam, sus es acerrov itatest omnitatur, ea vid qui tempore re, alique.
@@ -116,17 +144,20 @@
 \begin{frame}
     \frametitle{Twee objecten}
 
-    \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+    \begin{columns}[T,totalwidth=\linewidth]
+        \begin{column}{0.475\textwidth}
         \begin{block}{Dit sjabloon kunt u gebruiken voor twee tekstkolommen}
             Berestrupta conseria quam quae commo et eaquam quo dolent omnistis estion cuptatet duciendae ommolor simporuntium fugit eicatem quis autem eatemquiam nissum eatum facerit inciis voluptas quae 
 aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapid molore autestium dio el in pelibea rcimustio esectae moluption reriam.
         \end{block}
         \end{column}
-        \begin{column}{0.5\textwidth}
-Am restibusam nihillor alias ne officati officate numet, quiate autem rerro ipsam, sequae dollitate porat vitatem litatiaestis acesequid et ut moluptas dolorum voluptat a poruntibus imillaut fugia velitatempor.
-
-Magniscil illuptibus moleceria cumquis doluptu saerro in coresto volorecesse modit qui omnima volluptur, quo magnia coratis dus et faccae non plibusant. Ugit voluptatio eseria possimaio opturitatur.
+        \begin{column}{0.475\textwidth}
+            \begin{block}{}
+                Am restibusam nihillor alias ne officati officate numet, quiate autem rerro ipsam, sequae dollitate porat vitatem litatiaestis acesequid et ut moluptas dolorum voluptat a poruntibus imillaut fugia velitatempor.
+            \end{block}
+            \begin{block}{}
+                Magniscil illuptibus moleceria cumquis doluptu saerro in coresto volorecesse modit qui omnima volluptur, quo magnia coratis dus et faccae non plibusant. Ugit voluptatio eseria possimaio opturitatur.
+            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
@@ -134,15 +165,15 @@ Magniscil illuptibus moleceria cumquis doluptu saerro in coresto volorecesse mod
 \begin{frame}
     \frametitle{Twee objecten}
 
-    \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+    \begin{columns}[T,totalwidth=\linewidth]
+        \begin{column}{0.475\textwidth}
             \begin{block}{Maar ook voor een tekstkolom en een afbeelding}
                 Rectiatem sunto bla velesti berestrupta conseria quam quae omnistis estion cuptatet duciendae ommolor simporuntium fugit eicatem quis autem eatemquiam nissum eatum facerit inciis voluptas quae 
 aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapid molore autestium dio el in pelibea rcimustio esectae moluption reriam.
             \end{block}
         \end{column}
-        \begin{column}{0.5\textwidth}
-
+        \begin{column}{0.475\textwidth}
+            \includegraphics[width=\textwidth]{image.png}
         \end{column}
     \end{columns}
 \end{frame}
@@ -150,8 +181,8 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
 \begin{frame}
     \frametitle{Vergelijking}
         
-    \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+    \begin{columns}[T,totalwidth=\linewidth]
+        \begin{column}{0.475\textwidth}
             \begin{block}{Sapienis simet esto ugit voluptatio eseria possimaio opturitatur}
                 \begin{itemize}
                     \item Nem aut aut ipsa nest volo doluptat vendelique nimus simossi.
@@ -161,7 +192,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
                 \end{itemize}
             \end{block}
         \end{column}
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.475\textwidth}
             \begin{block}{Imus acerita dis quasper lita tiaestis acesequid et ut moluptas}
                 \begin{itemize}
                     \item Quisqui aut aut volutem quam quo tet, quam iliquiatqui conseque dita
@@ -172,6 +203,30 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
             \end{block}
         \end{column}
     \end{columns}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+        \includegraphics[height=0.6\paperheight]{image.png}
+        \caption{Afbeelding met bijschrift}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Voorbeeld van een tabel}
+
+    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+    \begin{tabular}{=l +r +r +r +r }
+%        \rowcolor{ruhuisstijlrood}\rowfont{\color{white}}
+        \rowcolor{ruhuisstijlrood}\rowstyle{\color{white}} & Kolom 1 & Kolom 2 & Kolom 3 & Kolom 4 \\
+        Rij 1 & 101 & 201 & 301 & 401 \\
+        Rij 2 & 102 & 202 & 302 & 402 \\
+        Rij 3 & 103 & 203 & 303 & 403 \\
+        Rij 4 & 104 & 204 & 304 & 404 \\
+        Rij 5 & 105 & 205 & 305 & 405 \\
+%        \rowfont{\color{ruhuisstijlrood}}
+        \rowstyle{\color{ruhuisstijlrood}}Totaal & 515 & 1015 & 1515 & 2014
+    \end{tabular}
 \end{frame}
 
 \end{document}
