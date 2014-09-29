@@ -86,6 +86,26 @@
     \end{block}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Bayesian Language Model: The Implementation}
+
+    \begin{block}{Implementation}
+        We use the following software:
+        \begin{description}
+            \item[cpyp] an existing C++ framework on BNP with PYP priors
+            \item[colibri] an existing C++ pattern model framework 
+        \end{description}
+    \end{block}
+
+    \begin{block}{Advantages}
+        \begin{itemize}
+            \item We can now handle many patterns such as $n$-grams, skipgrams and flexgrams
+            \item Tresholding patterns on many levels
+            \item Efficient storage of patterns
+        \end{itemize}
+    \end{block}
+\end{frame}
+
 \begin{frame}\section{Results}
     \frametitle{Results}
 
@@ -110,9 +130,9 @@
         \end{column}    
     \end{columns}
 
-    \begin{itemize}
-        \item Intrinsic evaluation with perplexity
-    \end{itemize}
+    \begin{description}
+        \item[Evaluation measure] Intrinsic evaluation with perplexity
+    \end{description}
 
     \begin{block}{Summary}
         \begin{itemize}
@@ -126,43 +146,54 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{A Closer Look at the Results}
+    \frametitle{Results: Within domain versus cross domain}
 
-    \begin{block}{Within domain versus cross domain}
-        {\small
-        \begin{columns}[T,totalwidth=\textwidth]
-            \begin{column}{0.4\textwidth}
-                \begin{tabular}{rrrr}
-                        & jrc & 1bw  & emea \\ \hline
-                    jrc & 13  & 1195 & 961 \\
-                    1bw & 768 & 158  & 945 \\
-                    emea& 600 & 1143 & 4
-                \end{tabular}
-            \end{column}
-            \begin{column}{0.3\textwidth}
-                \begin{tabular}{rrr}
-                    jrc & 1bw  & emea \\ \hline
-                    13  & 1162 & 939 \\
-                    751 & 162  & 921 \\
-                    581 & 1155 & 4
-                \end{tabular}
-            \end{column}
-            \begin{column}{0.3\textwidth}
-                \begin{tabular}{rrr}
-                    jrc & 1bw & emea \\ \hline
-                    2.0 & -2.8 & -2.3 \\
-                    -2.2 & 2.4 & -2.6 \\
-                    -3.2 & 1.1 & 0.7
-                \end{tabular}
-            \end{column}
-        \end{columns}
-        }
-    \end{block}
+    {\small
+        \begin{block}{Training with only $n$-grams}
+            \begin{tabular}{rrrr}
+                    & jrc & 1bw  & emea \\ \hline
+                jrc & 13  & 1195 & 961 \\
+                1bw & 768 & 158  & 945 \\
+                emea& 600 & 1143 & 4
+            \end{tabular}
+        \end{block}
 
-    \begin{block}{Effect of different backoff methods}
-        {\small
-        \begin{columns}[T,totalwidth=\textwidth]
-            \begin{column}{0.425\textwidth}
+        \begin{block}{Training with both $n$-grams and skipgrams}
+            \begin{tabular}{rrrr}
+                    & jrc & 1bw  & emea \\ \hline
+                jrc & 13  & 1162 & 939 \\
+                1bw & 751 & 162  & 921 \\
+                emea& 581 & 1155 & 4
+            \end{tabular}
+        \end{block}
+
+        \begin{block}{Relative differences}
+            \begin{tabular}{rrrr}
+                    & jrc  & 1bw  & emea \\ \hline
+                jrc & 2.0  & -2.8 & -2.3 \\
+                1bw & -2.2 & 2.4  & -2.6 \\
+                emea& -3.2 & 1.1  & 0.7
+            \end{tabular}
+        \end{block}
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Results: Effects of different backoff methods}
+
+    {\small
+    \begin{columns}[totalwidth=\textwidth]
+        \begin{column}{0.425\textwidth}
+            \begin{block}{\hspace{2.55cm}$n$-grams}
+            \end{block}
+        \end{column}
+        \begin{column}{0.425\textwidth}
+            \begin{block}{Skipgrams}
+            \end{block}
+        \end{column}
+    \end{columns}
+    \begin{columns}[T,totalwidth=\textwidth]
+        \begin{column}{0.425\textwidth}
                 \begin{tabular}{rrrrr}
                                           &       & jrc & 1bw  & emea \\ \cline{3-5}
                     \multirow{3}{*}{jrc}  & ngram & \cellcolor{green!25}{13}  & 1510 & 1081 \\
@@ -177,8 +208,8 @@
                                           & limited& 779 & 1385 & \cellcolor{green!25}{4}    \\
                                           & full   & \cellcolor{green!25}{600} & \cellcolor{green!25}{1143} & 32
                 \end{tabular}
-            \end{column}
-            \begin{column}{0.425\textwidth}
+        \end{column}
+        \begin{column}{0.425\textwidth}
                 \begin{tabular}{rrr}
                     jrc & 1bw  & emea \\ \hline
                     \cellcolor{green!25}{13}  & 1843 & 1295 \\
@@ -192,11 +223,10 @@
                     969 & 2089 & \cellcolor{green!25}{4}    \\   
                     838 & 1655 & \cellcolor{green!25}{4}    \\
                     \cellcolor{green!25}{581} & \cellcolor{green!25}{1155} & 32
-        \end{tabular}
-            \end{column}
-        \end{columns}
-        }
-    \end{block}
+                \end{tabular}
+        \end{column}
+    \end{columns}
+    }
 
 \end{frame}
 
@@ -237,11 +267,24 @@
     \frametitle{Side Projects}
 
     \begin{block}{Parsimonious Language Models}
-
+        The goal is to model the differences between corpora
+        \begin{itemize}
+            \item Only store salient differences:
+                \begin{itemize}
+                    \item document-specific terms and patterns
+                    \item domain-specific terms and patterns
+                \end{itemize}
+        \end{itemize}
     \end{block}
 
     \begin{block}{Realistic Motif Detection}
-
+        The goal is to find motifs in folk tales at a sentential level
+        \begin{itemize}
+            \item Take order of motifs in consideration
+            \item Sentences can take any number of motifs
+            \item Un-, semi-, and supervised learning
+            \item Incorporation of domain and genre knowledge
+        \end{itemize}
     \end{block}
 \end{frame}
 
