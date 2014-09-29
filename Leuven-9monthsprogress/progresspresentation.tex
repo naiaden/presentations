@@ -5,6 +5,8 @@
 \title{9 Months Progress Report}
 \author{Louis Onrust \\ CLS, Radboud University \and ESAT-PSI, KU Leuven}
 
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
+
 \begin{document}
 
 \begin{frame}
@@ -21,6 +23,7 @@
         \item Results
         \item Research plan
         \item Side projects
+        \item Reflections
         \item Formalities
     \end{itemize}
 
@@ -43,17 +46,17 @@
     \end{block}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Scope of the project}
-
-    \begin{block}{Latent Variable Models}
-    
-    \end{block}
-
-    \begin{block}{Language Models}
-
-    \end{block}
-\end{frame}
+%\begin{frame}
+%    \frametitle{Scope of the project}
+%
+%    \begin{block}{Latent Variable Models}
+%    
+%    \end{block}
+%
+%    \begin{block}{Language Models}
+%
+%    \end{block}
+%\end{frame}
 
 \begin{frame}\section{Bayesian Language Model}
     \frametitle{Bayesian Language Model}
@@ -92,8 +95,8 @@
     \begin{block}{Implementation}
         We use the following software:
         \begin{description}
-            \item[cpyp] an existing C++ framework on BNP with PYP priors
-            \item[colibri] an existing C++ pattern model framework 
+            \item[cpyp] an existing \CC{} framework on BNP with PYP priors
+            \item[colibri] an existing \CC{} pattern model framework 
         \end{description}
     \end{block}
 
@@ -111,10 +114,10 @@
 
     \begin{columns}[T,totalwidth=\linewidth]
         \begin{column}{0.475\textwidth}
-            \begin{block}{Data}
+            \begin{block}{Data sets}
                 \begin{itemize}
                     \item JRC English
-                    \item Google 1 billion word
+                    \item Google 1 billion words
                     \item EMEA English
                 \end{itemize}
             \end{block}
@@ -292,19 +295,31 @@
     \frametitle{Reflections}
 
     \begin{block}{Struggling with reproducing results}
-
+        \begin{itemize}
+            \item No data or code provisional
+            \item Instructions unclear and fuzzy
+            \item Fast pacing and non-dedicated research lines
+        \end{itemize}
     \end{block}
 
     \begin{block}{Missed the boat}
         \begin{itemize}
-            \item Good ideas, but ... by other publications
+            \item Good ideas, but obviated by other publications
+                \begin{itemize}
+                    \item HPYLM with $n\rightarrow\infty$: Stochastic Memoiser
+                    \item Bayesian PLM
+                \end{itemize}
         \end{itemize}
     \end{block}
 
     \begin{block}{}
         Little help from outside, but learned anyway
+        \begin{itemize}
+            \item A lot of literature, but confusing or contradicting
+            \item Still a relative small research community
+            \item Good foundation for further work
+        \end{itemize}
 
-        Good foundation for further work
     \end{block}
 \end{frame}
 
