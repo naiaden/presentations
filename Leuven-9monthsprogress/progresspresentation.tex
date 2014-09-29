@@ -1,7 +1,9 @@
 \documentclass{beamer}
+\usepackage{colortbl}
+\usepackage{multirow}
 
 \title{9 Months Progress Report}
-\author{Louis Onrust}
+\author{Louis Onrust \\ CLS, Radboud University \and ESAT-PSI, KU Leuven}
 
 \begin{document}
 
@@ -37,7 +39,7 @@
     \end{block}
 
     \begin{block}{Goal}
-    
+        Bring back language modelling in Bayesian language modelling    
     \end{block}
 \end{frame}
 
@@ -87,8 +89,8 @@
 \begin{frame}\section{Results}
     \frametitle{Results}
 
-    \begin{columns}
-        \begin{column}{0.5\textwidth}
+    \begin{columns}[T,totalwidth=\linewidth]
+        \begin{column}{0.475\textwidth}
             \begin{block}{Data}
                 \begin{itemize}
                     \item JRC English
@@ -97,7 +99,7 @@
                 \end{itemize}
             \end{block}
         \end{column}    
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.475\textwidth}
             \begin{block}{Backoff methods}
                 \begin{itemize}
                     \item $n$-gram backoff
@@ -118,8 +120,84 @@
             \item Adding skipgrams increases performance on cross domain evaluation
             \item For generic corpora, limited recursive backoff performs best
             \item Seems to outperform Generalised Language Model
+            \item If significant, perhaps not enough for extrinsic evaluation
         \end{itemize}
     \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{A Closer Look at the Results}
+
+    \begin{block}{Within domain versus cross domain}
+        {\small
+        \begin{columns}[T,totalwidth=\textwidth]
+            \begin{column}{0.4\textwidth}
+                \begin{tabular}{rrrr}
+                        & jrc & 1bw  & emea \\ \hline
+                    jrc & 13  & 1195 & 961 \\
+                    1bw & 768 & 158  & 945 \\
+                    emea& 600 & 1143 & 4
+                \end{tabular}
+            \end{column}
+            \begin{column}{0.3\textwidth}
+                \begin{tabular}{rrr}
+                    jrc & 1bw  & emea \\ \hline
+                    13  & 1162 & 939 \\
+                    751 & 162  & 921 \\
+                    581 & 1155 & 4
+                \end{tabular}
+            \end{column}
+            \begin{column}{0.3\textwidth}
+                \begin{tabular}{rrr}
+                    jrc & 1bw & emea \\ \hline
+                    2.0 & -2.8 & -2.3 \\
+                    -2.2 & 2.4 & -2.6 \\
+                    -3.2 & 1.1 & 0.7
+                \end{tabular}
+            \end{column}
+        \end{columns}
+        }
+    \end{block}
+
+    \begin{block}{Effect of different backoff methods}
+        {\small
+        \begin{columns}[T,totalwidth=\textwidth]
+            \begin{column}{0.425\textwidth}
+                \begin{tabular}{rrrrr}
+                                          &       & jrc & 1bw  & emea \\ \cline{3-5}
+                    \multirow{3}{*}{jrc}  & ngram & \cellcolor{green!25}{13}  & 1510 & 1081 \\
+                                          & limited& 14  & 1477 & 1122 \\
+                                          & full   & 69  & \cellcolor{green!25}{1195} & \cellcolor{green!25}{961}  \\
+         &&&& \\
+                    \multirow{3}{*}{1bws} & ngram & \cellcolor{green!25}{768} & \cellcolor{green!25}{158}  & \cellcolor{green!25}{946}  \\
+                                          & limited& 815 & 185  & 1025 \\
+                                          & full   & 801 & 264  & 1039 \\ 
+         &&&& \\ 
+                    \multirow{3}{*}{emea} & ngram & 769 & 1552 & \cellcolor{green!25}{4}    \\   
+                                          & limited& 779 & 1385 & \cellcolor{green!25}{4}    \\
+                                          & full   & \cellcolor{green!25}{600} & \cellcolor{green!25}{1143} & 32
+                \end{tabular}
+            \end{column}
+            \begin{column}{0.425\textwidth}
+                \begin{tabular}{rrr}
+                    jrc & 1bw  & emea \\ \hline
+                    \cellcolor{green!25}{13}  & 1843 & 1295 \\
+                    \cellcolor{green!25}{13}  & 1542 & 1149 \\
+                    65  & \cellcolor{green!25}{1195} & \cellcolor{green!25}{939}  \\
+         && \\
+                    879 & 163  & 1105 \\
+                    \cellcolor{green!25}{751} & \cellcolor{green!25}{162}  & \cellcolor{green!25}{921}  \\
+                    768 & 252  & 988  \\ 
+         && \\
+                    969 & 2089 & \cellcolor{green!25}{4}    \\   
+                    838 & 1655 & \cellcolor{green!25}{4}    \\
+                    \cellcolor{green!25}{581} & \cellcolor{green!25}{1155} & 32
+        \end{tabular}
+            \end{column}
+        \end{columns}
+        }
+    \end{block}
+
 \end{frame}
 
 \begin{frame}\section{Research Plan}
@@ -134,13 +212,23 @@
     \begin{block}{Experiments}
         \begin{itemize}
             \item Validate significance by testing multiple languages
-            \item Investigate influence skipgrams
+            \item Investigate influence skipgrams with qualitative analysis
             \item When we find a more substantial drop in perplexity:
                 \begin{itemize}
                     \item Machine translation experiments
                     \item Automated speech recognition experiments
                 \end{itemize}
             \item Investigate multi-domain language models
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Writing in progress}
+        \begin{itemize}
+            \item TACL journal paper on our findings
+                \begin{itemize}
+                    \item ACL, EMNLP, ICASSP, \ldots
+                \end{itemize}
+            \item Background/Methodology section of PhD thesis
         \end{itemize}
     \end{block}
 \end{frame}
@@ -157,6 +245,26 @@
     \end{block}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Reflections}
+
+    \begin{block}{Struggling with reproducing results}
+
+    \end{block}
+
+    \begin{block}{Missed the boat}
+        \begin{itemize}
+            \item Good ideas, but ... by other publications
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{}
+        Little help from outside, but learned anyway
+
+        Good foundation for further work
+    \end{block}
+\end{frame}
+
 \begin{frame}\section{Formalities}
     \frametitle{Formalities}
 
@@ -168,7 +276,7 @@
     \end{block}
 
     \begin{block}{Training and Education}
-        \begin{columns}
+        \begin{columns}[T,totalwidth=\textwidth]
             \begin{column}{0.5\textwidth}
                 \begin{block}{Participated}
                     \begin{itemize}
