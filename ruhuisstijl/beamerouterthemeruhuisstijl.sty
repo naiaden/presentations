@@ -18,54 +18,67 @@
 \setbeamerfont{blocktitle}{series=\bfseries}
 
 \ifbeamer@official
-%{caption}[numbered]
-\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+    % Removes the figure number from the caption. Use {caption}[numbered] otherwise
+    \setbeamertemplate{caption}{\raggedright\insertcaption\par}
 
-\setbeamertemplate{block begin}
-{%
-   {\bfseries\insertblocktitle}\par%\vspace{-0.2cm}%
-}
-\setbeamertemplate{block end}{\vskip\smallskipamount}
+    % Redesigning the block environment to have a title in bold font
+    % and minimal vertical spacing (only at the end)
+    \setbeamertemplate{block begin}
+    {%
+       {\bfseries\insertblocktitle}\par%\vspace{-0.2cm}%
+    }
+    \setbeamertemplate{block end}{\vskip\smallskipamount}
 
+    % The original style requires 2.5cm margin, whatever that means. Our frames
+    % are not of the same size, so we have to "scale" it. 1cm seems to be reasonable
     \setbeamersize{text margin left=1cm}
+
+    % Making sure that the lists are looking the same as the Powerpoint equivalents
     \setbeamertemplate{itemize item}[circle]
     \setbeamertemplate{itemize subitem}{--}
     \setbeamertemplate{itemize subsubitem}[triangle]
-\setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
-    \usebeamercolor[fg]{itemize item}
-    \usebeamertemplate{itemize item}, nosep, noitemsep}
-\setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
-    \usebeamercolor[fg]{itemize item}
-    \usebeamertemplate{itemize item}, nosep, labelsep=0pt,leftmargin=0.5em} %labelsep is the space between the bullet and the text
-\setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
-    \usebeamercolor[fg]{itemize subitem}
-    \usebeamertemplate{itemize subitem}, nosep, labelsep=0.5em}
-\setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
-    \usebeamercolor[fg]{itemize subsubitem}
-    \usebeamertemplate{itemize subsubitem}, nosep, noitemsep}
+    \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
+        \usebeamercolor[fg]{itemize item}
+        \usebeamertemplate{itemize item}, nosep, noitemsep}
+    \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
+        \usebeamercolor[fg]{itemize item}
+        %labelsep is the space between the bullet and the text
+        \usebeamertemplate{itemize item}, nosep, labelsep=0pt,leftmargin=0.5em} 
+    \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
+        \usebeamercolor[fg]{itemize subitem}
+        \usebeamertemplate{itemize subitem}, nosep, labelsep=0.5em}
+    \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
+        \usebeamercolor[fg]{itemize subsubitem}
+        \usebeamertemplate{itemize subsubitem}, nosep, noitemsep}
     
     \setbeamercolor{itemize item}{fg=ruhuisstijlzwart}
     \setbeamercolor{itemize subitem}{fg=ruhuisstijlzwart}
     \setbeamercolor{itemize subsubitem}{fg=ruhuisstijlzwart}
 \else%
-    \relax
+    \setbeamertemplate{caption}[default]
+
+    \setbeamertemplate{block begin}
+    {%
+       {\bfseries\insertblocktitle}\par%\vspace{-0.2cm}%
+    }
+    \setbeamertemplate{block end}{\vskip\smallskipamount}
 \fi%
 
 \defbeamertemplate*{frametitle}{ruhuisstijl}[1][]
 {
     \vspace{1.25cm}
     \ifbeamer@official
-    \begin{textblock}{12}(1.25,1.05)
-        \begin{beamercolorbox}{frametitle}
-            \insertframetitle\par%
-        \end{beamercolorbox}
-    \end{textblock}
+        \begin{textblock}{12}(1.25,1.05)
+            \begin{beamercolorbox}{frametitle}
+                \insertframetitle\par%
+            \end{beamercolorbox}
+        \end{textblock}
     \else%
-    \begin{textblock}{12}(1.5,1.5)
-        \begin{beamercolorbox}{frametitle}
-            \insertframetitle\par%
-        \end{beamercolorbox}
-    \end{textblock}
+        \begin{textblock}{12}(1.25,1.05)
+            \begin{beamercolorbox}{frametitle}
+                \insertframetitle\par%
+            \end{beamercolorbox}
+        \end{textblock}
     \fi%    
 
 }

@@ -1,30 +1,8 @@
 \documentclass[xcolor=table,10pt,t]{beamer}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \title{RU Beamer}
 \subtitle{Gebruiksvoorwaarden \& sjablonen (juli 2014)}
 \date{\today}
 \author{lama-fan}
-
-\makeatletter
-% http://tex.stackexchange.com/questions/26360/how-to-color-the-font-of-a-single-row-in-a-table
-\newcommand*{\@rowstyle}{}
-
-\newcommand*{\rowstyle}[1]{% sets the style of the next row
-  \gdef\@rowstyle{#1}%
-  \@rowstyle\ignorespaces%
-}
-
-\newcolumntype{=}{% resets the row style
-  >{\gdef\@rowstyle{}}%
-}
-
-\newcolumntype{+}{% adds the current row style to the next column
-  >{\@rowstyle}%
-}
-
-\makeatother
-
 
 %\usetheme[official=false]{ruhuisstijl}
 \usetheme[official=true]{ruhuisstijl}
@@ -89,7 +67,7 @@
 
     Zwart: RGB 0/0/0 \\
     Wit: RGB 250/250/250 \\
-    \textcolor{ruhuisstijlrood}{Rood: RGB 190/49/26 (RU huisstijl rood)} \\
+    \rured{Rood: RGB 190/49/26 (RU huisstijl rood)} \\
     \href{http://google.com/}{Hyperlink: RGB 190/49/26 (RU huisstijl rood)}
 \end{frame}
 
@@ -104,8 +82,8 @@
     \begin{block}{}
         Gebruik sjablonen uit de mappen:
         \begin{itemize}
-            \item Dia's > Indelingen > \textcolor{ruhuisstijlrood}{RU Tekstpagina's}
-            \item Dia's > Indelingen > \textcolor{ruhuisstijlrood}{RU Titelpagina's}
+            \item Dia's > Indelingen > \rured{RU Tekstpagina's}
+            \item Dia's > Indelingen > \rured{RU Titelpagina's}
         \end{itemize}
     \end{block}
     \vspace{1em}
@@ -116,10 +94,6 @@
 \begin{tussenpagina}{Tussenpagina}{Op een tussenpagina mag wel extra beeld toegevoegd worden.}
         \includegraphics[width=0.5\textwidth]{image.png}
 \end{tussenpagina}
-%\begin{frame}
-%    \frametitle{Tussenpagina}
-%
-%\end{frame}
 
 \begin{frame}
     \frametitle{Titel en object}
@@ -215,7 +189,6 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
 \begin{frame}
     \frametitle{Voorbeeld van een tabel}
 
-    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
     \begin{tabular}{=l +r +r +r +r }
 %        \rowcolor{ruhuisstijlrood}\rowfont{\color{white}}
         \rowcolor{ruhuisstijlrood}\rowstyle{\color{white}} & Kolom 1 & Kolom 2 & Kolom 3 & Kolom 4 \\

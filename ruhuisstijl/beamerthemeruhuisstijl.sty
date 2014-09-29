@@ -1,3 +1,6 @@
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+
 \RequirePackage{ifthen}
 \RequirePackage{tikz}
 
@@ -23,3 +26,24 @@
 %\setbeamertemplate{blocks}
 
 \mode<all>
+
+% http://tex.stackexchange.com/questions/26360/how-to-color-the-font-of-a-single-row-in-a-table
+\newcommand*{\@rowstyle}{}
+
+\newcommand*{\rowstyle}[1]{% sets the style of the next row
+  \gdef\@rowstyle{#1}%
+  \@rowstyle\ignorespaces%
+}
+
+\newcolumntype{=}{% resets the row style
+  >{\gdef\@rowstyle{}}%
+}
+
+\newcolumntype{+}{% adds the current row style to the next column
+  >{\@rowstyle}%
+}
+
+
+\newcommand{\rured}[1]{\textcolor{ruhuisstijlrood}{#1}}
+\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+
