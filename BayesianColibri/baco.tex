@@ -1,31 +1,31 @@
 %\documentclass{beamer}
 %\setbeameroption{show notes}
-\usetheme{rured}
-\setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{note page}[plain]
-\usepackage{graphicx}
-\usepackage[english]{babel}
-\usepackage{listings,amsmath}
-\usepackage{algorithm2e}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{ulem}
-\usepackage{palatino}
-\usepackage{color}
-\usepackage{colortbl}
+\usetheme[official=true]{ruhuisstijl}
+%\usepackage{graphicx}
+%\usepackage[english]{babel}
+%\usepackage{listings,amsmath}
+%\usepackage{algorithm2e}
+%\usepackage{graphicx}
+%\usepackage{booktabs}
+%\usepackage{array}
+%\usepackage{ulem}
+%\usepackage{palatino}
+%\usepackage{color}
+%\usepackage{colortbl}
 \usepackage{multirow}
-\usepackage{tikz}
-\usetikzlibrary{positioning,shapes.geometric}
-\usepackage{mathptmx}
-\usepackage[scaled=.90]{helvet}
-\usepackage{courier}
-\usepackage[T1]{fontenc}
-\renewcommand{\emph}[1]{\textcolor{rured}{#1}}
-\usepackage{biblatex}
-\newcolumntype{R}{@{\extracolsep{3cm}}r@{\extracolsep{0pt}}}%
+%\usepackage{tikz}
+%\usetikzlibrary{positioning,shapes.geometric}
+%\usepackage{mathptmx}
+%\usepackage[scaled=.90]{helvet}
+%\usepackage{courier}
+%\usepackage[T1]{fontenc}
+%\renewcommand{\emph}[1]{\textcolor{rured}{#1}}
+%\usepackage{biblatex}
+%\newcolumntype{R}{@{\extracolsep{3cm}}r@{\extracolsep{0pt}}}%
+%
+%\bibliography{baco}
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
 
-\bibliography{baco}
 
 \author{Louis Onrust}
 \title{$p(\text{conclusions} | \text{Skipping \{*2*\}})$}
@@ -34,634 +34,333 @@
 \begin{document}
 
 \begin{frame}
-	\titlepage
+    \titlepage
 \end{frame}
 \note[itemize]{
-    \item Gentle introduction to show what I've been working with
-    \item If you are familiar with skipgrams, you know that the title can mean either
-    \begin{itemize}
-        \item Skipping to some conclusions
-        \item Skipping apple pie conclusions
-        \item Skipping without any conclusions
-    \end{itemize}
-    \item Let's see what's on the menu today
 }
 
-\begin{frame}
-    \frametitle{The topics for today}
-    \begin{itemize}
-        \item Bayesian non-parametrics
-        \item Language modelling
-        \item Chinese restaurants
-        \item Results
-        \item Skipgrams
-        \item The future
-    \end{itemize}
+\begin{frame}{Bayesian Language Modelling with Skipgrams}
+
+\begin{block}{}
+    Louis Onrust \\
+    Centre for Language Studies, Radboud University \\
+    Center for Processing Speech and Images, KU Leuven
+\end{block}
+
+\begin{block}{}
+    \href{mailto:l.onrust@let.ru.nl}{l.onrust@let.ru.nl} \\
+    \href{https://github.com/naiaden}{github.com/naiaden}
+\end{block}
+
+\vfill
+
+\begin{block}{\LaTeX{} Beamer template for RU corporate style}
+    See my github page for example code:
+    \href{https://github.com/naiaden/presentations/tree/master/ruhuisstijl}{github.com/naiaden/presentations/tree/master/ruhuisstijl}
+\end{block}
+
 \end{frame}
 \note[itemize]{
-    \item It seems like we've got a very varied menu
-    \item It's in no particular order
-    \item But we will take them all anyway
 }
 
-\begin{frame}
-    \frametitle{Bayesian Non-Parametrics}
-
-    \begin{block}{Motivation for BNP}
+\begin{frame}{Scope of the Project}
+    \begin{block}{Scope}
         \begin{itemize}
-            \item As the data grows, more patterns emerge:
-            \begin{itemize}
-                \item this implies a growing, unbounded number of degrees of freedom;
-                \item risk of overfitting.
-            \end{itemize}
-        \end{itemize}   
+            \item Language models
+            \item Latent variable models
+            \item Domain-dependence of LVLM
+            \item Intrinsic \& extrinsic evaluation
+        \end{itemize}
     \end{block}
 
-    \begin{block}{Non-parametric with parameters}
+    \begin{block}{Goal}
         \begin{itemize}
-            \item Non-parametric does not mean there are no parameters:
-            \begin{itemize}
-                \item instead, the number of parameters is not fixed.
-                \item ``Allows an infinite number of parameters.''
-            \end{itemize}
+            \item Bring back language modelling in Bayesian language modelling
+            \item Improve cross domain langauge modelling with skipgrams
         \end{itemize}
     \end{block}
 \end{frame}
 \note[itemize]{
-    \item Basic motivation is the idea that in many stat.inf.prob.\ we expect that structures or pattern continue to emerge as data accrue, perhaps ad infinitum
-    \item We want a modelling framework that supplies a growing, unbounded number of d.o.f.\ to the data analysis
-    \item However, if we allow d.o.f.\ to accrue too quickly, we risk finding structures that are statistical artifacts: that is, we overfit.
-    \item Overfitting is a serious problem, and it motivates the Bayesian aspect of non-parametrics
-    \item The BNP approach is an alternative to parametric modelling and selection.
-    \item Bayesian methods are by no means immune to overfitting, but provide a natural resilience
-    \item By using a model with an unbounded complexity, underfitting is migitated, and computing, or approximating, the full posterior over parameters migitates overfitting.
-
-    \item NP does not mean there are no parameters
-    \item not parametric, the numbers of parameters is not fixed once and for all
-    \item So it's not opposed to parameters, to the contrary: the framework can be viewed as allowing an infinite number of parameters, or rather of finite but unbounded dimension
 }
 
-\begin{frame}[label=dirichletprocess]
-    \frametitle{Clustering and the First Formulae}
-
-    \begin{block}{Dirichlet Process}
+\begin{frame}{Language Model}
+    \begin{block}{Traditional method}
+        The process:
         \begin{itemize}
-            \item Centrepiece of BNP: Introduced by Ferguson%\footfullcite{Ferguson73}. 
-            \item Infinite-dimensional analog of the \hyperlink{dirichletsupplemental}{Dirichlet distribution}. 
+            \item Read $n$-gram $p$
+            \item Increment frequency of $p$
+            \item Repeat, preferably ad infinitum
         \end{itemize}
+
+        $n$-gram probabilities are then determined by their MLE
     \end{block}
 
-    \begin{block}{Clustering}
+    \begin{block}{Smoothed Traditional Language Model}
+        What to do when the occurrence count of $p$ is 0?
         \begin{itemize}
-            \item Each data point $x_i$ is assigned to one of $K$ clusters
-            \begin{itemize}
-                \item with probability $w_k$, for $k=1,2,\ldots,K$ and $\sum_{k=1}^Kw_k=1$ and a Dirichlet prior placed on the probabilities $\{w_k\}$.
-            \end{itemize}
-            \item Treat clustering problem as inferring partitions
-            \begin{itemize}
-                \item by placing probability distributions on partitions;
-                \item Chinese Restaurant Process
-            \end{itemize}
+            \item Not assign 0 as probability $\rightarrow$ smoothing
+            \item Fall back to the $(n-1)$ words of $p$ $\rightarrow$ backoff
         \end{itemize}
+
+        One of the best methods is still Modified Kneser-Ney: backoff and smoothing
     \end{block}
 \end{frame}
 \note[itemize]{
-    \item Now we laid some ground for our BNP framework
-    \item Dirichlet distribution plays an important role in Bay.stat.\ as conjugate distribution to the multinomial and categorical.
-    \item The DP is a distribution over probability measures, which are functions with certain special properties which allow them to be interpreted as distributions over some probabily space $\Theta$. A draw from a DP can thus be interpreted as random distributions.
-    \item Called DP because it has Dir. distri. finite-dimensional marginal distributions
-    
-    \item A standard Bay.\ model for clustering involves assuming each data point is assigned to one of $K$ clusters
-    \item The probability of being in cluster $k$ is $w_k$ for each cluster, and the probability vector is normalised. We place a dirichlet prior on the prob vector $\{w_k\}$
-
-    \item As an infinite-dimensional analog, you would expect to take $K$ to infinity to derive at the DP
-    \item But that is not the BNP approach (Infinite Mixture Model): instead we take a combined combinatorial and statistical approach to the clustering problems (DP mixture model)
-    \item where we want to infer the partition underlying the data
-    \item From a Bayesian p.o.v., this requires placing a prob dist on partitions: in particular, the CRP
-    \item KMeans
 }
 
-\begin{frame}
-    \frametitle{Clusteling with a Chinese Lestaulant Plocess}
-    
-    \begin{block}{Partitions and Clusters}
+\begin{frame}{Language Model}
+    \begin{block}{Bayesian method}
         \begin{itemize}
-            \item A partition of $N$ points is denoted as $\pi_{[N]}$
-            \begin{itemize}
-                \item $\pi_{[10]} = \{\{3,5\},\{1,2,9,10\},\{4,6,7\},\{8\}\}$
-                \item $\pi_{[N]}$ is a set of subsets, where subsets are clusters
-            \end{itemize}
+            \item Assume texts are generated by some process
+            \item Consider the texts to be a sample from the process
+            \item Infer underlying process
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Bayesian Language Model}
+        \begin{itemize}
+            \item Each $n$-gram is a cluster
+            \item Each $n$ is a layer
+            \item Each history is in a cluster at the $(n-1)$th layer
         \end{itemize}
     \end{block}
 
     \begin{block}{Chinese Restaurant Process}
         \begin{itemize}
-            \item CRP is a probability distribution on partitions.
-            \item Restaurant metaphor: points are customers, clusters are tables.
-            \item Sequential process: each point at a time is added to an existing set of clusters.
-            \begin{itemize}
-                \item The first customer is seated alone;
-                \item Each subsequent customer is either:
+            \item Clusters are tables, $n$-grams tokens are customers
+            \item Initially tokens seat at the same table
+            \item In the inference step, customers get to choose a new identity
+        \end{itemize}
+    \end{block}
+\end{frame}
+\note[itemize]{
+}
+
+\begin{frame}{Bayesian Language Model}
+    \begin{block}{Chinese Restaurant Process: Inference}
+        When $n$ are in the restaurant, people sit a table $t$ with probability
+        \begin{itemize}
+            \item $\frac{1}{n}$ with another $n$-gram $p$, or $\frac{|t|}{n}$ at the same table as $p$
+            \item $\frac{1}{n}$ at a new table
+        \end{itemize}
+        The number of tables grows logarithmically
+    \end{block}
+
+    \begin{block}{Hierarchical Pitman-Yor Chinese Restaurant Process}
+        \begin{itemize}
+            \item CRP and DPCRP give logarithmic growth
+            \item Language manifests typically in power law growth
+            \item PYCRP as generalisation of CRP and DPCRP
+            \begin{description}
+                \item[CRP] No parameters
+                \item[DPCRP] Concentration parameter $\alpha$
+                \item[PYCRP] Concentration parameter $\alpha$ and discount parameter $\gamma$
+            \end{description}
+            \item HPYCRP to model inherent hierarchical structure $n$-gram
+        \end{itemize}
+    \end{block}
+\end{frame}
+\note[itemize]{
+}
+
+\begin{frame}{Bayesian Language Model: The Implementation}
+    \begin{block}{Motivation}
+        Existing Bayesian language models\ldots
+        \begin{itemize}
+            \item are merely an algorithmic showcase without real language modelling aspirations
+            \item cannot handle really big data sets
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Implementation}
+        We use the following software:
+        \begin{description}
+            \item[cpyp] an existing \CC{} framework on BNP with PYP priors
+            \item[colibri] an existing \CC{} framework for pattern modelling
+        \end{description}
+    \end{block}
+
+    \begin{block}{Advantages}
+        \begin{itemize}
+            \item We can now handle many patterns such as $n$-grams, skipgrams, and flexgrams
+            \item Tresholding patterns on many levels
+            \item Efficient storage of patterns
+        \end{itemize}
+    \end{block}
+\end{frame}
+\note[itemize]{
+}
+
+\begin{frame}{Results: The Setup}
+    \begin{block}{Data Sets}
+        \begin{itemize}
+            \item JRC English
+            \item Google 1 billion words
+            \item EMEA English
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Backoff Methods}
+        \begin{description}
+            \item[$n$-gram] full recursive backoff to shorter $n$-grams
+            \item[Limited] recursive backoff to all patterns $\leq n$ until match
+            \item[Full] recursive backoff to all patterns $\leq n$
+        \end{description}
+    \end{block}
+
+    \begin{block}{Evaluation Measure}
+        \begin{itemize}
+            \item Intrinsic evaluation with perplexity
+        \end{itemize}
+    \end{block}
+\end{frame}
+\note[itemize]{
+}
+
+\begin{frame}{Results: An Overview}
+    \begin{block}{Summary}
+        \begin{itemize}
+            \item Within domain evaluation yields best performance
+            \item Adding skipgrams increases performance on cross domain evaluation
+            \item For generic corpora, limited recursive backoff performs best
+            \item Seems to outperform Generalised Language Model
+            \item If significant, perhaps not enough for extrinsic evaluation
+        \end{itemize}
+    \end{block}
+\end{frame}
+\note[itemize]{
+}
+
+\begin{frame}{Results: Domains and Patterns}
+
+    \begin{block}{Observations}
+        \begin{description}
+            \item[domains] Within domain evaluation yields best performance
+            \item[patterns] Adding skipgrams increases performance on cross domain evaluation
+        \end{description}
+    \end{block}
+
+    {\small
+        \begin{columns}[T,totalwidth=\textwidth]
+            \begin{column}{0.5\textwidth}
+                \begin{block}{Training with only $n$-grams}
+                    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+                    \begin{tabular}{rrrr}
+                            & jrc & 1bw  & emea \\ \hline
+                        jrc & 13  & 1195 & 961 \\
+                        1bw & 768 & 158  & 945 \\
+                        emea& 600 & 1143 & 4
+                    \end{tabular}
+                \end{block}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{block}{and with skipgrams}
+                    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+                    \begin{tabular}{rrrr}
+                            & jrc & 1bw  & emea \\ \hline
+                        jrc & 13  & 1162 & 939 \\
+                        1bw & 751 & 162  & 921 \\
+                        emea& 581 & 1155 & 4
+                    \end{tabular}
+                \end{block}
+            \end{column}
+        \end{columns}
+        \hspace{1em}
+        \begin{block}{Relative differences}
+            \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+            \begin{tabular}{rrrr}
+                    & jrc & 1bw & emea \\ \hline
+                jrc & 2.0 & \cellcolor{green!25}{-2.8} & \cellcolor{green!25}{-2.3} \\
+                1bw & \cellcolor{green!25}{-2.2} & 2.4 & \cellcolor{green!25}{-2.6} \\
+                emea& \cellcolor{green!25}{-3.2} & 1.1 & 0.7
+            \end{tabular}
+        \end{block}
+    }
+\end{frame}
+\note[itemize]{
+}
+
+\begin{frame}{Results: Effect of Different Backoff Methods}
+    \begin{block}{Observations}
+        \begin{description}
+            \item[backoff] For generic corpora, limited recursive backoff performs best
+        \end{description}
+    \end{block}
+    \vspace{-1em}
+    {\small
+        \begin{columns}[T,totalwidth=\textwidth]
+            \begin{column}{0.5\textwidth}
+                \begin{block}{\hspace{2.55cm}$n$-grams\vphantom{Skipgrams}}
+                    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+                    \begin{tabular}{rrrrr}
+                        & & jrc & 1bw & emea \\ \cline{3-5}
+                        \multirow{3}{*}{jrc} & ngram & \cellcolor{green!25}{13} & 1510 & 1081 \\
+                        & limited& 14 & 1477 & 1122 \\
+                        & full & 69 & \cellcolor{green!25}{1195} & \cellcolor{green!25}{961} \\
+                        &&&& \\
+                        \multirow{3}{*}{1bws} & ngram & \cellcolor{green!25}{768} & \cellcolor{green!25}{158} & \cellcolor{green!25}{946} \\
+                        & limited& 815 & 185 & 1025 \\
+                        & full & 801 & 264 & 1039 \\
+                        &&&& \\
+                        \multirow{3}{*}{emea} & ngram & 769 & 1552 & \cellcolor{green!25}{4} \\
+                        & limited& 779 & 1385 & \cellcolor{green!25}{4} \\
+                        & full & \cellcolor{green!25}{600} & \cellcolor{green!25}{1143} & 32
+                    \end{tabular}
+                \end{block}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{block}{Skipgrams}
+                    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+                    \begin{tabular}{rrr}
+                        jrc & 1bw & emea \\ \hline
+                        \cellcolor{green!25}{13} & 1843 & 1295 \\
+                        \cellcolor{green!25}{13} & 1542 & 1149 \\
+                        65 & \cellcolor{green!25}{1195} & \cellcolor{green!25}{939} \\
+                        && \\
+                        879 & 163 & 1105 \\
+                        \cellcolor{green!25}{751} & \cellcolor{green!25}{162} & \cellcolor{green!25}{921} \\
+                        768 & 252 & 988 \\
+                        && \\
+                        969 & 2089 & \cellcolor{green!25}{4} \\
+                        838 & 1655 & \cellcolor{green!25}{4} \\
+                        \cellcolor{green!25}{581} & \cellcolor{green!25}{1155} & 32
+                    \end{tabular}
+                \end{block}
+            \end{column}
+        \end{columns}
+    }
+\end{frame}
+\note[itemize]{
+}
+
+\begin{frame}{Future Work}
+    \begin{block}{Experiments}
+        \begin{itemize}
+            \item Validate significance by testing on multiple languages
+            \item Investigate influence skipgrams with qualitative analysis
+            \item When we find a more substantial drop in perplexity:
                 \begin{itemize}
-                    \item seated at one of the already occupied tables, or
-                    \item starting a new table.
+                    \item Machine translation experiments
+                    \item Automated speech recognition experiments
                 \end{itemize}
-            \end{itemize}   
+            \item Investigate multi-domain language models (DHPYPLM)
+            \item Generalise skipgrams to flexgrams
+            \item \ldots
         \end{itemize}
     \end{block}
 \end{frame}
 \note[itemize]{
-    \item Bayesian approach is model-based, which means that we first have to specify a generative model
-    \item Let's denote a partition of $N$ points as $\pi_{[N]}$
-    \item this is a set of $N$ points, where each point belongs to exactly one subset
-    \item subsets are clusters, and the ordering of clusters and points within clusters is arbitrary
-
-    \item CRP is a probability distribution over partitions
-    \item distribution is built up in a sequential manner: one point at a time is added to an existing set of clusters
-    \item metaphore of a restaurant, coined by Lester Dubins and Jim Pitman in the early 80's
-
-    \item sits at a already occupied table with probability proportional to the number of customers sitting at that table;
-    \item starts a new table with probability proportional to a fixed constant.
 }
 
-\begin{frame}
-    \[
-        P(\text{customer }n+1\text{ joins table }c|\pi_{[n]}) = 
-          \begin{cases}
-           \frac{|c|}{\alpha+n} & \text{if } c \in \pi_{[n]}, \\
-           \frac{\alpha}{\alpha+n}       & \text{otherwise.}
-          \end{cases}
-    \]
-    
-    The seating pattern after $N$ customers defines a set of clusters: 
-    \[
-        \pi_{[N]} \sim \operatorname{CRP}(\alpha, N)
-    \]
+\begin{tussenpagina}{}
+    \strut
 
-    \begin{block}{Example for $\{\{1,2,5\},\{3,4\},\{6\}\}$}
-        \begin{center}
-            \begin{tikzpicture}
-                \node[draw, circle] (t1) {};
-                \node[draw, circle, right=of t1] (t2) {};
-                \node[draw, circle, right=of t2] (t3) {};
-                \node[circle, right=of t3] (tdots) {$\ldots$};
-                \node[draw, circle, right=of tdots] (t4) {};
-
-                \onslide<2->{\node[node distance=0.1cm,above right=of t1] (c1) {1};}
-                \onslide<4->{\node[node distance=0.1cm,above left=of t1] (c2) {2};}
-                \onslide<6->{\node[node distance=0.1cm,above right=of t2] (c3) {3};}
-                \onslide<8->{\node[node distance=0.1cm,above left=of t2] (c4) {4};}
-                \onslide<10->{\node[node distance=0.1cm,below right=of t1] (c5) {5};}
-                \onslide<12->{\node[node distance=0.1cm,below right=of t3] (c6) {6};}
-            \end{tikzpicture}
-        \end{center}            
-        \note[item]<1>{1}
-        \note[item]<1>{ So, a new customer joins a table $c$, if $c$ is already a cluster, with prob prop to the number of customers already sitting at that table}
-        \note[item]<1>{ otherwise starts a new table, with a prob prop to fixed constant $\alpha$}
-        \note[item]<1>{ The seating pattern after $N$ customers thus defines a set of clusters}
-
-        \note[item]<1>{ Now for an example, imagine an infinite number of unlabelled tables}
-        \note[item]<1>{ when a customer starts a new table, one of the unlabelled tables is chosen arbitrarily}
-        \note[item]<1>{ So after $N$ customers have arrived, their seating pattern defines a set of clusters, and thus a partition.}
-        \note[item]<1>{ For each value of $N$, we have a different CRP, and thus a different distribution, making the CRP a family of distributions}
-        \note[item]<2>{2}
-        \note[item]<3>{3}
-        \note[item]<4>{4}
-        \note[item]<5>{5}
-        \note[item]<6>{6}
-        \note[item]<7>{7}
-        \note[item]<8>{8}
-        \note[item]<9>{9}
-        \note[item]<10>{10}
-        \note[item]<11>{11}
-        \note[item]<12>{12}
-        \note[item]<13>{13}
-
-        $\uncover<3->{P=\frac{\alpha}{\alpha}\uncover<5->{\frac{1}{\alpha+1}\uncover<7->{\frac{\alpha}{\alpha+2}\uncover<9->{\frac{1}{\alpha+3}\uncover<11->{\frac{2}{\alpha+4}\uncover<13->{\frac{\alpha}{\alpha+5}$}}}}}} \uncover<14->{$\rightarrow P(\pi_{[N]}) = \frac{\alpha^K}{\alpha^{(N)}}\prod_{c\in\pi_{[N]}}(|c|-1)!$}
-    \end{block}
-\end{frame}
-\note[itemize]{
-
-    \item As you can see people don't have anything to eat here yet.
-    \item The sequence $x_1, x_2,\ldots,x_6$ as generated by the CRP can be shown to be exchangeable. That is, the points are invariant to permuting the order of the sequence. De Finetti's theorom then shows that there must be a distribution over distributions, such that the points are conditionally independent and iid draws. The DP is one such distribution here.
-    \item .
-    \item a direct way to construct a weighted sum of an infinite sequence of point masses (with probability one) is the stick-breaking construction, also called the GEM distribution.
-}
-
-\begin{frame}
-    \frametitle{Two-Parameter Poisson-Dirichlet Processes}
-
-    \begin{block}{Why Pitman-Yor Processes?}
-        \begin{itemize}
-            \item DP generates an infinite number of atoms, with a relatively slow rate.
-            \item Many real-world phenomena have a power-law growth.
-            \item The DP cannot generate such power-laws, hence we use PYP.
-        \end{itemize}
-    \end{block}
-
-    \begin{block}{PYP as generalisation of the CRP}
-        \begin{itemize}
-            \item With DP the rate for selecting a new table is $\frac{\alpha}{\alpha+N}$, and choosing an occupied table goes to $\frac{N}{\alpha+N}$:
-            \begin{itemize}
-                \item $\sum_{n=1}^N\frac{\alpha}{\alpha+n}\asymp\log(N)$
-            \end{itemize}
-            \item PYP allows $\alpha$ to grow, with the rate of a discount parameter $\sigma$
-            \item PYP reduces to DP with $\sigma=0$.
-        \end{itemize}
-    \end{block}
-    
-\end{frame}
-\note[itemize]{
-    \item Now to the heart of the presentation
-    \item So the DP generates an infinite number of atoms, which is nice, but does so at a relatively slow rate
-    \item We know of many real-world phenomena that do not match this rate, but follow a power-law growth
-    \item The DP does not seem to be the tool we want?
-
-    \item So we introduce yet another generalisation: the Pitman-Yor process
-    \item The rate of atoms (tables) is asymptotically growing with the log of customers
-    \item The latter quickly dominates the former, and few new tables emerge as N becomes large;
-    \item We generalise the DP by adding a dicscount parameter $\sigma$
-}
-
-\begin{frame}
-    \frametitle{PYCRP}
-
-    \[
-        P(\text{customer }n+1\text{ joins table }c|\pi_{[n]}) = 
-          \begin{cases}
-           \frac{|c|-\sigma}{\alpha+n} & \text{if } c \in \pi_{[n]}, \\
-           \frac{\alpha+\sigma K_n}{\alpha+n}       & \text{otherwise.}
-          \end{cases}
-    \]
-    \begin{itemize}
-        \item The probability of joining an existing table is reduced by an amount proportional to $\sigma$ relative to the CRP.
-        \item Reductions are added to the probability of starting a new table.
-    \end{itemize}
-
-    The seating pattern after $N$ customers defines a set of clusters: \[\pi_{[N]}\sim\operatorname{PYP}(\alpha,\sigma,N)\]
-    \[
-        P(\pi_{[N]}) = \frac{\alpha(\alpha+\sigma)\cdots(\alpha+\sigma(K_N-1))}{\alpha^{(N)}}\prod_{c\in\pi_{[N]}}(1-\sigma)(2-\sigma)\cdots(|c|-1-\sigma).
-    \]
-\end{frame}
-\note[itemize]{
-    \item Although discounts in the restaurant are generally nice, in this case it means that you act as if there are less people on the table
-    \item This is especially noticeable in the beginning, when $|c|$ is small
-    \item all the discounts you saved by not joining a table, are used for the new table
-
-    \item The seating pattern is thus defined as such
-    \item and again we have exchangeability
-}
-
-\begin{frame}
-    \frametitle{Finally, Language Models}
-%    We use $n$-gram LM which use the conditional distributions of each word given a context of $n-1$ words: \[ P(\mathbf{w})\aprox\prod_{i}P(w_i|w_{i-n+1}^{i-1}) \]
-
-    \begin{block}{Unigram LM with PYP}
-        $W$ is a fixed vocabulary of $V$ words. For each $w\in W$ let $G(w)$ be the probability of $w$, and $G=[G(w)]_{w\in W}$ the vector of word probabilities. 
-\[ G \sim \operatorname{PYP}(\alpha, \sigma, G_0). \] 
-    \end{block}
-
-    \begin{block}{Inference for our Unigram LM}
-        \begin{itemize}
-            \item Training data $\mathcal{D}$ consists of occurrence counts $c_{w}$.
-            \item We are interested in the posterior distribution $P(G,\Theta|\mathcal{D}) = P(G,\Theta,\mathcal{D})/P(\mathcal{D})$.
-            \begin{itemize}
-                \item The CRP marginalises out $G$, replacing it with the seating arrangement $S$
-                \item The new posterior is then: $P(S,\Theta|\mathcal{D})=P(S,\Theta,\mathcal{D})/P(\mathcal{D})$.
-                \item Predictive probability: $p(w|\mathcal{D})=\int P(w|S,\Theta)P(S,\Theta|\mathcal{D})\text{d}(S,\sigma)$.
-                \begin{itemize}
-                    \item $P(w|S,\Theta) = \frac{c_w-\sigma t_w}{\alpha+c_\cdot} + \frac{\alpha+\sigma t_\cdot}{\alpha+c_\cdot}$.
-                \end{itemize}
-            \end{itemize}
-        \end{itemize}
-    \end{block}
-
-%    \begin{block}{The Generative Strategy to produce $x_1,x_2,\ldots$}
-%        \begin{itemize}
-%            \item Notice that we can treat $G$ and $G_0$ as distributions over $W$;
-%            \item Let $x1,x2,\ldots$ be a sequence over words drawn i.i.d. from $G$.
-%            \item We marginalise over $G$ by relating $x_1,x_2,\ldots$ to i.i.d. draws $y_1,y_2,\ldots$ from $G_0$.
-%            \item $x_1$ is assigned the value of $y_1$, and $t$ the current number of draws
-%            \item $c_k$ the number of words assigned the value of draw $y_k$ and $c_\cdot=\sum_{k=1}^tc_k$ the number of draws from $G$.
-%            \item For each subsequent word $x_{c_\cdot+1}$, we assign it the value of a previous draw $y_k$ with probability $\frac{c_k-\alpha}{\sigma+c_\cdot}$, or assign it the value of a new draw from $G_0$ with probability $\frac{\sigma+\alpha t}{\sigma+c_\cdot}$.
-%        \end{itemize}
-%    \end{block}
-
-\end{frame}
-\note[itemize]{
-    \item Notice that first we had $\operatorname{PYP}(\alpha, \sigma, N)$, now we have a distribution over some probability space $\Theta$, which are the words
-    \item $G_0$ being the uniform prior: $G_0(w) = \frac{1}{V}$
-    \item So now we can put a PYP prior on G
-
-    \item Although we can play two games, a generative game and an inference game, the second is more closely related to our idea of query likelihood
-    \item The seating arrangment is the partition we saw earlier, with customers sitting at a table with the dish being the word, and the cardinality of $c$ is the count
-    \item tough integral, which typically for Bayesian stuff we cannot compute (because of being an infinite sum)
-    \item our focus is on $P(w|S,\Theta)$ with a computation that must look similar to the ones we saw earlier for the PYP.
-}
-
-\begin{frame}
-    \frametitle{Hierarchical PYP}
-
-    \begin{block}{HPYLM}
-        Given a context $\mathbf{u}$, let $G_{\mathbf{u}}(w)$ be the probability of the current word taking on value $w$. 
-        The HPYP has a prior for $G_{\mathbf{u}} \sim \operatorname{PYP}(\alpha_{|\mathbf{u}|},\sigma_{|\mathbf{u}|},G_{\pi(\mathbf{u})})$, with $\pi(\mathbf{u})$ being the suffix of $\mathbf{u}$ of all but the first word. 
-        $G_{\pi(\mathbf{u})}$ is also unknown, so we place a recursive prior over it, with parameters $\alpha_{|\pi(\mathbf{u})|}, \sigma_{|\pi(\mathbf{u})|}$ 
-        and mean vector $G_{\pi(\pi(\mathbf{u}))}$; $G_\varnothing$ being the empty context, which is the same as for the unigram LM.
-
-        Interpolated Kneser-Ney can be considered to be an approximate inference of HPYLM.
-    \end{block}
-
-    \begin{block}{Chinese Restaurant Franchise}
-        \begin{itemize}
-            \item A Chinese Restaurant Franchise consists of Chinese Restaurants
-            \item There is a global menu with an unbounded number of dishes
-        \end{itemize}
-    \end{block}
-\end{frame}
-\note[itemize]{
-    \item We all know unigram LM do not perform very well: ngram as the hierarchical generalisation of unigrams, HPYP as the hierarchical generalisation of PYP, CRF as the hierarchical generalisation of CRP
-    \item So now we have to model the context: $\mathbf{u}$, and we estimate the probability $G_{\mathbf{u}}(w)$.
-    \item Similar to drawing $G$ from PYP with $G_0$ as base distribution, we now draw $G_{\mathbf{u}}$ from PYP with $G_{\pi(\mathbf{u})}$ as base distribution.
-    \item $\pi(\mathbf{u})$ is the suffix of all but the first word of $\mathbf{u}$.
-    \item This prior is also unknown, so we put a recursive prior on it, with the unigram model from last slide as the base case, the empty context.
-    
-    \item IKN can be considered to be an approximate inference of HPYP
-    \item MKN cannot because the values are not between 0 and 1
-}
-
-\begin{frame}
-    \frametitle{Adding Bayesiawesomeness to Colibri}
-    
-    Existing Bayesian language models\ldots
-        \begin{itemize}
-            \item are merely an algorithmic showcase without real LM aspirations;
-            \item cannot handle really big datasets.
-        \end{itemize}
-
-    \begin{block}{Colibri}
-        \begin{itemize}
-            \item C++ and Python library for basic linguistic constructions
-            \item Generates $n$-grams, skipgrams, and flexgrams
-            \item \url{http://proycon.github.io/colibri-core/}
-        \end{itemize}
-    \end{block}
-    \vspace{-0.25cm}
-    \begin{block}{Bayesian Colibri}
-        \begin{itemize}
-            \item We extend the C++ library for BNP with PYP (\url{https://github.com/redpony/cpyp})
-            \item BaCo is available at \url{https://github.com/naiaden/cococpyp}
-        \end{itemize}
-    \end{block}
-\end{frame}
-\note[itemize]{
-    \item Now we have a framework for a Bayesian $n$-gram language model
-    \item But we want to extend it
-}
-
-\begin{frame}
-    \frametitle{From $n$-gram to $Y$-gram}
-
-    We want to beat a MKN approach with skipgrams: Pickhardt et al., \textit{A Generalized Language Model as the Combination of Skipped n-grams and Modified Kneser Ney Smoothing}, ACL'14.
-
-    \begin{block}{Comparison}
-        \begin{itemize}
-            \item Compare with existing systems
-            \item Compare the performance of backoff methods
-            \item Compare the within and cross domain performance
-            \item Compare the ngram and skipgram performance
-        \end{itemize}
-    \end{block}
-
-    \begin{block}{Data}
-        \begin{itemize}
-            \item JRC-Acquis
-            \item Google 1 Billion Word Corpus
-            \item EMEA (European Medicines Agency)
-        \end{itemize}
-    \end{block}
-
-\end{frame}
-\note[itemize]{
-    \item Unfortunately we don't have our competitor's system running
-    \item only results that we generated ourselves
-
-    \item JRC 31M 8M
-    \item 1BW 10\% 80M 8M (4gram, 90G, 11days)
-    \item EMEA 12M 3M
-}
-
-\begin{frame}
-    \frametitle{Comparison with existing systems}
-
-    \begin{block}{$n$-grams}
-    {\small
-        \begin{tabular}{rrrrm{0.01cm}rrrm{0.01cm}rrr}
-            & \multicolumn{3}{c}{baco} & & \multicolumn{3}{c}{srilm} & & \multicolumn{3}{c}{cpyp} \\
-                  & jrc & 1bw  & emea & & jrc  & 1bw  & emea & & jrc & 1bw  & emea \\ \cline{2-4}\cline{6-8}\cline{10-12}
-            jrc   & 13  & 1195 & 961  & & 22   & 1664 & 1310 & & 13  & 1536 & 1098 \\
-            1bws  & 768 & 158  & 946  & & 1460 & 211  & 1516 & & 785 & 155  & 987 \\
-            emea  & 600 & 1143 & 4    & & 1115 & 1745 & 10   & & 794 & 1597 & 4
-        \end{tabular}
-    }
-    \end{block}
-    
-\begin{columns}[T] % align columns
-\begin{column}{.48\textwidth}
-    \begin{block}{skipgrams}
-    {\small
-        \begin{tabular}{rrrr}
-            & \multicolumn{3}{c}{baco} \\
-                  & jrc & 1bw  & emea \\ \cline{2-4}
-            jrc   & 13  & 1162 & 939  \\
-            1bws  & 751 & 162  & 921  \\
-            emea  & 581 & 1155 & 4    
-        \end{tabular}
-    }
-    \end{block}
-
-\end{column}%
-\hfill%
-\begin{column}{.48\textwidth}
-    \begin{block}{Relative change in perplexity}
-    {\small
-        \begin{tabular}{rrrr}
-            & \multicolumn{3}{c}{} \\
-                  & jrc  & 1bw  & emea \\ \cline{2-4}
-            jrc   & \cellcolor{red!25}{2.03}   & \cellcolor{green!25}{2.80} & \cellcolor{green!25}{2.30} \\
-            1bws  & \cellcolor{green!25}{2.23} & \cellcolor{red!25}{2.38}   & \cellcolor{green!25}{2.63} \\
-            emea  & \cellcolor{green!25}{3.20} & \cellcolor{red!25}{1.09}   & \cellcolor{red!25}{0.67}    
-        \end{tabular}
-    }
-    \end{block}
-\end{column}%
-\end{columns}
-
-
-
-
-
-\end{frame}
-\note[itemize]{
-    \item As expected, the first thing that catches the eye, is the good performance on the diagonals
-    \item Second, our performance is similar to cpyp. It should be, because the only thing that differs is the BOS and EOS marker
-    \item We outperform traditional MKN by a fair margin
-
-    \item skipgrams results?
-}
-
-\begin{frame}
-    \frametitle{Influence of backoff method}
-
-\begin{columns}[T] % align columns
-\begin{column}{.5\textwidth}
-    \begin{block}{$n$-grams}
-    {\small
-        \begin{tabular}{rrrrr}
-                                  &       & jrc & 1bw  & emea \\ \cline{3-5}
-            \multirow{3}{*}{jrc}  & ngram & \cellcolor{green!25}{13}  & 1510 & 1081 \\
-                                  & bobaco& 14  & 1477 & 1122 \\
-                                  & glm   & 69  & \cellcolor{green!25}{1195} & \cellcolor{green!25}{961}  \\
- &&&& \\
-            \multirow{3}{*}{1bws} & ngram & \cellcolor{green!25}{768} & \cellcolor{green!25}{158}  & \cellcolor{green!25}{946}  \\
-                                  & bobaco& 815 & 185  & 1025 \\
-                                  & glm   & 801 & 264  & 1039 \\ 
- &&&& \\ 
-            \multirow{3}{*}{emea} & ngram & 769 & 1552 & \cellcolor{green!25}{4}    \\   
-                                  & bobaco& 779 & 1385 & \cellcolor{green!25}{4}    \\
-                                  & glm   & \cellcolor{green!25}{600} & \cellcolor{green!25}{1143} & 32
-        \end{tabular}
-    }
-    \end{block}
-
-\end{column}%
-\hfill%
-\begin{column}{.5\textwidth}
-    \begin{block}{skipgrams}
-    {\small
-        \begin{tabular}{rrrrr}
-                                  &       & jrc & 1bw  & emea \\ \cline{3-5}
-            \multirow{3}{*}{jrc}  & ngram & \cellcolor{green!25}{13}  & 1843 & 1295 \\
-                                  & bobaco& \cellcolor{green!25}{13}  & 1542 & 1149 \\
-                                  & glm   & 65  & \cellcolor{green!25}{1195} & \cellcolor{green!25}{939}  \\
- &&&& \\
-            \multirow{3}{*}{1bws} & ngram & 879 & 163  & 1105 \\
-                                  & bobaco& \cellcolor{green!25}{751} & \cellcolor{green!25}{162}  & \cellcolor{green!25}{921}  \\
-                                  & glm   & 768 & 252  & 988  \\ 
- &&&& \\
-            \multirow{3}{*}{emea} & ngram & 969 & 2089 & \cellcolor{green!25}{4}    \\   
-                                  & bobaco& 838 & 1655 & \cellcolor{green!25}{4}    \\
-                                  & glm   & \cellcolor{green!25}{581} & \cellcolor{green!25}{1155} & 32
-        \end{tabular}
-    }
-    \end{block}
-\end{column}%
-\end{columns}
-
-\begin{description}
-    \item[ngram] only backoff to shorter $n$-grams
-    \item[bobaco] backoff to all patterns $\leq n$, until match
-    \item[glm] backoff to all patterns $\leq n$
-\end{description}
-
-
-\end{frame}
-\note[itemize]{
-    \item We compared two backoff methods
-    \begin{description}
-        \item[ngram] only backoffs to the patterns in the model. Although perhaps confusing, in the lower example the model is trained on skipgrams as well, and there it backoffs to skipgrams of a strict lower order as well
-        \item[glm] backoffs to all possible patterns, $n$-grams and skipgrams
-    \end{description}
-
-    \item ngram appears to be better within domain, whereas glm seems to be better cross domain
-}
-
-\begin{frame}
-    \frametitle{Future work}
-
-    \begin{block}{Monday}
-        \begin{itemize}
-            \item Further investigate clues cross domain language modelling
-            \item Further investigate comparison to state-of-the-art skipgram language modelling
-            \item Influence of size training data
-            \item Test hypotheses on more corpora
-            \item Get up to date on (Bayesian) statistical significance tests
-        \end{itemize}
-    \end{block}
-
-    \begin{block}{Someday}
-        \begin{itemize}
-            \item Create language models of multiple domains: DHPYPLM
-            \item Skipgrams versus flexgrams
-        \end{itemize}
-    \end{block}
-\end{frame}
-\note{
-
-}
-
-\appendix
-\begin{frame}[label=dirichletsupplemental]
-    \frametitle{Dirichlet Distribution}
-
-    \begin{block}{Informal introduction}%\footfullcite{Frigyk2010}}
-        \begin{itemize}
-            \item Dirichlet distribution can model the randomness of pmfs
-            \begin{itemize}
-                \item We have a dictionary of $k$ possible words
-                \item Each document can be represented by a pmf of length $k$ by normalising the empirical frequency of its words
-                \item A group of documents produces a collections of pmfs, and we use the Dirichlet distribution to capture the variability
-            \end{itemize}
-        \end{itemize}
-    \end{block}
-
-    \begin{block}{Formal introduction}
-        Let $Q = [Q_1, Q_2,\ldots,Q_k]$ be a random pmf with $k$ components, that is $Q_i \geq 0$ for $i=1,2,\ldots,k$ and $\sum_{i=1}^k Q_i = 1$
-        \[ f(q;\boldsymbol\alpha) = \frac{\Gamma(\alpha_0)}{\prod_{i=1}^k\Gamma(\alpha_i)}\prod_{i=1}^kq_i^{\alpha_i-1}. \]
-    \end{block}
-Back to the \hyperlink{dirichletprocess}{Dirichlet Process}.
-\end{frame}
-\note[itemize]{
-    \item Example of a pmf is an ordinary six-sided die
-    \item To sample from it you roll the die and produce a number one to six
-    \item Real dice are not exactly uniformly weighted (physics, manufactoring, \&c.)
-    \item A bag of 100 real dice is an example of a random pmf
-    \item To sample from it you put your hand in the bag and draw out a die, you draw a pmf
-    \item Dice from 100 years ago will likely have probs that deviate wildly from uniform, new sota dice Las Vegas casinos may have barely perceptible imperfections
-    \item The Dirichlet distribution can model the randomness of pmfs
-    
-    \item $\alpha$ is the concentration parameters, or inverse variance. Larger $\alpha$, the smaller the variance, and more mass concentrated around mean
-
-    \item Dirichlet distribution is particularly useful in modelling word distributions
-    \item $q$ is a pmf, and here a realisation of a random pmf $Q\sim\operatorname{Dir}(\alpha)$
-    \item $\boldsymbol\alpha$ is the parameter of the Dirichlet distribution, $\boldsymbol\alpha=[1,1,\ldots,1]$ is uniform over the simplex
-
-    
-}
-
-
-\begin{frame}
-    \frametitle{This is a dice}
-\scalebox{6}{\begin{tikzpicture}[diceface/.style={diamond, inner sep=3pt, shape aspect=2,
-rounded corners=3pt, scale=2}]
-% Corner at (0,0)
-\fill[gray!10!white] (-0.3, -0.3) rectangle (0.3, 0.3);
-% TOP (one)
-\fill (0,0) node[fill=white, diceface, anchor=south, draw=white] (topface) {};
-\fill[red, yscale=0.7] (topface.center) circle(4pt);
-% RIGHT (three)
-\fill (0,0) node[fill=gray!15!white, diceface, anchor=south, rotate=-120, draw=white] (rightface) {};
-\fill (rightface.center) circle(2pt);
-\fill (rightface.center)+(0.15,0.2) circle(2pt);
-\fill (rightface.center)+(-0.15,-0.2) circle(2pt);
-
-% LEFT (two)
-\fill (0,0) node[fill=gray!30!white, diceface, anchor=south, rotate=120,draw=white] (leftface) {};
-\fill (leftface.center)+(0.13,0.1) circle(2pt);
-\fill (leftface.center)+(-0.13,-0.1) circle(2pt);
-\end{tikzpicture}}
-\end{frame}
-\note{
-
-}
+    \begin{figure}
+        \includegraphics[width=0.95\textwidth]{images/dilbert.png}
+        \vspace{-0.2cm}
+        \caption{\href{http://dilbert.com/strips/comic/2009-09-17/}{\textcolor{black}{http://dilbert.com/strips/comic/2009-09-17}}}
+    \end{figure}
+%        \href{http://dilbert.com/strips/comic/2009-09-17/}{http://dilbert.com/strips/comic/2009-09-17/}
+\end{tussenpagina}
 
 \end{document}
