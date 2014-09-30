@@ -1,35 +1,118 @@
-\documentclass{beamer}
+\documentclass[11pt,t]{beamer}
+\mode<presentation> {\usetheme{kuleuven}}
+
 \usepackage{colortbl}
 \usepackage{multirow}
 
 \title{9 Months Progress Report}
-\author{Louis Onrust \\ CLS, Radboud University \and ESAT-PSI, KU Leuven}
+\author{Louis Onrust}
+\institute{CLS, Radboud University \and ESAT-PSI, KU Leuven}
 
 \def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
 
+
+\usepackage{environ}% Required for \NewEnviron, i.e. to read the whole body of the environment
+\makeatletter
+
+\newcounter{acolumn}%  Number of current column
+\newlength{\acolumnmaxheight}%   Maximum column height
+
+
+% `column` replacement to measure height
+\newenvironment{@acolumn}[1]{%
+    \stepcounter{acolumn}%
+    \begin{lrbox}{\@tempboxa}%
+    \begin{minipage}{#1}%
+}{%
+    \end{minipage}
+    \end{lrbox}
+    \@tempdimc=\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax
+    % Save height of this column:
+    \expandafter\xdef\csname acolumn@height@\roman{acolumn}\endcsname{\the\@tempdimc}%
+    % Save maximum height
+    \ifdim\@tempdimc>\acolumnmaxheight
+        \global\acolumnmaxheight=\@tempdimc
+    \fi
+}
+
+% `column` wrapper which sets the height beforehand
+\newenvironment{@@acolumn}[1]{%
+    \stepcounter{acolumn}%
+    % The \autoheight macro contains a \vspace macro with the maximum height minus the natural column height
+    \edef\autoheight{\noexpand\vspace*{\dimexpr\acolumnmaxheight-\csname acolumn@height@\roman{acolumn}\endcsname\relax}}%
+    % Call original `column`:
+    \orig@column{#1}%
+}{%
+    \endorig@column
+}
+
+% Save orignal `column` environment away
+\let\orig@column\column
+\let\endorig@column\endcolumn
+
+% `columns` variant with automatic height adjustment
+\NewEnviron{acolumns}[1][]{%
+    % Init vars:
+    \setcounter{acolumn}{0}%
+    \setlength{\acolumnmaxheight}{0pt}%
+    \def\autoheight{\vspace*{0pt}}%
+    % Set `column` environment to special measuring environment
+    \let\column\@acolumn
+    \let\endcolumn\end@acolumn
+    \BODY% measure heights
+    % Reset counter for second processing round
+    \setcounter{acolumn}{0}%
+    % Set `column` environment to wrapper
+    \let\column\@@acolumn
+    \let\endcolumn\end@@acolumn
+    % Finally process columns now for real
+    \begin{columns}[#1]%
+        \BODY
+    \end{columns}%
+}
+\makeatother
+
 \begin{document}
 
-\begin{frame}
-    \titlepage
+%title page
+    \setbeamertemplate{headline}[title_page]
+    \setbeamertemplate{footline}[title_page]
+    \csname beamer@calculateheadfoot\endcsname %recalculate head and foot dimension
+        \begin{frame}
+            \titlepage
+        \end{frame}
+%head and foot for body text    
+    \setbeamertemplate{headline}[body]
+    \setbeamertemplate{footline}[body]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Outline}
+    \vskip 5mm
+    {\parbox{.95\textwidth}{\tableofcontents[hideallsubsections]}}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Overview}
+%\begin{frame}
+%    \titlepage
+%\end{frame}
+%
+%\begin{frame}
+%    \frametitle{Overview}
+%
+%    %\tableofcontents
+%    \begin{itemize}
+%        \item Scope of the project
+%        \item Bayesian language models
+%        \item Results
+%        \item Research plan
+%        \item Side projects
+%        \item Reflections
+%        \item Formalities
+%    \end{itemize}
+%
+%\end{frame}
+\section{Scope of the project}
 
-    %\tableofcontents
-    \begin{itemize}
-        \item Scope of the project
-        \item Bayesian language models
-        \item Results
-        \item Research plan
-        \item Side projects
-        \item Reflections
-        \item Formalities
-    \end{itemize}
-
-\end{frame}
-
-\begin{frame}\section{Scope of the project}
+\begin{frame}    
     \frametitle{Scope of the project}
 
     \begin{block}{Scope}
@@ -42,7 +125,10 @@
     \end{block}
 
     \begin{block}{Goal}
-        Bring back language modelling in Bayesian language modelling    
+        \begin{itemize}
+            \item Bring back language modelling in Bayesian language modelling    
+            \item Improve cross domain language modelling with skipgrams
+        \end{itemize}
     \end{block}
 \end{frame}
 
@@ -57,8 +143,8 @@
 %
 %    \end{block}
 %\end{frame}
-
-\begin{frame}\section{Bayesian Language Model}
+\section{Bayesian Language Model}
+\begin{frame}
     \frametitle{Bayesian Language Model}
 
     \begin{itemize}
@@ -73,7 +159,10 @@
             \item Each history is in a cluster at the $(n-1)$th layer
         \end{itemize}
     \end{block}
+\end{frame}
 
+\begin{frame}
+    \frametitle{Bayesian Language Model: The Process}
     \begin{block}{Hierarchical Pitman-Yor Chinese Restaurant Process}
         \begin{itemize}
             \item CRP and DPCRP give logarithmic growth
@@ -109,11 +198,10 @@
     \end{block}
 \end{frame}
 
-\begin{frame}\section{Results}
-    \frametitle{Results}
+\section{Results}
+\begin{frame}
+    \frametitle{Results: The Setup}
 
-    \begin{columns}[T,totalwidth=\linewidth]
-        \begin{column}{0.475\textwidth}
             \begin{block}{Data sets}
                 \begin{itemize}
                     \item JRC English
@@ -121,8 +209,6 @@
                     \item EMEA English
                 \end{itemize}
             \end{block}
-        \end{column}    
-        \begin{column}{0.475\textwidth}
             \begin{block}{Backoff methods}
                 \begin{itemize}
                     \item $n$-gram backoff
@@ -130,13 +216,12 @@
                     \item Full recursive backoff
                 \end{itemize}
             \end{block}
-        \end{column}    
-    \end{columns}
 
-    \begin{description}
-        \item[Evaluation measure] Intrinsic evaluation with perplexity
-    \end{description}
+             Intrinsic evaluation with perplexity
+\end{frame}
 
+\begin{frame}
+    \frametitle{Results: An Overview}
     \begin{block}{Summary}
         \begin{itemize}
             \item Within domain evaluation yields best performance
@@ -152,6 +237,8 @@
     \frametitle{Results: Within domain versus cross domain}
 
     {\small
+    \begin{acolumns}[T,totalwidth=\textwidth]
+        \begin{column}{0.5\textwidth}
         \begin{block}{Training with only $n$-grams}
             \begin{tabular}{rrrr}
                     & jrc & 1bw  & emea \\ \hline
@@ -160,8 +247,9 @@
                 emea& 600 & 1143 & 4
             \end{tabular}
         \end{block}
-
-        \begin{block}{Training with both $n$-grams and skipgrams}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+        \begin{block}{and with skipgrams}
             \begin{tabular}{rrrr}
                     & jrc & 1bw  & emea \\ \hline
                 jrc & 13  & 1162 & 939 \\
@@ -169,13 +257,15 @@
                 emea& 581 & 1155 & 4
             \end{tabular}
         \end{block}
+        \end{column}
+    \end{acolumns}
 
         \begin{block}{Relative differences}
             \begin{tabular}{rrrr}
                     & jrc  & 1bw  & emea \\ \hline
-                jrc & 2.0  & -2.8 & -2.3 \\
-                1bw & -2.2 & 2.4  & -2.6 \\
-                emea& -3.2 & 1.1  & 0.7
+                jrc & 2.0  & \cellcolor{green!25}{-2.8} & \cellcolor{green!25}{-2.3} \\
+                1bw & \cellcolor{green!25}{-2.2} & 2.4  & \cellcolor{green!25}{-2.6} \\
+                emea& \cellcolor{green!25}{-3.2} & 1.1  & 0.7
             \end{tabular}
         \end{block}
     }
@@ -185,18 +275,9 @@
     \frametitle{Results: Effects of different backoff methods}
 
     {\small
-    \begin{columns}[totalwidth=\textwidth]
-        \begin{column}{0.425\textwidth}
-            \begin{block}{\hspace{2.55cm}$n$-grams}
-            \end{block}
-        \end{column}
-        \begin{column}{0.425\textwidth}
-            \begin{block}{Skipgrams}
-            \end{block}
-        \end{column}
-    \end{columns}
-    \begin{columns}[T,totalwidth=\textwidth]
-        \begin{column}{0.425\textwidth}
+    \begin{acolumns}[T,totalwidth=\textwidth]
+        \begin{column}{0.5\textwidth}
+                \begin{block}{\hspace{2.55cm}$n$-grams\vphantom{Skipgrams}}
                 \begin{tabular}{rrrrr}
                                           &       & jrc & 1bw  & emea \\ \cline{3-5}
                     \multirow{3}{*}{jrc}  & ngram & \cellcolor{green!25}{13}  & 1510 & 1081 \\
@@ -211,8 +292,10 @@
                                           & limited& 779 & 1385 & \cellcolor{green!25}{4}    \\
                                           & full   & \cellcolor{green!25}{600} & \cellcolor{green!25}{1143} & 32
                 \end{tabular}
+            \end{block}
         \end{column}
-        \begin{column}{0.425\textwidth}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Skipgrams}
                 \begin{tabular}{rrr}
                     jrc & 1bw  & emea \\ \hline
                     \cellcolor{green!25}{13}  & 1843 & 1295 \\
@@ -227,20 +310,18 @@
                     838 & 1655 & \cellcolor{green!25}{4}    \\
                     \cellcolor{green!25}{581} & \cellcolor{green!25}{1155} & 32
                 \end{tabular}
+            \end{block}
         \end{column}
-    \end{columns}
+    \end{acolumns}
     }
 
 \end{frame}
 
-\begin{frame}\section{Research Plan}
+\section{Research Plan}
+\begin{frame}
     \frametitle{Research Plan}
 
-    \begin{block}{Focus}
-        \begin{itemize}
-            \item Cross domain language modelling with skipgrams
-        \end{itemize}
-    \end{block}
+             Cross domain language modelling with skipgrams
 
     \begin{block}{Experiments}
         \begin{itemize}
@@ -266,7 +347,8 @@
     \end{block}
 \end{frame}
 
-\begin{frame}\section{Side Projects}
+\section{Side Projects}
+\begin{frame}
     \frametitle{Side Projects}
 
     \begin{block}{Parsimonious Language Models}
@@ -291,6 +373,7 @@
     \end{block}
 \end{frame}
 
+\section{Reflections}
 \begin{frame}
     \frametitle{Reflections}
 
@@ -311,7 +394,10 @@
                 \end{itemize}
         \end{itemize}
     \end{block}
+\end{frame}
 
+\begin{frame}
+    \frametitle{Reflections: pt. 2}
     \begin{block}{}
         Little help from outside, but learned anyway
         \begin{itemize}
@@ -323,7 +409,7 @@
     \end{block}
 \end{frame}
 
-\begin{frame}\section{Formalities}
+\begin{frame}
     \frametitle{Formalities}
 
     \begin{block}{Teaching and Supervision}
@@ -334,7 +420,7 @@
     \end{block}
 
     \begin{block}{Training and Education}
-        \begin{columns}[T,totalwidth=\textwidth]
+        \begin{acolumns}[T,totalwidth=\textwidth]
             \begin{column}{0.5\textwidth}
                 \begin{block}{Participated}
                     \begin{itemize}
@@ -342,6 +428,7 @@
                         \item Research methods and methodology
                         \item Applied Bayesian statistics school on Bayesian non-parametrics
                     \end{itemize}
+                    \autoheight
                 \end{block}
             \end{column}    
             \begin{column}{0.5\textwidth}
@@ -351,9 +438,10 @@
                         \item Presentation skills
                         \item Any relevant event
                     \end{itemize}
+                    \autoheight
                 \end{block}
             \end{column}    
-        \end{columns}
+        \end{acolumns}
     \end{block}
 \end{frame}
 
