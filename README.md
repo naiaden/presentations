@@ -2,7 +2,7 @@ This is the new hub for my presentations and themes.
 
 # Usage
 
-Beside an somewhat up-to-date LaTeX installation, you can make most of these presentations by using presentation software that supports presenter notes. Each presentation comes in three files:
+Besides a somewhat up-to-date LaTeX installation, you can make most of these presentations by using presentation software that supports presenter notes. Each presentation comes in three files:
 * -slides: This version contains the slides that are normally only visible to the audience
 * -notes: This version contains only the notes, and are only for the presenter. Each slide has its own page of notes
 * -both: Contains both the slides and notes, side by side
