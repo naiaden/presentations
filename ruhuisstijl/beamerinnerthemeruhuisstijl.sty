@@ -1,45 +1,62 @@
-\mode<presentation>
-
+\RequirePackage{ifthen}
 \RequirePackage[overlay,absolute]{textpos}
 
-\newenvironment{tussenpagina}[2]{\begin{frame}\vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}\begin{textblock}{12}(1.5,1.5)\usebeamerfont{title}{\Huge #1}\par\vspace{0.25cm}\usebeamerfont{subtitle} #2\par\end{textblock}\vspace{-5cm}}{\end{frame}}
+%\newcommand{\dept}{none}
+%\DeclareOptionBeamer{department}{\renewcommand{\dept}{#1}}
+
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\newenvironment{tussenpagina}[2]{%
+    \begin{frame}
+        \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
+        \begin{textblock}{12}(1.5,1.5)
+            \usebeamerfont{title}{\Huge #1}\par
+            \vspace{0.25cm}\usebeamerfont{subtitle} #2\par
+        \end{textblock}
+        \vspace{-5cm}
+}{%
+    \end{frame}
+}%
 
 \setbeamertemplate{background}{
-  %\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-slide.pdf}
-  \ifnum\thepage>1\relax%
-    \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-slide.pdf}
-    \fi
-%  \begin{tikzpicture}
-%  \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
-%    \node at (0,0) {\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{ruhuisstijl2014-43-slide.pdf}};
-%  \ifnum\thepage>1\relax%
-%   \fill[white,opacity=1] (0,0) rectangle(\the\paperwidth,\the\paperheight);
-%   \fi
-%  \end{tikzpicture}
+
+    \ifthenelse{%
+        \equal{\dept}{clst}
+    }{%
+      \ifnum\thepage>1\relax%
+        \includegraphics[width=1\paperwidth]{ruhuisstijl_clst_2014-43-slide.pdf}
+        \fi
+    }{%
+      \ifnum\thepage>1\relax%
+        \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-slide.pdf}
+        \fi
+    }%
+
 }
 
 \defbeamertemplate*{title page}{ruhuisstijl}[1][]
 {
-%\makebox[\textwidth][c]{
-%\begin{tikzpicture}[remember picture, overlay]
-%    \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
-%    \node at (0,0) {\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}};
-%\end{tikzpicture}
-%}
+    \ifthenelse{\equal{\dept}{clst}}{%
+        \ifnum\thepage>1\relax%
+        \else\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{ruhuisstijl_clst_2014-43-front.pdf}
+        \fi
+    }{%
+        \ifnum\thepage>1\relax%
+        \else\vspace*{-0.23cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
+        \fi
+    }%
 
-%    \setlength{\TPHorizModule}{1in}
-%    \setlength{\TPVertModule}{1in}
-
-    \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
-    
     \begin{textblock}{12}(1.5,1.5)
-        \usebeamerfont{title}{\Huge\inserttitle}\par%
-        \vspace{0.25cm}\usebeamerfont{subtitle}\insertsubtitle\par%
+        \begin{beamercolorbox}{title}
+            \usebeamerfont{title}{\Huge\inserttitle}\par%
+            \vspace{0.25cm}%
+            \usebeamerfont{subtitle}\insertsubtitle\par%
+        \end{beamercolorbox}
     \end{textblock}
-%    \begin{tikzpicture}
-%    \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
-%    \node[at=(current page.south east),anchor=south east,inner sep=0pt] {\includegraphics[width=4cm,height=3cm,keepaspectratio]{ruhuisstijl2014-169-front.pdf}};
-%    \end{tikzpicture}
 }
 
 \mode<all>

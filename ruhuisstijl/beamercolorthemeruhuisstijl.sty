@@ -2,8 +2,15 @@
 
 \ProcessOptionsBeamer
 
+
 \setbeamercolor{normal text}{fg=ruhuisstijlzwart}
 \setbeamercolor{frametitle}{fg=ruhuisstijlrood}
+
+\ifthenelse{\equal{\dept}{clst}}{%
+    \setbeamercolor{title}{fg=white}
+}{%
+    \setbeamercolor{title}{fg=black}
+}
 
 
 \mode<all>
