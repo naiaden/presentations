@@ -7,6 +7,9 @@
 \beamer@officialfalse
 \DeclareOptionBeamer{official}[false]{\csname beamer@official#1\endcsname}
 
+\newcommand{\dept}{none}
+\DeclareOptionBeamer{department}{\renewcommand{\dept}{#1}
+
 \ProcessOptionsBeamer
 
 \mode<presentation>
