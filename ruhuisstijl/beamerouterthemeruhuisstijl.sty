@@ -20,6 +20,15 @@
 \setbeamerfont{frametitle}{series=\bfseries}
 \setbeamerfont{blocktitle}{series=\bfseries}
 
+
+\setbeamertemplate{footnote}{%
+    \makebox[1em][l]{\insertfootnotemark}\footnotesize\insertfootnotetext\par%
+}
+
+\setbeamertemplate{footline}{%
+    \vspace{1.25cm}
+}
+
 \ifbeamer@official
     % Removes the figure number from the caption. Use {caption}[numbered] otherwise
     \setbeamertemplate{caption}{\raggedright\insertcaption\par}
@@ -40,19 +49,39 @@
     \setbeamertemplate{itemize item}[circle]
     \setbeamertemplate{itemize subitem}{--}
     \setbeamertemplate{itemize subsubitem}[triangle]
-    \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
-        \usebeamercolor[fg]{itemize item}
-        \usebeamertemplate{itemize item}, nosep, noitemsep}
-    \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
-        \usebeamercolor[fg]{itemize item}
-        %labelsep is the space between the bullet and the text
-        \usebeamertemplate{itemize item}, nosep, labelsep=0pt,leftmargin=0.5em} 
-    \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
-        \usebeamercolor[fg]{itemize subitem}
-        \usebeamertemplate{itemize subitem}, nosep, labelsep=0.5em}
-    \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
-        \usebeamercolor[fg]{itemize subsubitem}
-        \usebeamertemplate{itemize subsubitem}, nosep, noitemsep}
+
+    \ifthenelse{\equal{\dept}{clst}}{%
+        \setlist[description]{labelindent=1em}
+
+        \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
+            \usebeamercolor[fg]{itemize item}
+            \usebeamertemplate{itemize item}}
+        \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
+            \usebeamercolor[fg]{itemize item}
+            %labelsep is the space between the bullet and the text
+            \usebeamertemplate{itemize item},nosep} 
+        \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
+            \usebeamercolor[fg]{itemize subitem}
+            \usebeamertemplate{itemize subitem}}
+        \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
+            \usebeamercolor[fg]{itemize subsubitem}
+            \usebeamertemplate{itemize subsubitem}}
+    }{%
+        \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
+            \usebeamercolor[fg]{itemize item}
+            \usebeamertemplate{itemize item}, nosep, noitemsep}
+        \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
+            \usebeamercolor[fg]{itemize item}
+            %labelsep is the space between the bullet and the text
+            \usebeamertemplate{itemize item}, nosep, labelsep=0pt,leftmargin=0.5em} 
+        \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
+            \usebeamercolor[fg]{itemize subitem}
+            \usebeamertemplate{itemize subitem}, nosep, labelsep=0.5em}
+        \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
+            \usebeamercolor[fg]{itemize subsubitem}
+            \usebeamertemplate{itemize subsubitem}, nosep, noitemsep}
+
+    }
     
     \setbeamercolor{itemize item}{fg=ruhuisstijlzwart}
     \setbeamercolor{itemize subitem}{fg=ruhuisstijlzwart}
