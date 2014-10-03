@@ -25,9 +25,6 @@
     \makebox[1em][l]{\insertfootnotemark}\footnotesize\insertfootnotetext\par%
 }
 
-\setbeamertemplate{footline}{%
-    \vspace{1.25cm}
-}
 
 \ifbeamer@official
     % Removes the figure number from the caption. Use {caption}[numbered] otherwise
@@ -50,7 +47,29 @@
     \setbeamertemplate{itemize subitem}{--}
     \setbeamertemplate{itemize subsubitem}[triangle]
 
+    \setlist[enumerate,1]{%
+      label=\protect\usebeamerfont{enumerate item}%
+            \protect\usebeamercolor[fg]{enumerate item}%
+            \insertenumlabel.}
+    \setlist*[enumerate,2]{%
+      label=\protect\usebeamerfont{enumerate item}%
+            \protect\usebeamercolor[fg]{enumerate item}%
+            \insertenumlabel.}
+
+
     \ifthenelse{\equal{\dept}{clst}}{%
+        \setbeamertemplate{footline}{%
+            \vspace{1.25cm}
+        }
+
+%        \setlist[enumerate,1]{label=\protect\usebeamerfont{enumerate item}%
+%            \protect\usebeamercolor[fg]{enumerate item}%
+%            \insertenumlabel.}
+%        \setlist[enumerate,2]{label=\protect\usebeamerfont{enumerate item}%
+%            \protect\usebeamercolor[fg]{enumerate item}%
+%            \insertenumlabel.}
+
+
         \setlist[description]{labelindent=1em}
 
         \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
@@ -67,16 +86,22 @@
             \usebeamercolor[fg]{itemize subsubitem}
             \usebeamertemplate{itemize subsubitem}}
     }{%
+        \setbeamertemplate{footline}{%
+            \vspace{1.7cm}
+        }
+
+        \setlist[description]{labelindent=\parindent}
+
         \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
             \usebeamercolor[fg]{itemize item}
             \usebeamertemplate{itemize item}, nosep, noitemsep}
         \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
             \usebeamercolor[fg]{itemize item}
             %labelsep is the space between the bullet and the text
-            \usebeamertemplate{itemize item}, nosep, labelsep=0pt,leftmargin=0.5em} 
+            \usebeamertemplate{itemize item}, nosep, labelsep=0pt,leftmargin=\parindent} 
         \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
             \usebeamercolor[fg]{itemize subitem}
-            \usebeamertemplate{itemize subitem}, nosep, labelsep=0.5em}
+            \usebeamertemplate{itemize subitem}, nosep, labelsep=\parindent}
         \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
             \usebeamercolor[fg]{itemize subsubitem}
             \usebeamertemplate{itemize subsubitem}, nosep, noitemsep}
