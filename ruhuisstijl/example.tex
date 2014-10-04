@@ -5,8 +5,8 @@
 \author{lama-fan}
 
 %\usetheme[official=false]{ruhuisstijl}
-\usetheme[official=true]{ruhuisstijl}
-%\usetheme[official=true,department=clst]{ruhuisstijl}
+%\usetheme[official=true]{ruhuisstijl}
+\usetheme[official=true,department=clst]{ruhuisstijl}
 
 \begin{document}
 
@@ -232,6 +232,28 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
         Rij 5 & 105 & 205 & 305 & 405 \\
         \rowstyle{\color{ruhuisstijlrood}}Totaal & 515 & 1015 & 1515 & 2014
     \end{tabular}
+\end{frame}
+
+\begin{frame}{Niet alles blootgeven}
+    De \pause tekst \pause verschijnt \pause in \pause stukken.
+
+    \begin{itemize}
+         \item<+-> dit verschijnt pas als ``stukken .'' getoond is
+         \item<+-> dit verschijnt van de tweede actie tot het einde
+         \item<+-+> dit verschijnt eenmalig van de derde tot de vierde actie
+         \item<-+> Dit zal er staan vanaf het begin tot de vijfde actie.
+         \item<+-> Dit zal er op het einde komen 
+      \end{itemize}
+\end{frame}
+
+\begin{frame}{Nog een ander voorbeeld met stappen}
+    Alert kan \alert<+->{ook}
+    \emph<+->{andere} dingen:
+     
+    \uncover<+->{ zoals}
+    \visible<+->{ dit}
+    \only<+->{ leuke}
+    trucje
 \end{frame}
 
 \end{document}
