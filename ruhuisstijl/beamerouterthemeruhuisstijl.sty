@@ -1,7 +1,6 @@
 \RequirePackage{calc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{ifthen}
-%\RequirePackage{enumitem}
 
 \newif\ifbeamer@official
 \beamer@officialfalse
@@ -16,9 +15,6 @@
 
 
 
-\setbeamerfont{frametitle}{size=\large}
-\setbeamerfont{frametitle}{series=\bfseries}
-\setbeamerfont{blocktitle}{series=\bfseries}
 
 
 \setbeamertemplate{footnote}{%
@@ -29,6 +25,11 @@
 \setbeamertemplate{itemize item}[circle]
 \setbeamertemplate{itemize subitem}{--}
 \setbeamertemplate{itemize subsubitem}[triangle]
+
+\setbeamertemplate{itemize/enumerate body begin}
+  {\renewcommand\theenumii{\theenumi\alph{enumii}}}
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\alph{enumii}.}
 
 \renewcommand{\itemize}[1][]{%
   \beamer@ifempty{#1}{}{\def\beamer@defaultospec{#1}}%
@@ -41,22 +42,23 @@
     \list
       {\usebeamertemplate{itemize \beameritemnestingprefix item}}
       {%
-%          \setlength\itemsep{0pt}%
-%          \setlength\itemindent{1pt}%
-%          \setlength\labelindent{0pt}%
-          \setlength\labelsep{0pt}%
-          \setlength\labelwidth{7pt}%
-%          \setlength\parsep{0pt}%
-%          \setlength\topsep{0pt}%
-%          \setlength\partopsep{0pt}%
-          \setlength\leftmargin{8pt}%
+          \ifbeamer@official
+            \ifthenelse{\equal{\dept}{clst}}{%
+              \setlength\labelsep{10pt}%
+              \setlength\labelwidth{7pt}%
+              \setlength\leftmargin{18pt}%
+            }{%
+              \setlength\labelsep{0pt}%
+              \setlength\labelwidth{7pt}%
+              \setlength\leftmargin{8pt}%
+            }%
+          \else%
+            \relax%
+          \fi%
           \def\makelabel##1{%
           {%
                 \usebeamerfont*{itemize \beameritemnestingprefix item}%
                 \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1\hfill%
-%            \hss\llap{{%
-%                \usebeamerfont*{itemize \beameritemnestingprefix item}%
-%                \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1}}%
           }%
         }%
       }
@@ -67,6 +69,9 @@
 }
 
 
+
+\defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
+\setbeamertemplate{description item}[align left]
 
 
 
