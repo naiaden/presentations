@@ -1,7 +1,7 @@
 \RequirePackage{calc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{ifthen}
-\RequirePackage{enumitem}
+%\RequirePackage{enumitem}
 
 \newif\ifbeamer@official
 \beamer@officialfalse
@@ -26,6 +26,51 @@
 }
 
 
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{itemize subsubitem}[triangle]
+
+\renewcommand{\itemize}[1][]{%
+  \beamer@ifempty{#1}{}{\def\beamer@defaultospec{#1}}%
+  \ifnum \@itemdepth >2\relax\@toodeep\else
+    \advance\@itemdepth\@ne
+    \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+    \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+    \list
+      {\usebeamertemplate{itemize \beameritemnestingprefix item}}
+      {%
+%          \setlength\itemsep{0pt}%
+%          \setlength\itemindent{1pt}%
+%          \setlength\labelindent{0pt}%
+          \setlength\labelsep{0pt}%
+          \setlength\labelwidth{7pt}%
+%          \setlength\parsep{0pt}%
+%          \setlength\topsep{0pt}%
+%          \setlength\partopsep{0pt}%
+          \setlength\leftmargin{8pt}%
+          \def\makelabel##1{%
+          {%
+                \usebeamerfont*{itemize \beameritemnestingprefix item}%
+                \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1\hfill%
+%            \hss\llap{{%
+%                \usebeamerfont*{itemize \beameritemnestingprefix item}%
+%                \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1}}%
+          }%
+        }%
+      }
+  \fi%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
+
+
+
+
+
+
 \ifbeamer@official
     % Removes the figure number from the caption. Use {caption}[numbered] otherwise
     \setbeamertemplate{caption}{\raggedright\insertcaption\par}
@@ -43,74 +88,71 @@
     \setbeamersize{text margin left=1cm}
 
     % Making sure that the lists are looking the same as the Powerpoint equivalents
-    \setbeamertemplate{itemize item}[circle]
-    \setbeamertemplate{itemize subitem}{--}
-    \setbeamertemplate{itemize subsubitem}[triangle]
-
-    \setlist[enumerate,1]{%
-      label=\protect\usebeamerfont{enumerate item}%
-            \protect\usebeamercolor[fg]{enumerate item}%
-            \insertenumlabel.}
-    \setlist*[enumerate,2]{%
-      label=\protect\usebeamerfont{enumerate item}%
-            \protect\usebeamercolor[fg]{enumerate item}%
-            \insertenumlabel.}
-
-
+%
+%    \setlist[enumerate,1]{%
+%      label=\protect\usebeamerfont{enumerate item}%
+%            \protect\usebeamercolor[fg]{enumerate item}%
+%            \insertenumlabel.}
+%    \setlist*[enumerate,2]{%
+%      label=\protect\usebeamerfont{enumerate item}%
+%            \protect\usebeamercolor[fg]{enumerate item}%
+%            \insertenumlabel.}
+%
+%
     \ifthenelse{\equal{\dept}{clst}}{%
         \setbeamertemplate{footline}{%
             \vspace{1.25cm}
         }
-
-%        \setlist[enumerate,1]{label=\protect\usebeamerfont{enumerate item}%
-%            \protect\usebeamercolor[fg]{enumerate item}%
-%            \insertenumlabel.}
-%        \setlist[enumerate,2]{label=\protect\usebeamerfont{enumerate item}%
-%            \protect\usebeamercolor[fg]{enumerate item}%
-%            \insertenumlabel.}
-
-
-        \setlist[description]{labelindent=1em}
-
-        \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
-            \usebeamercolor[fg]{itemize item}
-            \usebeamertemplate{itemize item}}
-        \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
-            \usebeamercolor[fg]{itemize item}
-            %labelsep is the space between the bullet and the text
-            \usebeamertemplate{itemize item},nosep} 
-        \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
-            \usebeamercolor[fg]{itemize subitem}
-            \usebeamertemplate{itemize subitem}}
-        \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
-            \usebeamercolor[fg]{itemize subsubitem}
-            \usebeamertemplate{itemize subsubitem}}
+%
+%%        \setlist[enumerate,1]{label=\protect\usebeamerfont{enumerate item}%
+%%            \protect\usebeamercolor[fg]{enumerate item}%
+%%            \insertenumlabel.}
+%%        \setlist[enumerate,2]{label=\protect\usebeamerfont{enumerate item}%
+%%            \protect\usebeamercolor[fg]{enumerate item}%
+%%            \insertenumlabel.}
+%
+%
+%        \setlist[description]{labelindent=1em}
+%
+%        \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
+%            \usebeamercolor[fg]{itemize item}
+%            \usebeamertemplate{itemize item}}
+%        \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
+%            \usebeamercolor[fg]{itemize item}
+%            %labelsep is the space between the bullet and the text
+%            \usebeamertemplate{itemize item},nosep} 
+%        \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
+%            \usebeamercolor[fg]{itemize subitem}
+%            \usebeamertemplate{itemize subitem}}
+%        \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
+%            \usebeamercolor[fg]{itemize subsubitem}
+%            \usebeamertemplate{itemize subsubitem}}
     }{%
         \setbeamertemplate{footline}{%
             \vspace{1.7cm}
         }
 
-        \setlist[description]{labelindent=\parindent}
+ %       \setlist[description]{labelindent=\parindent}
 
-        \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
-            \usebeamercolor[fg]{itemize item}
-            \usebeamertemplate{itemize item}, nosep, noitemsep}
-        \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
-            \usebeamercolor[fg]{itemize item}
-            %labelsep is the space between the bullet and the text
-            \usebeamertemplate{itemize item}, nosep, labelsep=0pt,leftmargin=\parindent} 
-        \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
-            \usebeamercolor[fg]{itemize subitem}
-            \usebeamertemplate{itemize subitem}, nosep, labelsep=\parindent}
-        \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
-            \usebeamercolor[fg]{itemize subsubitem}
-            \usebeamertemplate{itemize subsubitem}, nosep, noitemsep}
+ %       \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
+ %           \usebeamercolor[fg]{itemize item}
+ %           \usebeamertemplate{itemize item}, nosep, noitemsep}
+ %       \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
+ %           \usebeamercolor[fg]{itemize item}
+ %           %labelsep is the space between the bullet and the text
+ %           \usebeamertemplate{itemize item}, nosep, labelsep=0pt,leftmargin=\parindent} 
+ %       \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
+ %           \usebeamercolor[fg]{itemize subitem}
+ %           \usebeamertemplate{itemize subitem}, nosep, labelsep=\parindent}
+ %       \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
+ %           \usebeamercolor[fg]{itemize subsubitem}
+ %           \usebeamertemplate{itemize subsubitem}, nosep, noitemsep}
 
     }
-    
-    \setbeamercolor{itemize item}{fg=ruhuisstijlzwart}
-    \setbeamercolor{itemize subitem}{fg=ruhuisstijlzwart}
-    \setbeamercolor{itemize subsubitem}{fg=ruhuisstijlzwart}
+ %   
+ %   \setbeamercolor{itemize item}{fg=ruhuisstijlzwart}
+ %   \setbeamercolor{itemize subitem}{fg=ruhuisstijlzwart}
+ %   \setbeamercolor{itemize subsubitem}{fg=ruhuisstijlzwart}
 \else%
     \setbeamertemplate{caption}[default]
 
