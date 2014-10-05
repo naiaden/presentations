@@ -21,6 +21,16 @@
     \makebox[1em][l]{\insertfootnotemark}\footnotesize\insertfootnotetext\par%
 }
 
+%%% Table of content stuff
+\ifbeamer@official
+    \ifthenelse{\equal{\dept}{clst}}{%
+        \relax
+    }{%
+        \setbeamertemplate{subsection in toc}{\leavevmode\leftskip=0.5em\parbox[t]{\textwidth-\leftskip-0.5em}{\inserttocsubsection}\par}
+    }%
+\else%
+    \relax
+\fi
 
 %%% Description stuff
 \ifbeamer@official
