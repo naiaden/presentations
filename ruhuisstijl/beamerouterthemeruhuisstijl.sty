@@ -22,12 +22,42 @@
 }
 
 
+%%% Description stuff
+\ifbeamer@official
+    \setbeamersize{description width=0.5em}
+    \setbeamertemplate{description item}{\hspace*{0.5em}\insertdescriptionitem}
+\else
+    \defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
+    \setbeamertemplate{description item}[align left]
+\fi
+
+%%% Enumeration stuff
+\ifbeamer@official
+    \ifthenelse{\equal{\dept}{clst}}{%
+        \relax
+    }{%
+        \setlength\leftmargini{1em}
+        \setlength\leftmarginii{0.5em}
+        \setlength\leftmarginiii{0.5em}
+        \setlength\labelsep{0.25em}
+        \setlength\labelwidth{\leftmarginii}
+        \setlength\labelwidth{-\labelsep}
+    }%
+\else%
+    \relax
+\fi%
+
+%%% Itemisation stuff
 \setbeamertemplate{itemize item}[circle]
 \setbeamertemplate{itemize subitem}{--}
 \setbeamertemplate{itemize subsubitem}[triangle]
 
 \setbeamertemplate{itemize/enumerate body begin}
-  {\renewcommand\theenumii{\theenumi\alph{enumii}}}
+  {\normalsize\renewcommand\theenumii{\theenumi\alph{enumii}}}
+\setbeamertemplate{itemize/enumerate subbody begin}{\normalsize}
+\setbeamertemplate{itemize/enumerate subsubbody begin}{\normalsize}
+\setbeamertemplate{itemize/enumerate subsubsubbody begin}{\normalsize}
+
 \setbeamertemplate{enumerate item}{\insertenumlabel.}
 \setbeamertemplate{enumerate subitem}{\alph{enumii}.}
 
@@ -43,14 +73,21 @@
       {\usebeamertemplate{itemize \beameritemnestingprefix item}}
       {%
           \ifbeamer@official
+            \setlength\itemsep{0pt}%
+            \setlength\topsep{0pt}%
+            \setlength\partopsep{0pt}%
+            \setlength\parsep{0pt}%
+            \setlength\parskip{0pt}%
             \ifthenelse{\equal{\dept}{clst}}{%
               \setlength\labelsep{10pt}%
               \setlength\labelwidth{7pt}%
               \setlength\leftmargin{18pt}%
             }{%
-              \setlength\labelsep{0pt}%
-              \setlength\labelwidth{7pt}%
-              \setlength\leftmargin{8pt}%
+              \setlength\leftmargini{1em}%
+              \setlength\leftmarginii{0.5em}%
+              \setlength\leftmarginiii{0.5em}%
+              \setlength\labelsep{0.25em}%
+              \setlength\labelwidth{0.6em}%
             }%
           \else%
             \relax%
@@ -68,10 +105,6 @@
   \beamer@firstlineitemizeunskip%
 }
 
-
-
-\defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
-\setbeamertemplate{description item}[align left]
 
 
 
