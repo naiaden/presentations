@@ -5,14 +5,25 @@
 
 \mode<presentation>
 
-\newenvironment{tussenpagina}[2]{%
+\newenvironment{tussenpagina}[3]{%
     \begin{frame}
-        \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
+        \ifthenelse{\equal{\dept}{clst}}{%
+            \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=12.8cm,height=8.34cm]{#3}
         \begin{textblock}{12}(1.5,1.5)
             \usebeamerfont{title}{\Huge #1}\par
             \vspace{0.25cm}\usebeamerfont{subtitle} #2\par
         \end{textblock}
         \vspace{-5cm}
+        }{%
+            \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
+        \includegraphics[width=0.5\textwidth]{#3}
+        \begin{textblock}{12}(1.5,1.5)
+            \usebeamerfont{title}{\Huge #1}\par
+            \vspace{0.25cm}\usebeamerfont{subtitle} #2\par
+        \end{textblock}
+        \vspace{-5cm}
+        \includegraphics[width=0.5\textwidth]{#3}
+            }%
 }{%
     \end{frame}
 }%

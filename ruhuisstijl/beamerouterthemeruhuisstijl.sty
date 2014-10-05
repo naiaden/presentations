@@ -24,8 +24,13 @@
 
 %%% Description stuff
 \ifbeamer@official
-    \setbeamersize{description width=0.5em}
-    \setbeamertemplate{description item}{\hspace*{0.5em}\insertdescriptionitem}
+    \ifthenelse{\equal{\dept}{clst}}{%
+        \defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
+        \setbeamertemplate{description item}[align left]
+    }{%
+        \setbeamersize{description width=0.5em}
+        \setbeamertemplate{description item}{\hspace*{0.5em}\insertdescriptionitem}
+    }%
 \else
     \defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
     \setbeamertemplate{description item}[align left]
