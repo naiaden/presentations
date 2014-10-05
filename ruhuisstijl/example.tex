@@ -1,9 +1,24 @@
-\documentclass[xcolor=table,10pt,t]{beamer}
-\title{RU Beamer}
+% This file shows how to use the beamer template ruhuisstijl. It 
+% mimics the corporate and departemental style for the Radboud 
+% University powerpoint presentations.
+% 
+% For comments, questions, and suggestions contact me at 
+% l.onrust@let.ru.nl or visit the github repository on
+% https://github.com/naiaden/presentations/tree/master/ruhuisstijl
+%
+% You can distribute and edit the files as you wish, but I'd
+% love to hear of any changes. Also, if you let me know that
+% you are using the template, I can keep you up-to-date on
+% future changes.
+
+\documentclass[handout,xcolor=table,10pt,t]{beamer}
+\title{Wie weet er wat er gebeurt als je een vele te lange titel neemt?}
 \subtitle{Gebruiksvoorwaarden \& sjablonen (juli 2014)}
 \date{\today}
 \author{lama-fan}
 
+%% Use the official themes as much as possible
+%\usetheme[official=false,department=clst]{ruhuisstijl}
 %\usetheme[official=false]{ruhuisstijl}
 %\usetheme[official=true]{ruhuisstijl}
 \usetheme[official=true,department=clst]{ruhuisstijl}
@@ -17,6 +32,9 @@
 \begin{frame}{Overzicht}
     \tableofcontents
 \end{frame}
+\note[itemize]{
+    \item Dit is een van de drie notities die ik gemaakt heb
+}
 
 \section{Voorwaarden}
 \subsection{Algemeen}
@@ -199,6 +217,9 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
         \caption{Afbeelding met bijschrift}
     \end{figure}
 \end{frame}
+\note{
+    Haha, dit plaatje!
+}
 
 \subsection{Tabel}
 \begin{frame}
@@ -237,6 +258,9 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \only<+->{ leuke}
     trucje
 \end{frame}
+\note[itemize]{
+    \item Hier is nummer drie dan!
+}
 
 \begin{frame}{Hebban olla vogala nestas hagunnan hinase hic anda thu?}
     \begin{itemize}
@@ -311,6 +335,20 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \end{split}
 \end{equation}
 
+\end{frame}
+
+\begin{frame}{Tips}
+    \begin{block}{Handout}
+        Als je in de preamble \texttt{handout} als optie aan de documentclass \texttt{beamer} meegeeft, dan maakt hij per slide 1 pagina aan. Ook al gebruik je overlays en stapsgewijze opsommingen.
+    \end{block}
+
+    \begin{block}{Inhoudsopgave per sectie}
+        Als je superveel te vertellen hebt, maak dan een slide aan met een inhoudsopgave van het hoofdstuk wat je op dat moment gaat beginnen met \texttt{\textbackslash tableofcontents[currentsection]}
+    \end{block}
+
+    \begin{block}{Notities voor op het tweede scherm}
+        Net als de presenter view van PowerPoint, kun je met \texttt{beamer} ook notities maken. In deze presentatie vind je er drie. Zoek in de source code maar op \texttt{\textbackslash note}. Standaard staan ze aan, maar als je na je frame niet aangeeft dat je notes wilt, dan wordt er ook geen pagina voor aangemaakt. 
+    \end{block}
 \end{frame}
 
 \end{document}

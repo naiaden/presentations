@@ -1,5 +1,17 @@
+% This beamer template mimics the corporate and departemental
+% style for the Radboud University powerpoint presentations.
+% 
+% For comments, questions, and suggestions contact me at 
+% l.onrust@let.ru.nl or visit the github repository on
+% https://github.com/naiaden/presentations/tree/master/ruhuisstijl
+%
+% You can distribute and edit the files as you wish, but I'd
+% love to hear of any changes. Also, if you let me know that
+% you are using the template, I can keep you up-to-date on
+% future changes.
+
 \RequirePackage{ifthen}
-\RequirePackage[overlay,absolute]{textpos}
+\RequirePackage{calc}
 
 \ProcessOptionsBeamer
 
@@ -9,27 +21,25 @@
     \begin{frame}
         \ifthenelse{\equal{\dept}{clst}}{%
             \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=12.8cm,height=8.34cm]{#3}
-        \begin{textblock}{12}(1.5,1.5)
-            \usebeamerfont{title}{\Huge #1}\par
-            \vspace{0.25cm}\usebeamerfont{subtitle} #2\par
-        \end{textblock}
-        \vspace{-5cm}
+            \vspace*{-7.5cm}
         }{%
             \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
-        \includegraphics[width=0.5\textwidth]{#3}
-        \begin{textblock}{12}(1.5,1.5)
-            \usebeamerfont{title}{\Huge #1}\par
-            \vspace{0.25cm}\usebeamerfont{subtitle} #2\par
-        \end{textblock}
-        \vspace{-5cm}
-        \includegraphics[width=0.5\textwidth]{#3}
-            }%
+            \vspace*{-5cm}
+            \includegraphics[width=0.5\textwidth]{#3}\par%
+            \vspace*{-8cm}
+        }
+        \begin{minipage}[t][2.5cm][t]{10cm}%
+            \begin{beamercolorbox}{title}%
+                \usebeamerfont{title}{\Huge#1}\par%
+                \vspace{0.25cm}%
+                \usebeamerfont{subtitle}#2\par%
+            \end{beamercolorbox}%
+        \end{minipage}%
 }{%
     \end{frame}
 }%
 
 \setbeamertemplate{background}{
-
     \ifthenelse{%
         \equal{\dept}{clst}
     }{%
@@ -41,7 +51,6 @@
         \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-slide.pdf}
         \fi
     }%
-
 }
 
 \defbeamertemplate*{title page}{ruhuisstijl}[1][]
@@ -57,14 +66,14 @@
             \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
         \fi
     }%
-
-    \begin{textblock}{12}(1.5,1.5)
-        \begin{beamercolorbox}{title}
+    \vspace*{-8.5cm}
+    \begin{minipage}[t][2.5cm][t]{10cm}%
+        \begin{beamercolorbox}{title}%
             \usebeamerfont{title}{\Huge\inserttitle}\par%
             \vspace{0.25cm}%
             \usebeamerfont{subtitle}\insertsubtitle\par%
-        \end{beamercolorbox}
-    \end{textblock}
+        \end{beamercolorbox}%
+    \end{minipage}%
 }
 
 \mode<all>

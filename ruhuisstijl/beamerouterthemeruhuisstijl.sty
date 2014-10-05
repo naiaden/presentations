@@ -1,3 +1,15 @@
+% This beamer template mimics the corporate and departemental
+% style for the Radboud University powerpoint presentations.
+% 
+% For comments, questions, and suggestions contact me at 
+% l.onrust@let.ru.nl or visit the github repository on
+% https://github.com/naiaden/presentations/tree/master/ruhuisstijl
+%
+% You can distribute and edit the files as you wish, but I'd
+% love to hear of any changes. Also, if you let me know that
+% you are using the template, I can keep you up-to-date on
+% future changes.
+
 \RequirePackage{calc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{ifthen}
@@ -13,9 +25,16 @@
 
 \mode<presentation>
 
-
-
-
+%%% Footnote stuff
+\ifthenelse{\equal{\dept}{clst}}{%
+    \setbeamertemplate{footline}{%
+        \vspace{1.25cm}
+    }
+}{%
+    \setbeamertemplate{footline}{%
+        \vspace{1.7cm}
+    }
+}
 
 \setbeamertemplate{footnote}{%
     \makebox[1em][l]{\insertfootnotemark}\footnotesize\insertfootnotetext\par%
@@ -120,10 +139,6 @@
   \beamer@firstlineitemizeunskip%
 }
 
-
-
-
-
 \ifbeamer@official
     % Removes the figure number from the caption. Use {caption}[numbered] otherwise
     \setbeamertemplate{caption}{\raggedright\insertcaption\par}
@@ -139,73 +154,6 @@
     % The original style requires 2.5cm margin, whatever that means. Our frames
     % are not of the same size, so we have to "scale" it. 1cm seems to be reasonable
     \setbeamersize{text margin left=1cm}
-
-    % Making sure that the lists are looking the same as the Powerpoint equivalents
-%
-%    \setlist[enumerate,1]{%
-%      label=\protect\usebeamerfont{enumerate item}%
-%            \protect\usebeamercolor[fg]{enumerate item}%
-%            \insertenumlabel.}
-%    \setlist*[enumerate,2]{%
-%      label=\protect\usebeamerfont{enumerate item}%
-%            \protect\usebeamercolor[fg]{enumerate item}%
-%            \insertenumlabel.}
-%
-%
-    \ifthenelse{\equal{\dept}{clst}}{%
-        \setbeamertemplate{footline}{%
-            \vspace{1.25cm}
-        }
-%
-%%        \setlist[enumerate,1]{label=\protect\usebeamerfont{enumerate item}%
-%%            \protect\usebeamercolor[fg]{enumerate item}%
-%%            \insertenumlabel.}
-%%        \setlist[enumerate,2]{label=\protect\usebeamerfont{enumerate item}%
-%%            \protect\usebeamercolor[fg]{enumerate item}%
-%%            \insertenumlabel.}
-%
-%
-%        \setlist[description]{labelindent=1em}
-%
-%        \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
-%            \usebeamercolor[fg]{itemize item}
-%            \usebeamertemplate{itemize item}}
-%        \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
-%            \usebeamercolor[fg]{itemize item}
-%            %labelsep is the space between the bullet and the text
-%            \usebeamertemplate{itemize item},nosep} 
-%        \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
-%            \usebeamercolor[fg]{itemize subitem}
-%            \usebeamertemplate{itemize subitem}}
-%        \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
-%            \usebeamercolor[fg]{itemize subsubitem}
-%            \usebeamertemplate{itemize subsubitem}}
-    }{%
-        \setbeamertemplate{footline}{%
-            \vspace{1.7cm}
-        }
-
- %       \setlist[description]{labelindent=\parindent}
-
- %       \setlist[itemize,0]{label=\usebeamerfont*{itemize item}%
- %           \usebeamercolor[fg]{itemize item}
- %           \usebeamertemplate{itemize item}, nosep, noitemsep}
- %       \setlist[itemize,1]{label=\usebeamerfont*{itemize item}%
- %           \usebeamercolor[fg]{itemize item}
- %           %labelsep is the space between the bullet and the text
- %           \usebeamertemplate{itemize item}, nosep, labelsep=0pt,leftmargin=\parindent} 
- %       \setlist[itemize,2]{label=\usebeamerfont*{itemize subitem}%
- %           \usebeamercolor[fg]{itemize subitem}
- %           \usebeamertemplate{itemize subitem}, nosep, labelsep=\parindent}
- %       \setlist[itemize,3]{label=\usebeamerfont*{itemize subsubitem}%
- %           \usebeamercolor[fg]{itemize subsubitem}
- %           \usebeamertemplate{itemize subsubitem}, nosep, noitemsep}
-
-    }
- %   
- %   \setbeamercolor{itemize item}{fg=ruhuisstijlzwart}
- %   \setbeamercolor{itemize subitem}{fg=ruhuisstijlzwart}
- %   \setbeamercolor{itemize subsubitem}{fg=ruhuisstijlzwart}
 \else%
     \setbeamertemplate{caption}[default]
 
@@ -216,23 +164,14 @@
     \setbeamertemplate{block end}{\vskip\smallskipamount}
 \fi%
 
-\defbeamertemplate*{frametitle}{ruhuisstijl}[1][]
+\setbeamertemplate{frametitle}
 {
-    \vspace{1.25cm}
-    \ifbeamer@official
-        \begin{textblock}{12}(1.25,1.05)
-            \begin{beamercolorbox}{frametitle}
-                \insertframetitle\par%
-            \end{beamercolorbox}
-        \end{textblock}
-    \else%
-        \begin{textblock}{12}(1.25,1.05)
-            \begin{beamercolorbox}{frametitle}
-                \insertframetitle\par%
-            \end{beamercolorbox}
-        \end{textblock}
-    \fi%    
-
+    \vspace*{1.5em}%
+    \begin{minipage}[t][.5cm][t]{10cm}%
+        \begin{beamercolorbox}{frametitle}%
+            \raggedright\insertframetitle\par%
+        \end{beamercolorbox}%
+    \end{minipage}
 }
 
 \mode<all>
