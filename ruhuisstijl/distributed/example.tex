@@ -1,0 +1,360 @@
+%% This file shows how to use the beamer template ruhuisstijl. It 
+%% mimics the corporate and departemental style for the Radboud 
+%% University powerpoint presentations. This file contains the 
+%% single-file version of the template. The full (multiple-file)
+%% version is always up-to-date, so try that version first if you
+%% encounter any problems.
+%% 
+%% For comments, questions, and suggestions contact me at 
+%% l.onrust@let.ru.nl or visit the github repository on
+%% https://github.com/naiaden/presentations/tree/master/ruhuisstijl
+%% (this single-file version can be found in the distributed dir)
+%%
+%% You can distribute and edit the files as you wish, but I'd
+%% love to hear of any changes. Also, if you let me know that
+%% you are using the template, I can keep you up-to-date on
+%% future changes.
+
+\documentclass[department=clst, notes={hide notes}, slidesperpage=4, handout, official=true]{beamerruhuisstijl}
+%% The class takes the following optional arguments:
+%% notes: {show notes}, {hide notes}, {show only notes}
+%% official: true, false
+%% department: clst
+%% handout
+%% slidesperpage: 1, 2, 3, 4, 6 
+
+\title{Wie weet er wat er gebeurt als je een vele te lange titel neemt?}
+\subtitle{Gebruiksvoorwaarden \& sjablonen (juli 2014)}
+\date{\today}
+\author{lama-fan}
+
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Overzicht}
+    \tableofcontents
+\end{frame}
+\note[itemize]{
+    \item Dit is een van de drie notities die ik gemaakt heb
+}
+
+\section{Voorwaarden}
+\subsection{Algemeen}
+\begin{frame}
+    \frametitle{Gebruiksvoorwaarden algemeen}
+
+    \begin{block}{Titelpagina's (rood)}
+        \begin{itemize}
+            \item Maak altijd gebruik van de rode titelpagina met het logo van de Radboud Universiteit rechtsonder
+            \item Er mogen geen extra tekstvelden of afbeeldingen worden toegevoegd
+            \item Indien een openingspagina als tussenpagina wordt gebruikt mogen er wel afbeeldingen toegevoegd worden
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Tekstpagina's}
+        \begin{itemize}
+            \item Gebruik voor tekstpagina's altijd de witte dia met het logo in de rode balk
+            \item Teksten linkslijnend plaatsen, niet centreren
+        \end{itemize}
+    \end{block}
+\end{frame} 
+
+\subsection{Tekstpagina's}
+\begin{frame}
+    \frametitle{Gebruiksvoorwaarden tekstpagina's (witte achtergrond)}
+
+    \begin{block}{Maak altijd gebruik van lettertype Arial}
+        \begin{itemize}
+            \item Paginatitel: standaard, grootte 30 pt
+            \item Tekst/inhoud: standaard, grootte 25 pt (of 21 pt)
+            \item Tussenkoppen: vet, grootte 25 pt (of 21 pt)
+            \item Fotobijschriften: standaard, grootte 18 pt
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Plaats teksten altijd in zwart of rood}
+        \begin{description}
+            \item[Paginatitel] RU huisstijl rood \emph{(RGB: 190, 49, 26)}% Ook maar eens even kijken wat er gebeurt als deze regel te lang is.
+            \item[Inhoud tekst en tussenkoppen] zwart
+        \end{description}
+    \end{block}
+
+    \begin{block}{Maak altijd gebruik vastgestelde kantlijn}
+        \begin{itemize}
+            \item Titel en tekst/inhoud\footnote{Afbeeldingen en teksten mogen nooit over de onderste lijn en het logo geplaatst worden.}
+: horizontaal vanaf links 2,5 cm
+            \item Titel: verticaal vanaf boven 2 cm
+            \item Tekst/inhoud: verticaal vanaf boven 5 cm
+        \end{itemize}
+    \end{block}
+
+\end{frame}
+
+\section{Kleuren}
+\begin{frame}
+    \frametitle{Kleuren in het RU Thema}
+
+    Zwart: RGB 0/0/0 \\
+    Wit: RGB 250/250/250 \\
+    \rured{Rood: RGB 190/49/26 (RU huisstijl rood)} \\
+    \href{http://google.com/}{Hyperlink: RGB 190/49/26 (RU huisstijl rood)}
+\end{frame}
+
+\section{Sjablonen}
+\begin{frame}
+    \frametitle{Sjablonen}
+    
+    \begin{block}{}
+        Alle gebruikte sjablonen zijn aangemaakt in het basisdocument. \\
+        U vindt de sjablonen onder Dia's > indelingen.
+    \end{block}
+
+    \begin{block}{}
+        Gebruik sjablonen uit de mappen:
+        \begin{itemize}
+            \item Dia's > Indelingen > \rured{RU Tekstpagina's}
+            \item Dia's > Indelingen > \rured{RU Titelpagina's}
+        \end{itemize}
+    \end{block}
+
+    \footnotetext{Hierna volgen enkele voorbeeldpagina's, de paginatitels zijn gelijk aan de naam van het sjabloon}
+
+\end{frame}
+
+\section{Voorbeeldslides}
+\subsection{Tussenpagina}
+\begin{tussenpagina}{Tussenpagina}{Op een tussenpagina mag wel extra beeld toegevoegd worden.}{imagebackground.jpg}
+        %\includegraphics[width=0.5\textwidth]{image.png}
+\end{tussenpagina}
+
+\subsection{Blokken}
+\begin{frame}
+    \frametitle{Titel en object}
+
+    \begin{block}{Dit is een tussenkop}
+    Rectiatem sunto bla velesti berestrupta conseria quam quae commo et eaquam quo dolent omnistis estion cuptatet duciendae dolorunt ipit, omnimus trumqui ommolor simporuntium fugit eicatem quis autem eatemquiam nissum eatum facerit inciis voluptas quae aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapid.
+    \end{block}
+
+    \begin{block}{}
+    Een opsomming:
+    \begin{itemize}
+        \item que volore non etur aut laborum, te repudam, sus es acerrov itatest omnitatur, ea vid qui tempore re, alique.
+        \begin{itemize}
+            \item Am restibusam nihillor 
+            \item Alias ne officati officate
+            \item Sequae dollitate porat vitatem
+        \end{itemize}
+    \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Twee objecten}
+
+    \begin{columns}[T,totalwidth=\linewidth]
+        \begin{column}{0.475\textwidth}
+        \begin{block}{Dit sjabloon kunt u gebruiken voor twee tekstkolommen}
+            Berestrupta conseria quam quae commo et eaquam quo dolent omnistis estion cuptatet duciendae ommolor simporuntium fugit eicatem quis autem eatemquiam nissum eatum facerit inciis voluptas quae 
+aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapid molore autestium dio el in pelibea rcimustio esectae moluption reriam.
+        \end{block}
+        \end{column}
+        \begin{column}{0.475\textwidth}
+            \begin{block}{}
+                Am restibusam nihillor alias ne officati officate numet, quiate autem rerro ipsam, sequae dollitate porat vitatem litatiaestis acesequid et ut moluptas dolorum voluptat a poruntibus imillaut fugia velitatempor.
+            \end{block}
+            \begin{block}{}
+                Magniscil illuptibus moleceria cumquis doluptu saerro in coresto volorecesse modit qui omnima volluptur, quo magnia coratis dus et faccae non plibusant. Ugit voluptatio eseria possimaio opturitatur.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Twee objecten}
+
+    \begin{columns}[T,totalwidth=\linewidth]
+        \begin{column}{0.475\textwidth}
+            \begin{block}{Maar ook voor een tekstkolom en een afbeelding}
+                Rectiatem sunto bla velesti berestrupta conseria quam quae omnistis estion cuptatet duciendae ommolor simporuntium fugit eicatem quis autem eatemquiam nissum eatum facerit inciis voluptas quae 
+aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapid molore autestium dio el in pelibea rcimustio esectae moluption reriam.
+            \end{block}
+        \end{column}
+        \begin{column}{0.475\textwidth}
+            \includegraphics[width=\textwidth]{image.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Vergelijking}
+        
+    \begin{columns}[T,totalwidth=\linewidth]
+        %\begin{column}{0.475\textwidth}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Sapienis simet esto ugit voluptatio eseria possimaio opturitatur}
+                \begin{itemize}
+                    \item Nem aut aut ipsa nest volo doluptat vendelique nimus simossi.
+                    \item Magnihi cimaios descidist verum, con rere que molenis adipsus apisin repressunt atibuscipsum.
+                    \item Velibust praestiore natur, coresed que que dolut raturer roreperciae veribus num voloreiciet arum que.
+                    \item Quatemped unt la dolores sequodi gnataes dictibus estrunt iorers pedia de pelluptae.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Imus acerita dis quasper lita tiaestis acesequid et ut moluptas}
+                \begin{itemize}
+                    \item Quisqui aut aut volutem quam quo tet, quam iliquiatqui conseque dita
+                    \item Aut harum ipsam vid untia ne dolupta corum de qui.
+                    \item Aut qui ut utet everrum quatur sunto ea sunt lam que sae lit aut volupta turerum exeri.
+                    \item Dolorit odi utemqui coris magnatus experfe rionsequam rera vel mil maiorupta serae dolupiet ius aliciti simagnimodi.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \begin{figure}
+        \includegraphics[height=0.6\paperheight]{image.png}
+        \caption{Afbeelding met bijschrift}
+    \end{figure}
+\end{frame}
+\note{
+    Haha, dit plaatje!
+}
+
+\subsection{Tabel}
+\begin{frame}
+    \frametitle{Voorbeeld van een tabel}
+
+    \begin{tabular}{=l +r +r +r +r }
+        \rowcolor{ruhuisstijlrood}\rowstyle{\color{white}} & Kolom 1 & Kolom 2 & Kolom 3 & Kolom 4 \\
+        Rij 1 & 101 & 201 & 301 & 401 \\
+        Rij 2 & 102 & 202 & 302 & 402 \\
+        Rij 3 & 103 & 203 & 303 & 403 \\
+        Rij 4 & 104 & 204 & 304 & 404 \\
+        Rij 5 & 105 & 205 & 305 & 405 \\
+        \rowstyle{\color{ruhuisstijlrood}}Totaal & 515 & 1015 & 1515 & 2014
+    \end{tabular}
+\end{frame}
+
+\subsection{De rest}
+\begin{frame}{Niet alles blootgeven}
+    De \pause tekst \pause verschijnt \pause in \pause stukken.
+
+    \begin{itemize}
+         \item<+-> dit verschijnt pas als ``stukken .'' getoond is
+         \item<+-> dit verschijnt van de tweede actie tot het einde
+         \item<+-+> dit verschijnt eenmalig van de derde tot de vierde actie
+         \item<-+> Dit zal er staan vanaf het begin tot de vijfde actie.
+         \item<+-> Dit zal er op het einde komen 
+      \end{itemize}
+\end{frame}
+
+\begin{frame}{Nog een ander voorbeeld met stappen}
+    Alert kan \alert<+->{ook}
+    \emph<+->{andere} dingen:
+     
+    \uncover<+->{ zoals}
+    \visible<+->{ dit}
+    \only<+->{ leuke}
+    trucje
+\end{frame}
+\note[itemize]{
+    \item Hier is nummer drie dan!
+}
+
+\begin{frame}{Hebban olla vogala nestas hagunnan hinase hic anda thu?}
+    \begin{itemize}
+        \item Wat unbidan we nu
+        \begin{itemize}
+            \item Habent omnes uolucres nidos inceptos nisi ego et tu. Quid expectamus nunc.
+            \begin{itemize}
+                \item Have all birds begun nests, except me and you, what are we waiting for?
+                \item Es haben alle V\"ogel Nester begonnen, nicht aber ich und du, was wartet Ihr nun? 
+            \end{itemize}
+        \end{itemize}
+        \item De tekst, die werd geschreven door een West-Vlaamse kopiist,
+        \item dateert naar schatting uit het derde kwart van de 11e eeuw.
+        \item  De eerste twee zinnen zijn in het Latijn. 
+        \item De taal waarin de rest van de tekst geschreven is wordt door de meeste taalkundigen als Oud-Westnederfrankisch aangeduid
+        \item maar hierover bestaat nog controverse.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Hier tellen we mee}
+    Eerst maar eens de kantlijn bepalen.
+    \begin{enumerate}
+        \item Tel je mee?
+        \item De tweede
+        \item Drie!
+        \begin{enumerate}
+            \item Drie-en-een-beetje
+            \item Drie-en-half
+            \item \label{haha} Twee ei is geen ei
+        \end{enumerate}
+        \item Vier!!!!!
+    \end{enumerate}
+
+    H\'e, \ref{haha} hoort daar helemaal niet.
+
+    \begin{description}
+        \item[Een item] Ook de description maar even testen met een veel-te-lange regel om te kijken wat er dan gebeurt.
+        \item[Mag] ook kort zijn uiteraard.
+        \item[Maar wat nu als] het label van zichzelf wel erg lang is?
+    \end{description}
+\end{frame}
+
+\begin{frame}{Opsommingen enzo}
+    Eerst even wat normale tekst om de kantlijn te bepalen.
+    \begin{itemize}
+        \item[$\star$] Item 0
+        \item Dit is item 1
+        \begin{itemize}
+            \item Dit is een ander item 1.1
+            \item[$\Gamma$] Een \emph{custom} item 1.2
+            \begin{itemize}
+                \item $\alpha \beta \gamma$
+                \item Maak deze regel dan maar gewoon lekker lang om te zien hoe de indentatie is.
+            \end{itemize}
+        \end{itemize}
+        \item Item 2 dan maar
+    \end{itemize}
+
+    \begin{enumerate}
+        \item First item
+        \begin{enumerate}
+            \item Nested.
+        \end{enumerate}
+    \end{enumerate}
+
+\[ a+b=4 \]
+
+\begin{equation}
+    \begin{split}
+        a = 2 \\
+        b = 2
+    \end{split}
+\end{equation}
+
+\end{frame}
+
+\begin{frame}{Tips}
+    \begin{block}{Handout}
+        Als je in de preamble \texttt{handout} als optie aan de documentclass \texttt{beamerruhuisstijl} meegeeft, dan maakt hij per slide 1 pagina aan. Ook al gebruik je overlays en stapsgewijze opsommingen.
+    \end{block}
+
+    \begin{block}{Inhoudsopgave per sectie}
+        Als je superveel te vertellen hebt, maak dan een slide aan met een inhoudsopgave van het hoofdstuk wat je op dat moment gaat beginnen met \texttt{\textbackslash tableofcontents[currentsection]}
+    \end{block}
+
+    \begin{block}{Notities voor op het tweede scherm}
+        Net als de presenter view van PowerPoint, kun je met \texttt{beamer} ook notities maken. In deze presentatie vind je er drie. Zoek in de source code maar op \texttt{\textbackslash note}. Standaard staan ze aan, maar als je na je frame niet aangeeft dat je notes wilt, dan wordt er ook geen pagina voor aangemaakt. 
+    \end{block}
+\end{frame}
+
+\end{document}
