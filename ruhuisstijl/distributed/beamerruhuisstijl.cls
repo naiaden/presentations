@@ -1,5 +1,19 @@
+%% This file implements the beamer template for the 2014 Radboud 
+%% University corporate style. It also contains the template for
+%% the Centre for Language and Speech Technology department.
+%%
+%% For comments, questions, and suggestions contact me at
+%% l.onrust@let.ru.nl or visit the github repository on
+%% https://github.com/naiaden/presentations/tree/master/ruhuisstijl
+%% (this single-file version can be found in the distributed dir)
+%%
+%% You can distribute and edit the files as you wish, but I'd
+%% love to hear of any changes. Also, if you let me know that
+%% you are using the template, I can keep you up-to-date on
+%% future changes.
+
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{beamerruhuisstijl}
+\ProvidesClass{beamerruhuisstijl}[2014/10/07 Beamer template for Radboud University corporate style]
 
 \LoadClass[xcolor=table,10pt,t]{beamer}
 
@@ -10,25 +24,18 @@
 \RequirePackage{ifthen}
 \RequirePackage{tikz}
 
-%\newcommand{\dept}{none}
-%\DeclareOption{department}{\typeout{Saw #1}\renewcommand{\dept}{#1}}
-%
-%\newcommand{\offcl}{false}
-%\DeclareOption{official}{\renewcommand{\official}{#1}}
-
 \newif\ifbeamer@official
 \beamer@officialfalse
 \DeclareOptionBeamer{official}[false]{\csname beamer@official#1\endcsname}
 
+\DeclareOptionBeamer{handout}{\gdef\beamer@currentmode{handout}}
+
+\newcommand{\notes}{hide notes}
+\DeclareOptionBeamer{notes}{\renewcommand{\notes}{#1}}
+
 \newcommand{\dept}{none}
 \DeclareOptionBeamer{department}{\renewcommand{\dept}{#1}}
-%
-%%\DeclareOptionBeamer{official}
-%%{\PassOptionsToPackage{official=#1}{beamerouterthemeruhuisstijl}}
-%%
-%%\DeclareOptionBeamer{department}
-%%{\PassOptionsToPackage{department=#1}{beamerouterthemeruhuisstijl}}
-%
+
 \newcommand{\spp}{1}
 \DeclareOptionBeamer{slidesperpage}{\renewcommand{\spp}{#1}}
 
@@ -37,332 +44,332 @@
 }
 
 \ProcessOptionsBeamer
-%
-%\pgfpagesdeclarelayout{3 on 1}
-%{
-%  \edef\pgfpageoptionheight{\the\paperwidth} % landscaped by default
-%  \edef\pgfpageoptionwidth{\the\paperheight}
-%  \def\pgfpageoptionborder{0pt}
-%  \def\pgfpageoptionfirstshipout{1}
-%}
-%{
-%  \pgfpagesphysicalpageoptions
-%  {%
-%    logical pages=3,%
-%    physical height=\pgfpageoptionheight,%
-%    physical width=\pgfpageoptionwidth,%
-%    current logical shipout=\pgfpageoptionfirstshipout%
-%  }
-%  \ifdim\paperheight>\paperwidth\relax
-%    % put side-by-side
-%    \pgfpageslogicalpageoptions{1}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=.33\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.1667\pgfphysicalwidth}{.5\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{2}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=.33\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{3}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=.33\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.8333\pgfphysicalwidth}{.5\pgfphysicalheight}%
-%    }%
-%  \else
-%    % stack on top of one another
-%    \pgfpageslogicalpageoptions{1}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=\pgfphysicalwidth,%
-%      resized height=.33\pgfphysicalheight,%
-%      center=\pgfpoint{.5\pgfphysicalwidth}{.8333\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{2}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=\pgfphysicalwidth,%
-%      resized height=.33\pgfphysicalheight,%
-%      center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{3}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=\pgfphysicalwidth,%
-%      resized height=.33\pgfphysicalheight,%
-%      center=\pgfpoint{.5\pgfphysicalwidth}{.1667\pgfphysicalheight}%
-%    }%
-%  \fi
-%}
-%
-%\pgfpagesdeclarelayout{6 on 1}
-%{
-%  \edef\pgfpageoptionheight{\the\paperwidth} % landscaped by default
-%  \edef\pgfpageoptionwidth{\the\paperheight}
-%  \def\pgfpageoptionborder{0pt}
-%  \def\pgfpageoptionfirstshipout{1}
-%}
-%{
-%  \pgfpagesphysicalpageoptions
-%  {%
-%    logical pages=6,%
-%    physical height=\pgfpageoptionheight,%
-%    physical width=\pgfpageoptionwidth,%
-%    current logical shipout=\pgfpageoptionfirstshipout%
-%  }
-%  \ifdim\paperheight>\paperwidth\relax
-%    % put side-by-side
-%    \pgfpageslogicalpageoptions{1}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.1667\pgfphysicalwidth}{.25\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{3}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.5\pgfphysicalwidth}{.25\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{5}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.8333\pgfphysicalwidth}{.25\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{2}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.1667\pgfphysicalwidth}{.75\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{4}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.5\pgfphysicalwidth}{.75\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{6}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.8333\pgfphysicalwidth}{.75\pgfphysicalheight}%
-%    }%
-%  \else
-%    % stack on top of one another
-%    \pgfpageslogicalpageoptions{1}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=0.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.25\pgfphysicalwidth}{.8333\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{3}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=0.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.25\pgfphysicalwidth}{.5\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{5}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=0.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.25\pgfphysicalwidth}{.1667\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{2}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=0.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.75\pgfphysicalwidth}{.8333\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{4}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=0.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.75\pgfphysicalwidth}{.5\pgfphysicalheight}%
-%    }%
-%    \pgfpageslogicalpageoptions{6}
-%    {%
-%      border shrink=\pgfpageoptionborder,%
-%      resized width=0.5\pgfphysicalwidth,%
-%      resized height=\pgfphysicalheight,%
-%      center=\pgfpoint{.75\pgfphysicalwidth}{.1667\pgfphysicalheight}%
-%    }%
-%  \fi
-%}
-%
-%\ifthenelse{\equal{\spp}{2}}{\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]}{}
-%\ifthenelse{\equal{\spp}{3}}{\pgfpagesuselayout{3 on 1}[a4paper,border shrink=5mm]}{}
-%\ifthenelse{\equal{\spp}{4}}{\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]}{}
-%\ifthenelse{\equal{\spp}{6}}{\pgfpagesuselayout{6 on 1}[a4paper,border shrink=5mm]}{}
-%
-%\mode<presentation>
-%
-%%%% Footnote stuff
-%\ifthenelse{\equal{\dept}{clst}}{%
-%    \setbeamertemplate{footline}{%
-%        \vspace{1.25cm}
-%    }
-%}{%
-%    \setbeamertemplate{footline}{%
-%        \vspace{1.7cm}
-%    }
-%}
-%
-%\setbeamertemplate{footnote}{%
-%    \makebox[1em][l]{\insertfootnotemark}\footnotesize\insertfootnotetext\par%
-%}
-%
-%%%% Table of content stuff
-%\ifbeamer@official
-%    \ifthenelse{\equal{\dept}{clst}}{%
-%        \relax
-%    }{%
-%        \setbeamertemplate{subsection in toc}{\leavevmode\leftskip=0.5em\parbox[t]{\textwidth-\leftskip-0.5em}{\inserttocsubsection}\par}
-%    }%
-%\else%
-%    \relax
-%\fi
-%
-%%%% Description stuff
-%\ifbeamer@official
-%    \ifthenelse{\equal{\dept}{clst}}{%
-%        \defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
-%        \setbeamertemplate{description item}[align left]
-%    }{%
-%        \setbeamersize{description width=0.5em}
-%        \setbeamertemplate{description item}{\hspace*{0.5em}\insertdescriptionitem}
-%    }%
-%\else
-%    \defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
-%    \setbeamertemplate{description item}[align left]
-%\fi
-%
-%%%% Enumeration stuff
-%\ifbeamer@official
-%    \ifthenelse{\equal{\dept}{clst}}{%
-%        \relax
-%    }{%
-%        \setlength\leftmargini{1em}
-%        \setlength\leftmarginii{0.5em}
-%        \setlength\leftmarginiii{0.5em}
-%        \setlength\labelsep{0.25em}
-%        \setlength\labelwidth{\leftmarginii}
-%        \setlength\labelwidth{-\labelsep}
-%    }%
-%\else%
-%    \relax
-%\fi%
-%
-%%%% Itemisation stuff
-%\setbeamertemplate{itemize item}[circle]
-%\setbeamertemplate{itemize subitem}{--}
-%\setbeamertemplate{itemize subsubitem}[triangle]
-%
-%\setbeamertemplate{itemize/enumerate body begin}
-%  {\normalsize\renewcommand\theenumii{\theenumi\alph{enumii}}}
-%\setbeamertemplate{itemize/enumerate subbody begin}{\normalsize}
-%\setbeamertemplate{itemize/enumerate subsubbody begin}{\normalsize}
-%\setbeamertemplate{itemize/enumerate subsubsubbody begin}{\normalsize}
-%
-%\setbeamertemplate{enumerate item}{\insertenumlabel.}
-%\setbeamertemplate{enumerate subitem}{\alph{enumii}.}
-%
-%\renewcommand{\itemize}[1][]{%
-%  \beamer@ifempty{#1}{}{\def\beamer@defaultospec{#1}}%
-%  \ifnum \@itemdepth >2\relax\@toodeep\else
-%    \advance\@itemdepth\@ne
-%    \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
-%    \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
-%    \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
-%    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
-%    \list
-%      {\usebeamertemplate{itemize \beameritemnestingprefix item}}
-%      {%
-%          \ifbeamer@official
-%            \setlength\itemsep{0pt}%
-%            \setlength\topsep{0pt}%
-%            \setlength\partopsep{0pt}%
-%            \setlength\parsep{0pt}%
-%            \setlength\parskip{0pt}%
-%            \ifthenelse{\equal{\dept}{clst}}{%
-%              \setlength\labelsep{10pt}%
-%              \setlength\labelwidth{7pt}%
-%              \setlength\leftmargin{18pt}%
-%            }{%
-%              \setlength\leftmargini{1em}%
-%              \setlength\leftmarginii{0.5em}%
-%              \setlength\leftmarginiii{0.5em}%
-%              \setlength\labelsep{0.25em}%
-%              \setlength\labelwidth{0.6em}%
-%            }%
-%          \else%
-%            \relax%
-%          \fi%
-%          \def\makelabel##1{%
-%          {%
-%                \usebeamerfont*{itemize \beameritemnestingprefix item}%
-%                \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1\hfill%
-%          }%
-%        }%
-%      }
-%  \fi%
-%  \beamer@cramped%
-%  \raggedright%
-%  \beamer@firstlineitemizeunskip%
-%}
-%
-%\ifbeamer@official
-%    % Removes the figure number from the caption. Use {caption}[numbered] otherwise
-%    \setbeamertemplate{caption}{\raggedright\insertcaption\par}
-%
-%    % Redesigning the block environment to have a title in bold font
-%    % and minimal vertical spacing (only at the end)
-%    \setbeamertemplate{block begin}
-%    {%
-%       {\bfseries\insertblocktitle}\par%\vspace{-0.2cm}%
-%    }
-%    \setbeamertemplate{block end}{\vskip\smallskipamount}
-%
-%    % The original style requires 2.5cm margin, whatever that means. Our frames
-%    % are not of the same size, so we have to "scale" it. 1cm seems to be reasonable
-%    \setbeamersize{text margin left=1cm}
-%\else%
-%    \setbeamertemplate{caption}[default]
-%
-%    \setbeamertemplate{block begin}
-%    {%
-%       {\bfseries\insertblocktitle}\par%\vspace{-0.2cm}%
-%    }
-%    \setbeamertemplate{block end}{\vskip\smallskipamount}
-%\fi%
-%
-%\setbeamertemplate{frametitle}
-%{
-%    \vspace*{1.5em}%
-%    \begin{minipage}[t][.5cm][t]{10cm}%
-%        \begin{beamercolorbox}{frametitle}%
-%            \raggedright\insertframetitle\par%
-%        \end{beamercolorbox}%
-%    \end{minipage}
-%}
+
+\pgfpagesdeclarelayout{3 on 1}
+{
+  \edef\pgfpageoptionheight{\the\paperwidth} % landscaped by default
+  \edef\pgfpageoptionwidth{\the\paperheight}
+  \def\pgfpageoptionborder{0pt}
+  \def\pgfpageoptionfirstshipout{1}
+}
+{
+  \pgfpagesphysicalpageoptions
+  {%
+    logical pages=3,%
+    physical height=\pgfpageoptionheight,%
+    physical width=\pgfpageoptionwidth,%
+    current logical shipout=\pgfpageoptionfirstshipout%
+  }
+  \ifdim\paperheight>\paperwidth\relax
+    % put side-by-side
+    \pgfpageslogicalpageoptions{1}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=.33\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.1667\pgfphysicalwidth}{.5\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{2}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=.33\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{3}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=.33\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.8333\pgfphysicalwidth}{.5\pgfphysicalheight}%
+    }%
+  \else
+    % stack on top of one another
+    \pgfpageslogicalpageoptions{1}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=\pgfphysicalwidth,%
+      resized height=.33\pgfphysicalheight,%
+      center=\pgfpoint{.5\pgfphysicalwidth}{.8333\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{2}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=\pgfphysicalwidth,%
+      resized height=.33\pgfphysicalheight,%
+      center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{3}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=\pgfphysicalwidth,%
+      resized height=.33\pgfphysicalheight,%
+      center=\pgfpoint{.5\pgfphysicalwidth}{.1667\pgfphysicalheight}%
+    }%
+  \fi
+}
+
+\pgfpagesdeclarelayout{6 on 1}
+{
+  \edef\pgfpageoptionheight{\the\paperwidth} % landscaped by default
+  \edef\pgfpageoptionwidth{\the\paperheight}
+  \def\pgfpageoptionborder{0pt}
+  \def\pgfpageoptionfirstshipout{1}
+}
+{
+  \pgfpagesphysicalpageoptions
+  {%
+    logical pages=6,%
+    physical height=\pgfpageoptionheight,%
+    physical width=\pgfpageoptionwidth,%
+    current logical shipout=\pgfpageoptionfirstshipout%
+  }
+  \ifdim\paperheight>\paperwidth\relax
+    % put side-by-side
+    \pgfpageslogicalpageoptions{1}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.1667\pgfphysicalwidth}{.25\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{3}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.5\pgfphysicalwidth}{.25\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{5}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.8333\pgfphysicalwidth}{.25\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{2}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.1667\pgfphysicalwidth}{.75\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{4}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.5\pgfphysicalwidth}{.75\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{6}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.8333\pgfphysicalwidth}{.75\pgfphysicalheight}%
+    }%
+  \else
+    % stack on top of one another
+    \pgfpageslogicalpageoptions{1}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=0.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.25\pgfphysicalwidth}{.8333\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{3}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=0.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.25\pgfphysicalwidth}{.5\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{5}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=0.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.25\pgfphysicalwidth}{.1667\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{2}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=0.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.75\pgfphysicalwidth}{.8333\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{4}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=0.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.75\pgfphysicalwidth}{.5\pgfphysicalheight}%
+    }%
+    \pgfpageslogicalpageoptions{6}
+    {%
+      border shrink=\pgfpageoptionborder,%
+      resized width=0.5\pgfphysicalwidth,%
+      resized height=\pgfphysicalheight,%
+      center=\pgfpoint{.75\pgfphysicalwidth}{.1667\pgfphysicalheight}%
+    }%
+  \fi
+}
+
+\ifthenelse{\equal{\spp}{2}}{\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]}{}
+\ifthenelse{\equal{\spp}{3}}{\pgfpagesuselayout{3 on 1}[a4paper,border shrink=5mm]}{}
+\ifthenelse{\equal{\spp}{4}}{\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]}{}
+\ifthenelse{\equal{\spp}{6}}{\pgfpagesuselayout{6 on 1}[a4paper,border shrink=5mm]}{}
+
+\mode<presentation>
+
+%%% Footnote stuff
+\ifthenelse{\equal{\dept}{clst}}{%
+    \setbeamertemplate{footline}{%
+        \vspace{1.25cm}
+    }
+}{%
+    \setbeamertemplate{footline}{%
+        \vspace{1.7cm}
+    }
+}
+
+\setbeamertemplate{footnote}{%
+    \makebox[1em][l]{\insertfootnotemark}\footnotesize\insertfootnotetext\par%
+}
+
+%%% Table of content stuff
+\ifbeamer@official
+    \ifthenelse{\equal{\dept}{clst}}{%
+        \relax
+    }{%
+        \setbeamertemplate{subsection in toc}{\leavevmode\leftskip=0.5em\parbox[t]{\textwidth-\leftskip-0.5em}{\inserttocsubsection}\par}
+    }%
+\else%
+    \relax
+\fi
+
+%%% Description stuff
+\ifbeamer@official
+    \ifthenelse{\equal{\dept}{clst}}{%
+        \defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
+        \setbeamertemplate{description item}[align left]
+    }{%
+        \setbeamersize{description width=0.5em}
+        \setbeamertemplate{description item}{\hspace*{0.5em}\insertdescriptionitem}
+    }%
+\else
+    \defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
+    \setbeamertemplate{description item}[align left]
+\fi
+
+%%% Enumeration stuff
+\ifbeamer@official
+    \ifthenelse{\equal{\dept}{clst}}{%
+        \relax
+    }{%
+        \setlength\leftmargini{1em}
+        \setlength\leftmarginii{0.5em}
+        \setlength\leftmarginiii{0.5em}
+        \setlength\labelsep{0.25em}
+        \setlength\labelwidth{\leftmarginii}
+        \setlength\labelwidth{-\labelsep}
+    }%
+\else%
+    \relax
+\fi%
+
+%%% Itemisation stuff
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{itemize subsubitem}[triangle]
+
+\setbeamertemplate{itemize/enumerate body begin}
+  {\normalsize\renewcommand\theenumii{\theenumi\alph{enumii}}}
+\setbeamertemplate{itemize/enumerate subbody begin}{\normalsize}
+\setbeamertemplate{itemize/enumerate subsubbody begin}{\normalsize}
+\setbeamertemplate{itemize/enumerate subsubsubbody begin}{\normalsize}
+
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\alph{enumii}.}
+
+\renewcommand{\itemize}[1][]{%
+  \beamer@ifempty{#1}{}{\def\beamer@defaultospec{#1}}%
+  \ifnum \@itemdepth >2\relax\@toodeep\else
+    \advance\@itemdepth\@ne
+    \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+    \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+    \list
+      {\usebeamertemplate{itemize \beameritemnestingprefix item}}
+      {%
+          \ifbeamer@official
+            \setlength\itemsep{0pt}%
+            \setlength\topsep{0pt}%
+            \setlength\partopsep{0pt}%
+            \setlength\parsep{0pt}%
+            \setlength\parskip{0pt}%
+            \ifthenelse{\equal{\dept}{clst}}{%
+              \setlength\labelsep{10pt}%
+              \setlength\labelwidth{7pt}%
+              \setlength\leftmargin{18pt}%
+            }{%
+              \setlength\leftmargini{1em}%
+              \setlength\leftmarginii{0.5em}%
+              \setlength\leftmarginiii{0.5em}%
+              \setlength\labelsep{0.25em}%
+              \setlength\labelwidth{0.6em}%
+            }%
+          \else%
+            \relax%
+          \fi%
+          \def\makelabel##1{%
+          {%
+                \usebeamerfont*{itemize \beameritemnestingprefix item}%
+                \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1\hfill%
+          }%
+        }%
+      }
+  \fi%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
+
+\ifbeamer@official
+    % Removes the figure number from the caption. Use {caption}[numbered] otherwise
+    \setbeamertemplate{caption}{\raggedright\insertcaption\par}
+
+    % Redesigning the block environment to have a title in bold font
+    % and minimal vertical spacing (only at the end)
+    \setbeamertemplate{block begin}
+    {%
+       {\bfseries\insertblocktitle}\par%\vspace{-0.2cm}%
+    }
+    \setbeamertemplate{block end}{\vskip\smallskipamount}
+
+    % The original style requires 2.5cm margin, whatever that means. Our frames
+    % are not of the same size, so we have to "scale" it. 1cm seems to be reasonable
+    \setbeamersize{text margin left=1cm}
+\else%
+    \setbeamertemplate{caption}[default]
+
+    \setbeamertemplate{block begin}
+    {%
+       {\bfseries\insertblocktitle}\par%\vspace{-0.2cm}%
+    }
+    \setbeamertemplate{block end}{\vskip\smallskipamount}
+\fi%
+
+\setbeamertemplate{frametitle}
+{
+    \vspace*{1.5em}%
+    \begin{minipage}[t][.5cm][t]{10cm}%
+        \begin{beamercolorbox}{frametitle}%
+            \raggedright\insertframetitle\par%
+        \end{beamercolorbox}%
+    \end{minipage}
+}
 
 \newenvironment{tussenpagina}[3]{%
     \begin{frame}
@@ -386,75 +393,71 @@
     \end{frame}
 }%
 
-%\setbeamertemplate{background}{
-%    \ifthenelse{%
-%        \equal{\dept}{clst}
-%    }{%
-%      \ifnum\thepage>1\relax%
-%        \includegraphics[width=1\paperwidth]{ruhuisstijl_clst_2014-43-slide.pdf}
-%        \fi
-%    }{%
-%      \ifnum\thepage>1\relax%
-%        \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-slide.pdf}
-%        \fi
-%    }%
-%}
-%
-%\defbeamertemplate*{title page}{ruhuisstijl}[1][]
-%{
-%    \ifthenelse{\equal{\dept}{clst}}{%
-%        \ifnum\thepage>1\relax%
-%        \else\vspace*{-0.25cm}\hspace*{-1.08cm}
-%            \includegraphics[width=1\paperwidth]{ruhuisstijl_clst_2014-43-front.pdf}
-%        \fi
-%    }{%
-%        \ifnum\thepage>1\relax%
-%        \else\vspace*{-0.23cm}\hspace*{-1.08cm}
-%            \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
-%        \fi
-%    }%
-%    \vspace*{-8.5cm}
-%    \begin{minipage}[t][2.5cm][t]{10cm}%
-%        \begin{beamercolorbox}{title}%
-%            \usebeamerfont{title}{\Huge\inserttitle}\par%
-%            \vspace{0.25cm}%
-%            \usebeamerfont{subtitle}\insertsubtitle\par%
-%        \end{beamercolorbox}%
-%    \end{minipage}%
-%}
-%
-%%\useinnertheme{ruhuisstijl}
-%%\useoutertheme{ruhuisstijl}
-%%\usecolortheme{ruhuisstijl}
-%%\usefonttheme{ruhuisstijl}
-%
-%\setbeameroption{show notes}
-%\setbeamertemplate{note page}[plain]
-%
-%\hypersetup{
-%    colorlinks=true,
-%    linkcolor=ruhuisstijlrood,
-%    urlcolor=ruhuisstijlrood,
-%}
-%
-%\setbeamertemplate{navigation symbols}{}
-%
-%\setbeamerfont{frametitle}{size=\large}
-%\setbeamerfont{frametitle}{series=\bfseries}
-%\setbeamerfont{blocktitle}{series=\bfseries}
-%\setbeamerfont{description item}{series=\bfseries}
-%
-%\setbeamercolor{normal text}{fg=ruhuisstijlzwart}
-%\setbeamercolor{structure}{fg=ruhuisstijlzwart}
-%\setbeamercolor{example text}{fg=ruhuisstijlzwart}
-%\setbeamercolor{frametitle}{fg=ruhuisstijlrood}
-%\setbeamercolor{alerted text}{fg=ruhuisstijlrood}
-%
-%\ifthenelse{\equal{\dept}{clst}}{%
-%    \setbeamercolor{title}{fg=ruhuisstijlwit}
-%}{%
-%    \setbeamercolor{title}{fg=ruhuisstijlzwart}
-%}
+\setbeamertemplate{background}{
+    \ifthenelse{%
+        \equal{\dept}{clst}
+    }{%
+      \ifnum\thepage>1\relax%
+        \includegraphics[width=1\paperwidth]{ruhuisstijl_clst_2014-43-slide.pdf}
+        \fi
+    }{%
+      \ifnum\thepage>1\relax%
+        \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-slide.pdf}
+        \fi
+    }%
+}
+
+\defbeamertemplate*{title page}{ruhuisstijl}[1][]
+{
+    \ifthenelse{\equal{\dept}{clst}}{%
+        \ifnum\thepage>1\relax%
+        \else\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{ruhuisstijl_clst_2014-43-front.pdf}
+        \fi
+    }{%
+        \ifnum\thepage>1\relax%
+        \else\vspace*{-0.23cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
+        \fi
+    }%
+    \vspace*{-8.5cm}
+    \begin{minipage}[t][2.5cm][t]{10cm}%
+        \begin{beamercolorbox}{title}%
+            \usebeamerfont{title}{\Huge\inserttitle}\par%
+            \vspace{0.25cm}%
+            \usebeamerfont{subtitle}\insertsubtitle\par%
+        \end{beamercolorbox}%
+    \end{minipage}%
+}
+
+
+\setbeameroption{\notes}
+\setbeamertemplate{note page}[plain]
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ruhuisstijlrood,
+    urlcolor=ruhuisstijlrood,
+}
+
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{frametitle}{series=\bfseries}
+\setbeamerfont{blocktitle}{series=\bfseries}
+\setbeamerfont{description item}{series=\bfseries}
+
+\setbeamercolor{normal text}{fg=ruhuisstijlzwart}
+\setbeamercolor{structure}{fg=ruhuisstijlzwart}
+\setbeamercolor{example text}{fg=ruhuisstijlzwart}
+\setbeamercolor{frametitle}{fg=ruhuisstijlrood}
+\setbeamercolor{alerted text}{fg=ruhuisstijlrood}
+
+\ifthenelse{\equal{\dept}{clst}}{%
+    \setbeamercolor{title}{fg=ruhuisstijlwit}
+}{%
+    \setbeamercolor{title}{fg=ruhuisstijlzwart}
+}
 
 \mode<all>
 
