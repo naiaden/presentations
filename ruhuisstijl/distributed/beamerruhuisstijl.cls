@@ -223,13 +223,13 @@
 \mode<presentation>
 
 %%% Footnote stuff
-\ifthenelse{\equal{\dept}{clst}}{%
+\ifthenelse{\equal{\dept}{none}}{%
     \setbeamertemplate{footline}{%
-        \vspace{1.25cm}
+        \vspace{1.7cm}
     }
 }{%
     \setbeamertemplate{footline}{%
-        \vspace{1.7cm}
+        \vspace{1.25cm}
     }
 }
 
@@ -239,10 +239,10 @@
 
 %%% Table of content stuff
 \ifbeamer@official
-    \ifthenelse{\equal{\dept}{clst}}{%
-        \relax
-    }{%
+    \ifthenelse{\equal{\dept}{none}}{%
         \setbeamertemplate{subsection in toc}{\leavevmode\leftskip=0.5em\parbox[t]{\textwidth-\leftskip-0.5em}{\inserttocsubsection}\par}
+    }{%
+        \relax
     }%
 \else%
     \relax
@@ -250,12 +250,12 @@
 
 %%% Description stuff
 \ifbeamer@official
-    \ifthenelse{\equal{\dept}{clst}}{%
-        \defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
-        \setbeamertemplate{description item}[align left]
-    }{%
+    \ifthenelse{\equal{\dept}{none}}{%
         \setbeamersize{description width=0.5em}
         \setbeamertemplate{description item}{\hspace*{0.5em}\insertdescriptionitem}
+    }{%
+        \defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
+        \setbeamertemplate{description item}[align left]
     }%
 \else
     \defbeamertemplate{description item}{align left}{\hspace*{1em}\insertdescriptionitem\hfill}
@@ -264,15 +264,15 @@
 
 %%% Enumeration stuff
 \ifbeamer@official
-    \ifthenelse{\equal{\dept}{clst}}{%
-        \relax
-    }{%
+    \ifthenelse{\equal{\dept}{none}}{%
         \setlength\leftmargini{1em}
         \setlength\leftmarginii{0.5em}
         \setlength\leftmarginiii{0.5em}
         \setlength\labelsep{0.25em}
         \setlength\labelwidth{\leftmarginii}
         \setlength\labelwidth{-\labelsep}
+    }{%
+        \relax
     }%
 \else%
     \relax
@@ -309,16 +309,16 @@
             \setlength\partopsep{0pt}%
             \setlength\parsep{0pt}%
             \setlength\parskip{0pt}%
-            \ifthenelse{\equal{\dept}{clst}}{%
-              \setlength\labelsep{10pt}%
-              \setlength\labelwidth{7pt}%
-              \setlength\leftmargin{18pt}%
-            }{%
+            \ifthenelse{\equal{\dept}{none}}{%
               \setlength\leftmargini{1em}%
               \setlength\leftmarginii{0.5em}%
               \setlength\leftmarginiii{0.5em}%
               \setlength\labelsep{0.25em}%
               \setlength\labelwidth{0.6em}%
+            }{%
+              \setlength\labelsep{10pt}%
+              \setlength\labelwidth{7pt}%
+              \setlength\leftmargin{18pt}%
             }%
           \else%
             \relax%
@@ -373,14 +373,14 @@
 
 \newenvironment{tussenpagina}[3]{%
     \begin{frame}
-        \ifthenelse{\equal{\dept}{clst}}{%
-            \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=12.8cm,height=8.34cm]{#3}
-            \vspace*{-7.5cm}
-        }{%
-            \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
+        \ifthenelse{\equal{\dept}{none}}{%
+            \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-front.pdf}
             \vspace*{-5cm}
             \includegraphics[width=0.5\textwidth]{#3}\par%
             \vspace*{-8cm}
+        }{%
+            \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=12.8cm,height=8.34cm]{#3}
+            \vspace*{-7.5cm}
         }
         \begin{minipage}[t][2.5cm][t]{10cm}%
             \begin{beamercolorbox}{title}%
@@ -394,17 +394,20 @@
 }%
 
 \setbeamertemplate{background}{
-    \ifthenelse{%
-        \equal{\dept}{clst}
-    }{%
-      \ifnum\thepage>1\relax%
-        \includegraphics[width=1\paperwidth]{ruhuisstijl_clst_2014-43-slide.pdf}
+    \ifthenelse{\equal{\dept}{clst}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_clst_2014-43-slide.pdf}
         \fi
     }{%
-      \ifnum\thepage>1\relax%
-        \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-slide.pdf}
+    \ifthenelse{\equal{\dept}{cls}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_cls_2014-43-slide.pdf}
         \fi
-    }%
+    }{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-slide.pdf}
+        \fi
+    }}%
 }
 
 \defbeamertemplate*{title page}{ruhuisstijl}[1][]
@@ -412,14 +415,20 @@
     \ifthenelse{\equal{\dept}{clst}}{%
         \ifnum\thepage>1\relax%
         \else\vspace*{-0.25cm}\hspace*{-1.08cm}
-            \includegraphics[width=1\paperwidth]{ruhuisstijl_clst_2014-43-front.pdf}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_clst_2014-43-front.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{cls}}{%
+        \ifnum\thepage>1\relax%
+        \else\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_cls_2014-43-front.pdf}
         \fi
     }{%
         \ifnum\thepage>1\relax%
         \else\vspace*{-0.23cm}\hspace*{-1.08cm}
-            \includegraphics[width=1\paperwidth]{ruhuisstijl2014-43-front.pdf}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-front.pdf}
         \fi
-    }%
+    }}%
     \vspace*{-8.5cm}
     \begin{minipage}[t][2.5cm][t]{10cm}%
         \begin{beamercolorbox}{title}%
@@ -453,11 +462,17 @@
 \setbeamercolor{frametitle}{fg=ruhuisstijlrood}
 \setbeamercolor{alerted text}{fg=ruhuisstijlrood}
 
-\ifthenelse{\equal{\dept}{clst}}{%
-    \setbeamercolor{title}{fg=ruhuisstijlwit}
-}{%
+\ifthenelse{\equal{\dept}{none}}{%
     \setbeamercolor{title}{fg=ruhuisstijlzwart}
+}{%
+    \setbeamercolor{title}{fg=ruhuisstijlwit}
 }
+
+%\ifthenelse{\isundefined{\dept}}{%
+%    \setbeamercolor{title}{fg=ruhuisstijlwit}
+%}{%
+%    \setbeamercolor{title}{fg=ruhuisstijlzwart}
+%}
 
 \mode<all>
 
