@@ -14,12 +14,16 @@
 %% love to hear of any changes. Also, if you let me know that
 %% you are using the template, I can keep you up-to-date on
 %% future changes.
+%%
+%% 10 October 2014: CLS template added
+%% 20 October 2014: HLCS template added
+%% 28 October 2014: Kaski, PTRS, IMR, SteR templates added
 
-\documentclass[department=ster, notes={hide notes}, slidesperpage=4, handout, official=true]{beamerruhuisstijl}
+\documentclass[department=kaski, notes={hide notes}, slidesperpage=4, handout, official=true]{beamerruhuisstijl}
 %% The class takes the following optional arguments:
 %% notes: {show notes}, {hide notes}, {show only notes}
 %% official: true, false
-%% department: clst, cls, hlcs, kaski, ptrs, imr, ster
+%% department: clst, cls, hlcs, kaski, ptrs, imr, ster (default = RU)
 %% handout
 %% slidesperpage: 1, 2, 3, 4, 6 
 
@@ -39,7 +43,7 @@
     \tableofcontents
 \end{frame}
 \note[itemize]{
-    \item Dit is een van de drie notities die ik gemaakt heb
+    \item Dit is een van de drie notities die ik gemaakt heb.
 }
 
 \section{Voorwaarden}
@@ -355,6 +359,72 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \begin{block}{Notities voor op het tweede scherm}
         Net als de presenter view van PowerPoint, kun je met \texttt{beamer} ook notities maken. In deze presentatie vind je er drie. Zoek in de source code maar op \texttt{\textbackslash note}. Standaard staan ze aan, maar als je na je frame niet aangeeft dat je notes wilt, dan wordt er ook geen pagina voor aangemaakt. 
     \end{block}
+\end{frame}
+
+\renewcommand{\dept}{none}
+\setbeamercolor{title}{fg=ruhuisstijlzwart}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{Voorbeeld: none}
+	Radboud University
+\end{frame}
+
+\renewcommand{\dept}{cls}
+\setbeamercolor{title}{fg=ruhuisstijlwit}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{Voorbeeld: CLS}
+	Centre for Language Studies
+\end{frame}
+
+\renewcommand{\dept}{hlcs}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{Voorbeeld: HLCS}
+	Institute for Historical, Literary and Cultural Studies
+\end{frame}
+
+\renewcommand{\dept}{clst}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{Voorbeeld: CLST}
+	Centre for Language and Speech Technology
+\end{frame}
+
+\renewcommand{\dept}{kaski}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{Voorbeeld: Kaski}
+	Center for Applied Research on Religion
+\end{frame}
+
+\renewcommand{\dept}{ster}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{Voorbeeld: SteR}
+	Research Centre for State and Law
+\end{frame}
+
+\renewcommand{\dept}{imr}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{Voorbeeld: IMR}
+	Institute for Management Research
+\end{frame}
+
+\renewcommand{\dept}{ptrs}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{Voorbeeld: PTRS}
+	Research Institute for Philosophy, Theology and Religious Studies
 \end{frame}
 
 \end{document}
