@@ -409,10 +409,30 @@
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_hlcs_2014-43-slide.pdf}
         \fi
     }{%
+    \ifthenelse{\equal{\dept}{kaski}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_kaski_2014-43-slide.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{ptrs}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ptrs_2014-43-slide.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{imr}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_imr_2014-43-slide.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{ster}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ster_2014-43-slide.pdf}
+        \fi
+    }{%
         \ifnum\thepage>1\relax%
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-slide.pdf}
         \fi
-    }}}%
+    }}}}}}}%
 }
 
 \defbeamertemplate*{title page}{ruhuisstijl}[1][]
@@ -435,11 +455,35 @@
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_hlcs_2014-43-front.pdf}
         \fi
     }{%
+    \ifthenelse{\equal{\dept}{kaski}}{%
+        \ifnum\thepage>1\relax%
+        \else\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_kaski_2014-43-front.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{ptrs}}{%
+        \ifnum\thepage>1\relax%
+        \else\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ptrs_2014-43-front.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{imr}}{%
+        \ifnum\thepage>1\relax%
+        \else\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_imr_2014-43-front.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{ster}}{%
+        \ifnum\thepage>1\relax%
+        \else\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ster_2014-43-front.pdf}
+        \fi
+    }{%
         \ifnum\thepage>1\relax%
         \else\vspace*{-0.23cm}\hspace*{-1.08cm}
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-front.pdf}
         \fi
-    }}}%
+    }}}}}}}%
     \vspace*{-8.5cm}
     \begin{minipage}[t][2.5cm][t]{10cm}%
         \begin{beamercolorbox}{title}%
