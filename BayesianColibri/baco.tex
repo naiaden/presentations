@@ -1,31 +1,5 @@
-%\documentclass{beamer}
-%\setbeameroption{show notes}
-\usetheme[official=true]{ruhuisstijl}
-%\usepackage{graphicx}
-%\usepackage[english]{babel}
-%\usepackage{listings,amsmath}
-%\usepackage{algorithm2e}
-%\usepackage{graphicx}
-%\usepackage{booktabs}
-%\usepackage{array}
-%\usepackage{ulem}
-%\usepackage{palatino}
-%\usepackage{color}
-%\usepackage{colortbl}
-\usepackage{multirow}
-%\usepackage{tikz}
-%\usetikzlibrary{positioning,shapes.geometric}
-%\usepackage{mathptmx}
-%\usepackage[scaled=.90]{helvet}
-%\usepackage{courier}
-%\usepackage[T1]{fontenc}
-%\renewcommand{\emph}[1]{\textcolor{rured}{#1}}
-%\usepackage{biblatex}
-%\newcolumntype{R}{@{\extracolsep{3cm}}r@{\extracolsep{0pt}}}%
-%
-%\bibliography{baco}
 \def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
-
+\usepackage{multirow}
 
 \author{Louis Onrust}
 \title{$p(\text{conclusions} | \text{Skipping \{*2*\}})$}
@@ -40,25 +14,16 @@
 }
 
 \begin{frame}{Bayesian Language Modelling with Skipgrams}
+    \begin{block}{}
+        Louis Onrust \\
+        Centre for Language Studies, Radboud University \\
+        Center for Processing Speech and Images, KU Leuven
+    \end{block}
 
-\begin{block}{}
-    Louis Onrust \\
-    Centre for Language Studies, Radboud University \\
-    Center for Processing Speech and Images, KU Leuven
-\end{block}
-
-\begin{block}{}
-    \href{mailto:l.onrust@let.ru.nl}{l.onrust@let.ru.nl} \\
-    \href{https://github.com/naiaden}{github.com/naiaden}
-\end{block}
-
-\vfill
-
-\begin{block}{\LaTeX{} Beamer template for RU corporate style}
-    See my github page for example code:
-    \href{https://github.com/naiaden/presentations/tree/master/ruhuisstijl}{github.com/naiaden/presentations/tree/master/ruhuisstijl}
-\end{block}
-
+    \begin{block}{}
+        \href{mailto:l.onrust@let.ru.nl}{l.onrust@let.ru.nl} \\
+        \href{https://github.com/naiaden}{github.com/naiaden}
+    \end{block}
 \end{frame}
 \note[itemize]{
 }
@@ -99,7 +64,7 @@
         What to do when the occurrence count of $p$ is 0?
         \begin{itemize}
             \item Not assign 0 as probability $\rightarrow$ smoothing
-            \item Fall back to the $(n-1)$ words of $p$ $\rightarrow$ backoff
+            \item Fall back to the last $(n-1)$ words of $p$ $\rightarrow$ backoff
         \end{itemize}
 
         One of the best methods is still Modified Kneser-Ney: backoff and smoothing
@@ -117,48 +82,88 @@
         \end{itemize}
     \end{block}
 
-    \begin{block}{Bayesian Language Model}
+    \begin{block}{Bayesian Unigram Language Model: Chinese Restaurant Process}
         \begin{itemize}
-            \item Each $n$-gram is a cluster
-            \item Each $n$ is a layer
-            \item Each history is in a cluster at the $(n-1)$th layer
+            \item Clusters are tables, unigram tokens are customers
+            \item Initially tokens seat at the same type table
+            \item In the inference step, customers get to choose a new identity
         \end{itemize}
     \end{block}
 
-    \begin{block}{Chinese Restaurant Process}
+    \begin{block}{Bayesian $n$-gram Language Model: Nested Chinese Restaurant Process}
         \begin{itemize}
-            \item Clusters are tables, $n$-grams tokens are customers
-            \item Initially tokens seat at the same table
-            \item In the inference step, customers get to choose a new identity
+            \item Each context is a restaurant
+            \item Each $n$ is a floor
+            \item Each $n$-gram is a table
+            \item Each $(n-1)$-gram sits at a table on the $(n-1)$th floor
         \end{itemize}
     \end{block}
 \end{frame}
 \note[itemize]{
 }
 
-\begin{frame}{Bayesian Language Model}
-    \begin{block}{Chinese Restaurant Process: Inference}
-        When $n$ are in the restaurant, people sit a table $t$ with probability
+\begin{frame}{Bayesian Language Model: Learning \& Estimating}
+    \begin{block}{Chinese Restaurant Process: Empirical Distribution}
         \begin{itemize}
-            \item $\frac{1}{n}$ with another $n$-gram $p$, or $\frac{|t|}{n}$ at the same table as $p$
+            \item Each $n$-gram enters the restaurant, and goes to the $n$th floor, to the room that represents the context
+            \item There he seeks for the table with other $n$-grams of the same type
+                \begin{itemize}
+                    \item If there is such a table, he joins that table
+                    \item Otherwise he seats himself at an empty table
+                \end{itemize}
+            \item For each new table, a family member of the same $n$-gram but of length $(n-1)$ is sent to represent the family
+                \begin{itemize}
+                    \item This process repeats for $0 < x \leq n$
+                \end{itemize}
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Chinese Restaurant Process: Inference}
+        With $m$ customers in the restaurant, a customer re-enters the restaurant and sits a table $t$ with probability
+        \begin{itemize}
+            \item $\frac{1}{m+1}$ with another $n$-gram $p$, or $\frac{|t|}{m+1}$ at the same table as $p$
             \item $\frac{1}{n}$ at a new table
         \end{itemize}
         The number of tables grows logarithmically
     \end{block}
+\end{frame}
 
-    \begin{block}{Hierarchical Pitman-Yor Chinese Restaurant Process}
+\begin{frame}{Processes and Priors}
+    \begin{block}{\only<1>{Reeeeeeeee-cap}\only<2>{REEMIX}}
         \begin{itemize}
-            \item CRP and DPCRP give logarithmic growth
-            \item Language manifests typically in power law growth
-            \item PYCRP as generalisation of CRP and DPCRP
-            \begin{description}
-                \item[CRP] No parameters
-                \item[DPCRP] Concentration parameter $\alpha$
-                \item[PYCRP] Concentration parameter $\alpha$ and discount parameter $\gamma$
-            \end{description}
-            \item HPYCRP to model inherent hierarchical structure $n$-gram
+            \item We described a Chinese restaurants process mixture model
+                \begin{align}
+                    \pi_{[M]} &\sim \operatorname{CRP}(M)\label{eq:CRPMMpartition} \\
+                    \phi_t | \pi_{[M]} &\overset{\text{iid}}{\sim} G_0 && \text{ for }t\in\pi_{[M]},\label{eq:CRPMMlatent} \\
+                    x_i|\phi,\pi_{[M]} &\overset{\text{ind}}{\sim} F(\phi_t) && \text{ for }t\in\pi_{[M]}\text{ and }i\in t,\label{eq:CRPMMdatapoints}
+                \end{align}
         \end{itemize}
     \end{block}
+
+    \only<1>{
+        \begin{block}{Nested Pitman-Yor Chinese Restaurant Process}
+            \begin{itemize}
+                \item CRP and DPCRP give logarithmic growth
+                \item Language manifests typically in power law growth
+                \item PYCRP as generalisation of CRP and DPCRP
+                    \begin{description}
+                        \item[CRP] No parameters
+                        \item[DPCRP] Concentration parameter $\alpha$
+                        \item[PYCRP] Concentration parameter $\alpha$ and discount parameter $\gamma$
+                    \end{description}
+            \end{itemize}
+        \end{block}
+    }
+    \only<2>{
+        \begin{block}{Nested Pitman-Yor Chinese Restaurant Process Mixture Model}
+            \begin{align}
+                \pi_{[M]} &\sim \operatorname{PYCRP}(\alpha,\gamma,G_0) \\
+                G_u &\sim\operatorname{PYCRP}(\alpha_{|u|},\gamma_{|u|},G_{\pi(u)}) \\
+                \phi_t | \pi_{[M]} &\overset{\text{iid}}{\sim} G_0 && \text{ for }t\in\pi_{[M]}, \\
+                x_i|\phi,\pi_{[M]} &\overset{\text{ind}}{\sim} F(\phi_t) && \text{ for }t\in\pi_{[M]}\text{ and }i\in t,
+            \end{align}
+        \end{block}
+    }
 \end{frame}
 \note[itemize]{
 }
@@ -244,7 +249,7 @@
         \begin{columns}[T,totalwidth=\textwidth]
             \begin{column}{0.5\textwidth}
                 \begin{block}{Training with only $n$-grams}
-                    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+                    %\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
                     \begin{tabular}{rrrr}
                             & jrc & 1bw  & emea \\ \hline
                         jrc & 13  & 1195 & 961 \\
@@ -255,7 +260,7 @@
             \end{column}
             \begin{column}{0.5\textwidth}
                 \begin{block}{and with skipgrams}
-                    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+                    %\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
                     \begin{tabular}{rrrr}
                             & jrc & 1bw  & emea \\ \hline
                         jrc & 13  & 1162 & 939 \\
@@ -267,7 +272,7 @@
         \end{columns}
         \hspace{1em}
         \begin{block}{Relative differences}
-            \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+            %\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
             \begin{tabular}{rrrr}
                     & jrc & 1bw & emea \\ \hline
                 jrc & 2.0 & \cellcolor{green!25}{-2.8} & \cellcolor{green!25}{-2.3} \\
@@ -291,7 +296,7 @@
         \begin{columns}[T,totalwidth=\textwidth]
             \begin{column}{0.5\textwidth}
                 \begin{block}{\hspace{2.55cm}$n$-grams\vphantom{Skipgrams}}
-                    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+                    %\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
                     \begin{tabular}{rrrrr}
                         & & jrc & 1bw & emea \\ \cline{3-5}
                         \multirow{3}{*}{jrc} & ngram & \cellcolor{green!25}{13} & 1510 & 1081 \\
@@ -310,7 +315,7 @@
             \end{column}
             \begin{column}{0.5\textwidth}
                 \begin{block}{Skipgrams}
-                    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+                    %\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
                     \begin{tabular}{rrr}
                         jrc & 1bw & emea \\ \hline
                         \cellcolor{green!25}{13} & 1843 & 1295 \\
@@ -351,16 +356,5 @@
 \end{frame}
 \note[itemize]{
 }
-
-\begin{tussenpagina}{}
-    
-
-    \begin{figure}
-        \includegraphics[width=0.95\textwidth]{images/dilbert.png}
-        \vspace{-0.2cm}
-        \caption{\href{http://dilbert.com/strips/comic/2009-09-17/}{\textcolor{black}{http://dilbert.com/strips/comic/2009-09-17}}}
-    \end{figure}
-%        \href{http://dilbert.com/strips/comic/2009-09-17/}{http://dilbert.com/strips/comic/2009-09-17/}
-\end{tussenpagina}
 
 \end{document}
