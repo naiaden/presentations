@@ -36,6 +36,9 @@
 \newcommand{\dept}{none}
 \DeclareOptionBeamer{department}{\renewcommand{\dept}{#1}}
 
+\newcommand{\grouplogo}{none}
+\DeclareOptionBeamer{grouplogo}{\renewcommand{\grouplogo}{#1}}
+
 \newcommand{\spp}{1}
 \DeclareOptionBeamer{slidesperpage}{\renewcommand{\spp}{#1}}
 
@@ -433,6 +436,14 @@
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-slide.pdf}
         \fi
     }}}}}}}%
+    \ifthenelse{\equal{\grouplogo}{lama}}{%
+        %\vspace*{-0.8cm}
+        \hspace*{-12.5cm}
+        % [trim=-5cm 0 0 -1cm] left bottom right top
+        % trim the graphic for positive values and add space for negative values
+        \includegraphics[scale=0.4, trim=0cm -0.5cm 0cm 0cm]{logo/lama.pdf}
+    }{%
+    }% 
 }
 
 \defbeamertemplate*{title page}{ruhuisstijl}[1][]
@@ -468,6 +479,14 @@
 			\vspace*{-0.23cm}\hspace*{-1.08cm}
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-front.pdf}
     }}}}}}}%
+    \ifthenelse{\equal{\grouplogo}{lama}}{%
+    	%\vspace*{-0.8cm}
+        \hspace*{-12.5cm}
+        % [trim=-5cm 0 0 -1cm] left bottom right top
+        % trim the graphic for positive values and add space for negative values
+        \includegraphics[scale=0.4, trim=0cm -0.5cm -50cm 0cm]{logo/lama.pdf}
+    }{%
+    }%    
     \vspace*{-8.5cm}
     \begin{minipage}[t][2.5cm][t]{10cm}%
         \begin{beamercolorbox}{title}%
