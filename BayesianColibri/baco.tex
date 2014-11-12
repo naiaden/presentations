@@ -100,6 +100,13 @@
     \end{block}
 \end{frame}
 \note[itemize]{
+    \note word types/tables: 1625150 1.6M
+    \note word tokens/guests: 70310246 70M
+    \note n=4: 31044735 CRPs 31M
+    \note n=3: 11624400 CRPs 12M
+    \note n=2: 1447377 CRPs 1.5M
+    \note n=1: 1 CRP
+    \note 56h, 100iterations
 }
 
 \begin{frame}{Bayesian Language Model: Learning \& Estimating}
@@ -122,7 +129,7 @@
         With $m$ customers in the restaurant, a customer re-enters the restaurant and sits a table $t$ with probability
         \begin{itemize}
             \item $\frac{1}{m+1}$ with another $n$-gram $p$, or $\frac{|t|}{m+1}$ at the same table as $p$
-            \item $\frac{1}{n}$ at a new table
+            \item $\frac{1}{m+1}$ at a new table
         \end{itemize}
         The number of tables grows logarithmically
     \end{block}
@@ -199,9 +206,10 @@
 \begin{frame}{Results: The Setup}
     \begin{block}{Data Sets}
         \begin{itemize}
-            \item JRC English
+            \item JRC-Acquis English
             \item Google 1 billion words
             \item EMEA English
+            \item Wikipedia English
         \end{itemize}
     \end{block}
 
