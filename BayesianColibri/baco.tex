@@ -1,5 +1,66 @@
 \def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
 \usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{tabu}
+
+\newcommand{\semitransp}[2][35]{\color{fg!#1}#2}
+
+\colorlet{tableheadcolor}{ruhuisstijlrood} % Table header colour = 25% gray
+\newcommand{\headcol}{\rowcolor{tableheadcolor}} %he
+
+
+\colorlet{tablerowcolorodd}{ruhuisstijlrood!10} % Table row separator colour = 10% gray
+\newcommand{\rowcolodd}{\rowcolor{tablerowcolorodd}} %
+
+\colorlet{tablerowcoloreven}{ruhuisstijlrood!25} % Table row separator colour = 10% gray
+\newcommand{\rowcoleven}{\rowcolor{tablerowcoloreven}} %
+
+
+
+% Command \topline consists of a (slightly modified) \toprule followed by a \heavyrule rule of colour tableheadcolor (hence, 2 separate rules)
+\newcommand{\topline}{\arrayrulecolor{black}\specialrule{0.1em}{\abovetopsep}{0.5pt}%
+            \arrayrulecolor{tableheadcolor}\specialrule{\belowrulesep}{0pt}{-3pt}%
+            \arrayrulecolor{black}
+            }
+    % Command \midline consists of 3 rules (top colour tableheadcolor, middle colour black, bottom colour white)
+\newcommand{\midline}{\arrayrulecolor{tableheadcolor}\specialrule{\aboverulesep}{-1pt}{0pt}%
+            \arrayrulecolor{black}\specialrule{\lightrulewidth}{0pt}{0pt}%
+            \arrayrulecolor{white}\specialrule{\belowrulesep}{0pt}{-3pt}%
+            \arrayrulecolor{black}
+            }
+    % Command \rowmidlinecw consists of 3 rules (top colour tablerowcolorodd, middle colour black, bottom colour white)
+\newcommand{\rowmidlinecw}{\arrayrulecolor{tablerowcolorodd}\specialrule{\aboverulesep}{0pt}{0pt}%
+            \arrayrulecolor{black}\specialrule{\lightrulewidth}{0pt}{0pt}%
+            \arrayrulecolor{white}\specialrule{\belowrulesep}{0pt}{0pt}%
+         \arrayrulecolor{black}}
+    % Command \rowmidlinewc consists of 3 rules (top colour white, middle colour black, bottom colour tablerowcolorodd)
+\newcommand{\rowmidlinewc}{\arrayrulecolor{white}\specialrule{\aboverulesep}{0pt}{0pt}%
+            \arrayrulecolor{black}\specialrule{\lightrulewidth}{0pt}{0pt}%
+            \arrayrulecolor{tablerowcolorodd}\specialrule{\belowrulesep}{0pt}{0pt}%
+            \arrayrulecolor{black}}
+    % Command \rowmidlinew consists of 1 white rule
+\newcommand{\rowmidlinew}{\arrayrulecolor{white}\specialrule{\aboverulesep}{0pt}{0pt}%
+            \arrayrulecolor{black}}
+    % Command \rowmidlinec consists of 1 tablerowcolorodd rule
+\newcommand{\rowmidlinec}{\arrayrulecolor{tablerowcolorodd}\specialrule{\aboverulesep}{0pt}{0pt}%
+            \arrayrulecolor{black}}
+    % Command \bottomline consists of 2 rules (top colour
+\newcommand{\bottomline}{\arrayrulecolor{white}\specialrule{\aboverulesep}{0pt}{-2pt}%
+            \arrayrulecolor{black}\specialrule{\heavyrulewidth}{0pt}{\belowbottomsep}}%
+\newcommand{\bottomlinec}{\arrayrulecolor{tablerowcolorodd}\specialrule{\aboverulesep}{0pt}{0pt}%
+            \arrayrulecolor{black}\specialrule{\heavyrulewidth}{0pt}{\belowbottomsep}}%
+
+
+
+
+
+
+
+
+
+
+\setbeamercovered{highly dynamic}
+
 
 \author{Louis Onrust}
 \title{$p(\text{conclusions} | \text{Skipping \{*2*\}})$}
@@ -60,6 +121,7 @@
         $n$-gram probabilities are then determined by their MLE
     \end{block}
 
+  \uncover<2>{
     \begin{block}{Smoothed Traditional Language Model}
         What to do when the occurrence count of $p$ is 0?
         \begin{itemize}
@@ -69,6 +131,7 @@
 
         One of the best methods is still Modified Kneser-Ney: backoff and smoothing
     \end{block}
+  }
 \end{frame}
 \note[itemize]{
 }
@@ -82,6 +145,7 @@
         \end{itemize}
     \end{block}
 
+  \uncover<2->{
     \begin{block}{Bayesian Unigram Language Model: Chinese Restaurant Process}
         \begin{itemize}
             \item Clusters are tables, unigram tokens are customers
@@ -89,15 +153,18 @@
             \item In the inference step, customers get to choose a new identity
         \end{itemize}
     \end{block}
-
+  }
+  \uncover<3->{
     \begin{block}{Bayesian $n$-gram Language Model: Nested Chinese Restaurant Process}
         \begin{itemize}
             \item Each context is a restaurant
             \item Each $n$ is a floor
             \item Each $n$-gram is a table
             \item Each $(n-1)$-gram sits at a table on the $(n-1)$th floor
+            \item All restaurants share the same global menu
         \end{itemize}
     \end{block}
+  }
 \end{frame}
 \note[itemize]{
     \note word types/tables: 1625150 1.6M
@@ -125,6 +192,7 @@
         \end{itemize}
     \end{block}
 
+  \uncover<2>{
     \begin{block}{Chinese Restaurant Process: Inference}
         With $m$ customers in the restaurant, a customer re-enters the restaurant and sits a table $t$ with probability
         \begin{itemize}
@@ -133,21 +201,29 @@
         \end{itemize}
         The number of tables grows logarithmically
     \end{block}
+  }
 \end{frame}
 
 \begin{frame}{Processes and Priors}
-    \begin{block}{\only<1>{Reeeeeeeee-cap}\only<2>{REEMIX}}
-        \begin{itemize}
-            \item We described a Chinese restaurants process mixture model
-                \begin{align}
-                    \pi_{[M]} &\sim \operatorname{CRP}(M)\label{eq:CRPMMpartition} \\
-                    \phi_t | \pi_{[M]} &\overset{\text{iid}}{\sim} G_0 && \text{ for }t\in\pi_{[M]},\label{eq:CRPMMlatent} \\
-                    x_i|\phi,\pi_{[M]} &\overset{\text{ind}}{\sim} F(\phi_t) && \text{ for }t\in\pi_{[M]}\text{ and }i\in t,\label{eq:CRPMMdatapoints}
-                \end{align}
-        \end{itemize}
+    \begin{block}{\only<1-2>{The Generative Model}\only<3>{A Suboptimal Unigram Language Model}}
+        We described a Chinese restaurant process mixture model
+        \only<1-2>{
+          \begin{align}
+          \pi_{[M]} &\sim \operatorname{CRP}(M)\label{eq:CRPMMpartition} \\
+          \phi_t | \pi_{[M]} &\sim G_0 && \text{ for }t\in\pi_{[M]},\label{eq:CRPMMlatent} \\
+          x_i|\phi,\pi_{[M]} &\sim F(\phi_t) && \text{ for }t\in\pi_{[M]}\text{ and }i\in t\label{eq:CRPMMdatapoints}
+          \end{align}
+        }
+        \only<3>{
+            \begin{align}
+                G_0 &= \mathcal{U} \\
+                G &\sim \operatorname{CRP}(G_0) \\
+                x_i &\sim G
+            \end{align}
+        }
     \end{block}
 
-    \only<1>{
+    \only<1-2>{\uncover<2>{
         \begin{block}{Nested Pitman-Yor Chinese Restaurant Process}
             \begin{itemize}
                 \item CRP and DPCRP give logarithmic growth
@@ -160,14 +236,14 @@
                     \end{description}
             \end{itemize}
         \end{block}
-    }
-    \only<2>{
+    }}
+    \only<3>{
         \begin{block}{Nested Pitman-Yor Chinese Restaurant Process Mixture Model}
             \begin{align}
-                \pi_{[M]} &\sim \operatorname{PYCRP}(\alpha,\gamma,G_0) \\
-                G_u &\sim\operatorname{PYCRP}(\alpha_{|u|},\gamma_{|u|},G_{\pi(u)}) \\
-                \phi_t | \pi_{[M]} &\overset{\text{iid}}{\sim} G_0 && \text{ for }t\in\pi_{[M]}, \\
-                x_i|\phi,\pi_{[M]} &\overset{\text{ind}}{\sim} F(\phi_t) && \text{ for }t\in\pi_{[M]}\text{ and }i\in t,
+                G_0 &= \mathcal{U} \\
+                G_1 &\sim\operatorname{PYCRP}(\alpha_1,\gamma_1,G_0)\\
+                G_u &\sim\operatorname{PYCRP}(\alpha_{|u|},\gamma_{|u|},G_{\pi(u)})\\                
+                x_i|u_j &\sim G_{u_j}
             \end{align}
         \end{block}
     }
@@ -184,6 +260,7 @@
         \end{itemize}
     \end{block}
 
+  \uncover<2>{
     \begin{block}{Implementation}
         We use the following software:
         \begin{description}
@@ -199,6 +276,7 @@
             %\item Efficient storage of patterns
         \end{itemize}
     \end{block}
+  }
 \end{frame}
 \note[itemize]{
 }
@@ -213,19 +291,22 @@
         \end{itemize}
     \end{block}
 
+  \uncover<2->{
     \begin{block}{Backoff Methods}
         \begin{description}
-            \item[$n$-gram] full recursive backoff to shorter $n$-grams
-            \item[Limited] recursive backoff to all patterns $\leq n$ until match
-            \item[Full] recursive backoff to all patterns $\leq n$
+            \item[ngram] full recursive backoff to shorter $n$-grams
+            \item[limited] recursive backoff to all patterns $\leq n$ until match
+            \item[full] recursive backoff to all patterns $\leq n$
         \end{description}
     \end{block}
-
+  }
+  \uncover<3>{
     \begin{block}{Evaluation Measure}
         \begin{itemize}
             \item Intrinsic evaluation with perplexity
         \end{itemize}
     \end{block}
+  }
 \end{frame}
 \note[itemize]{
 }
@@ -233,8 +314,8 @@
 \begin{frame}{Results: An Overview}
     \begin{block}{Summary}
         \begin{itemize}
-            \item Within domain evaluation yields best performance
-            \item Adding skipgrams increases performance on cross domain evaluation
+            \item Within-domain evaluation yields best performance
+            \item Adding skipgrams increases performance on cross-domain evaluation
             \item For generic corpora, limited recursive backoff performs best
             \item Seems to outperform Generalised Language Model
             \item If significant, perhaps not enough for extrinsic evaluation
@@ -248,46 +329,20 @@
 
     \begin{block}{Observations}
         \begin{description}
-            \item[domains] Within domain evaluation yields best performance
-            \item[patterns] Adding skipgrams increases performance on cross domain evaluation
+            \item[domains] Within-domain evaluation yields best performance
+            \item[patterns] Adding skipgrams increases performance on cross-domain evaluation
         \end{description}
     \end{block}
-    \vspace{-1em}
+    %\vspace{-1em}
     {\small
-        \begin{columns}[T,totalwidth=\textwidth]
-            \begin{column}{0.5\textwidth}
-                \begin{block}{Training with only $n$-grams}
-                    %\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
-                    \begin{tabular}{rrrr}
-                            & jrc & 1bw  & emea \\ \hline
-                        jrc & 13  & 1195 & 961 \\
-                        1bw & 768 & 158  & 945 \\
-                        emea& 600 & 1143 & 4
-                    \end{tabular}
-                \end{block}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                \begin{block}{and with skipgrams}
-                    %\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
-                    \begin{tabular}{rrrr}
-                            & jrc & 1bw  & emea \\ \hline
-                        jrc & 13  & 1162 & 939 \\
-                        1bw & 751 & 162  & 921 \\
-                        emea& 581 & 1155 & 4
-                    \end{tabular}
-                \end{block}
-            \end{column}
-        \end{columns}
-        \hspace{1em}
-        \begin{block}{Relative differences}
-            %\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
-            \begin{tabular}{rrrr}
-                    & jrc & 1bw & emea \\ \hline
-                jrc & 2.0 & \cellcolor{green!25}{-2.8} & \cellcolor{green!25}{-2.3} \\
-                1bw & \cellcolor{green!25}{-2.2} & 2.4 & \cellcolor{green!25}{-2.6} \\
-                emea& \cellcolor{green!25}{-3.2} & 1.1 & 0.7
-            \end{tabular}
-        \end{block}
+    \begin{tabular}{rrrrrrrrrr} 
+    & \multicolumn{4}{c}{\cellcolor{ruhuisstijlrood}\color{white} $n$-gram} & & \multicolumn{4}{c}{\cellcolor{ruhuisstijlrood}\color{white} skipgram} \\
+    \headcol & {\color{white} jrc} & {\color{white} 1bw} & {\color{white} emea} & {\color{white} wp} & & {\color{white} jrc} & {\color{white} 1bw} & {\color{white} emea} & {\color{white} wp}\\
+    \rowcolodd jrc & 13  & 1195 & 961 & 1011 & & 13  & {\color{ruhuisstijlrood} 1162} & {\color{ruhuisstijlrood} 939} & {\color{ruhuisstijlrood} 1008}\\
+    \rowcoleven 1bws & 768 & {\color{ruhuisstijlrood} 158}  & 945 & {\color{ruhuisstijlrood} 493} & & {\color{ruhuisstijlrood} 751} & 162  & {\color{ruhuisstijlrood} 921} & 507\\
+    \rowcolodd emea& 600 & {\color{ruhuisstijlrood} 1143} & 4   & 843 & & {\color{ruhuisstijlrood} 581} & 1155 & 4   & {\color{ruhuisstijlrood} 842}\\
+    \rowcoleven wps  & {\color{ruhuisstijlrood} 555} & {\color{ruhuisstijlrood} 455} & 1005 & {\color{ruhuisstijlrood} 217} & & 565 & 470  & {\color{ruhuisstijlrood} 990} & 227\\
+    \end{tabular}
     }
 \end{frame}
 \note[itemize]{
@@ -299,48 +354,25 @@
             \item[backoff] For generic corpora, limited recursive backoff performs best
         \end{description}
     \end{block}
-    \vspace{-1em}
+    %\vspace{-1em}
     {\small
-        \begin{columns}[T,totalwidth=\textwidth]
-            \begin{column}{0.5\textwidth}
-                \begin{block}{\hspace{2.55cm}$n$-grams\vphantom{Skipgrams}}
-                    %\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
-                    \begin{tabular}{rrrrr}
-                        & & jrc & 1bw & emea \\ \cline{3-5}
-                        \multirow{3}{*}{jrc} & ngram & \cellcolor{green!25}{13} & 1510 & 1081 \\
-                        & limited& 14 & 1477 & 1122 \\
-                        & full & 69 & \cellcolor{green!25}{1195} & \cellcolor{green!25}{961} \\
-                        &&&& \\
-                        \multirow{3}{*}{1bws} & ngram & \cellcolor{green!25}{768} & \cellcolor{green!25}{158} & \cellcolor{green!25}{946} \\
-                        & limited& 815 & 185 & 1025 \\
-                        & full & 801 & 264 & 1039 \\
-                        &&&& \\
-                        \multirow{3}{*}{emea} & ngram & 769 & 1552 & \cellcolor{green!25}{4} \\
-                        & limited& 779 & 1385 & \cellcolor{green!25}{4} \\
-                        & full & \cellcolor{green!25}{600} & \cellcolor{green!25}{1143} & 32
-                    \end{tabular}
-                \end{block}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                \begin{block}{Skipgrams}
-                    %\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
-                    \begin{tabular}{rrr}
-                        jrc & 1bw & emea \\ \hline
-                        \cellcolor{green!25}{13} & 1843 & 1295 \\
-                        \cellcolor{green!25}{13} & 1542 & 1149 \\
-                        65 & \cellcolor{green!25}{1195} & \cellcolor{green!25}{939} \\
-                        && \\
-                        879 & 163 & 1105 \\
-                        \cellcolor{green!25}{751} & \cellcolor{green!25}{162} & \cellcolor{green!25}{921} \\
-                        768 & 252 & 988 \\
-                        && \\
-                        969 & 2089 & \cellcolor{green!25}{4} \\
-                        838 & 1655 & \cellcolor{green!25}{4} \\
-                        \cellcolor{green!25}{581} & \cellcolor{green!25}{1155} & 32
-                    \end{tabular}
-                \end{block}
-            \end{column}
-        \end{columns}
+        \begin{tabular}{rrrrrrrrrrr}
+        & & \multicolumn{4}{c}{\cellcolor{ruhuisstijlrood}\color{white} $n$-gram} & & \multicolumn{4}{c}{\cellcolor{ruhuisstijlrood}\color{white} skipgram} \\
+\headcol %\rowfont{\color{white}}
+ &  & {\color{white} jrc} & {\color{white} 1bw} & {\color{white} emea} & {\color{white} wp} &  & {\color{white} jrc} & {\color{white} 1bw} & {\color{white} emea} & {\color{white} wp} \\
+\rowcolodd & ngram & {\color{ruhuisstijlrood} 13} & 1510 & 1081 & 1293 &  & {\color{ruhuisstijlrood} 13} & 1843 & 1295 & 1623 \\
+\rowcolodd & limited & 14 & 1477 & 1122 & 1263 &  & {\color{ruhuisstijlrood} 13} & 1542 & 1149 & 1356 \\ 
+\rowcolodd \multirow{-3}{*}{jrc} & full & 69 & {\color{ruhuisstijlrood} 1195} & {\color{ruhuisstijlrood} 961} & {\color{ruhuisstijlrood} 1011} &  & 65 & {\color{ruhuisstijlrood}\bf 1162} & {\color{ruhuisstijlrood}\bf 939} & {\color{ruhuisstijlrood}\bf 1008} \\
+\rowcoleven & ngram & {\color{ruhuisstijlrood} 768} & {\color{ruhuisstijlrood}\bf 158} & {\color{ruhuisstijlrood} 946} & {\color{ruhuisstijlrood}\bf 493} &  & 879 & 163 & 1105 & 550 \\ 
+\rowcoleven & limited & 815 & 185 & 1025 & 563 &  & {\color{ruhuisstijlrood}\bf 751} & {\color{ruhuisstijlrood} 162} & {\color{ruhuisstijlrood}\bf 921} & {\color{ruhuisstijlrood} 507} \\
+\rowcoleven \multirow{-3}{*}{1bws} & full & 800 & 264 & 1039 & 583 &  & 769 & 252 & 988 & 561 \\ 
+\rowcolodd & ngram & 769 & 1552 & {\color{ruhuisstijlrood} 4} & 1097 &  & 969 & 2090 & {\color{ruhuisstijlrood} 4} & 1416 \\ 
+\rowcolodd & limited & 779 & 1385 & {\color{ruhuisstijlrood} 4} & 1018 &  & 838 & 1655 & {\color{ruhuisstijlrood} 4} & 1139 \\ 
+\rowcolodd \multirow{-3}{*}{emea} & full & {\color{ruhuisstijlrood} 600} & {\color{ruhuisstijlrood}\bf 1143} & 32 & {\color{ruhuisstijlrood} 843} &  & {\color{ruhuisstijlrood}\bf 581} & {\color{ruhuisstijlrood} 1155} & 32 & {\color{ruhuisstijlrood}\bf 842} \\  
+\rowcoleven & ngram & {\color{ruhuisstijlrood}\bf 555} & {\color{ruhuisstijlrood}\bf 455} & {\color{ruhuisstijlrood} 1005} & {\color{ruhuisstijlrood}\bf 217} &  & 623 & 504 & 1,132 & 233 \\ 
+\rowcoleven & limited & 629 & 543 & 1168 & 260 &  & {\color{ruhuisstijlrood} 565} & {\color{ruhuisstijlrood} 470} & {\color{ruhuisstijlrood}\bf 990} & {\color{ruhuisstijlrood} 227} \\ 
+\rowcoleven \multirow{-3}{*}{wps} & full & 656 & 579 & 1184 & 357 &  & 625 & 548 & 1,106 & 336 \\
+\end{tabular}
     }
 \end{frame}
 \note[itemize]{
@@ -366,3 +398,4 @@
 }
 
 \end{document}
+
