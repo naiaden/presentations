@@ -514,7 +514,7 @@
     }{%
 			\vspace*{-0.23cm}\hspace*{-1.08cm}
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-front.pdf}
-    }}}}}}}%
+    }}}}}}}}}}}%
     \ifthenelse{\equal{\grouplogo}{lama}}{%
     	%\vspace*{-0.8cm}
         \hspace*{-12.5cm}
