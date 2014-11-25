@@ -427,6 +427,26 @@
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_imr_2014-43-slide.pdf}
         \fi
     }{%
+    \ifthenelse{\equal{\dept}{is}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_is_2014-43-slide.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{ds}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ds_2014-43-slide.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{icis}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_icis_2014-43-slide.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{mbsd}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_mbsd_2014-43-slide.pdf}
+        \fi
+    }{%
     \ifthenelse{\equal{\dept}{ster}}{%
         \ifnum\thepage>1\relax%
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ster_2014-43-slide.pdf}
@@ -435,7 +455,7 @@
         \ifnum\thepage>1\relax%
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-slide.pdf}
         \fi
-    }}}}}}}%
+    }}}}}}}}}}}%
     \ifthenelse{\equal{\grouplogo}{lama}}{%
         %\vspace*{-0.8cm}
         \hspace*{-12.5cm}
@@ -471,6 +491,22 @@
     \ifthenelse{\equal{\dept}{imr}}{%
 			\vspace*{-0.25cm}\hspace*{-1.08cm}
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_imr_2014-43-front.pdf}
+    }{%
+    \ifthenelse{\equal{\dept}{is}}{%
+			\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_is_2014-43-front.pdf}
+    }{%
+    \ifthenelse{\equal{\dept}{icis}}{%
+			\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_icis_2014-43-front.pdf}
+    }{%
+    \ifthenelse{\equal{\dept}{mbsd}}{%
+			\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_mbsd_2014-43-front.pdf}
+    }{%
+    \ifthenelse{\equal{\dept}{ds}}{%
+			\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ds_2014-43-front.pdf}
     }{%
     \ifthenelse{\equal{\dept}{ster}}{%
 			\vspace*{-0.25cm}\hspace*{-1.08cm}
