@@ -1,9 +1,7 @@
 %% This file shows how to use the beamer template ruhuisstijl. It 
 %% mimics the corporate and departemental style for the Radboud 
 %% University powerpoint presentations. This file contains the 
-%% single-file version of the template. The full (multiple-file)
-%% version is always up-to-date, so try that version first if you
-%% encounter any problems.
+%% single-file version of the template. 
 %% 
 %% For comments, questions, and suggestions contact me at 
 %% l.onrust@let.ru.nl or visit the github repository on
@@ -21,7 +19,7 @@
 %% 11 November 2014: Group logo added for Language Machines (lama)
 %% 25 November 2014: DS, iCIS, IS, MBSD templates added
 
-\documentclass[department=ds, notes={hide notes}, slidesperpage=4, handout, official=true]{beamerruhuisstijl}
+\documentclass[department=ds, notes={show notes}, slidesperpage=4, handout, official=true]{beamerruhuisstijl}
 %% The class takes the following optional arguments:
 %% notes: {show notes}, {hide notes}, {show only notes} (default = hide notes)
 %% official: true, false (default = false)
@@ -30,28 +28,126 @@
 %% handout
 %% slidesperpage: 1, 2, 3, 4, 6 (default = 1)
 
-\title{Wie weet er wat er gebeurt als je een vele te lange titel neemt?}
-\subtitle{Gebruiksvoorwaarden \& sjablonen (juli 2014)}
+\title{The Beamer version of the Radboud University Corporate Style Powerpoint Template}
+\subtitle{An Introduction and Showcase}
 \date{\today}
 \author{lama-fan}
 
+\usepackage{cleveref}
 
 \begin{document}
 
 \begin{frame}
     \titlepage
 \end{frame}
+\note{
 
-\begin{frame}{Overzicht}
-    \tableofcontents
-\end{frame}
-\note[itemize]{
-    \item Dit is een van de drie notities die ik gemaakt heb.
 }
+
+\begin{frame}{Disclaimer}
+	\begin{block}{Introduction}
+    	This presentation shows the possibilities of the Beamer version of the Radboud University's new (2014) corporate style Powerpoint template. Note that although one of the parameters to the document class for Beamer is \texttt{official}, and the university encourages the use of this template, only the Powerpoint and Keynote templates are officially supported. See \url{http://www.ru.nl/huisstijl/} for everything corporate style related.
+    \end{block}
+    
+    \begin{block}{Questions, feedback, and comments}
+    	Don't hesitate to contact me, also if you have questions on how to realise certain parts of your presentation.
+    	\begin{description}
+        	\item[Email] \href{mailto:l.onrust@let.ru.nl}{l.onrust@let.ru.nl}
+            \item[Github] \href{https://github.com/naiaden}{naiaden}
+        \end{description}
+    \end{block}
+\end{frame}   
+\note{
+	I've sent this template to the department of Corporate Communications, and they got me in contact with the designers of this corporate style. They promised to look at the template, and to tell me on which points I can improve.
+    
+    Although in the beginning I didn't like their ideas much, some of them I grew to appreciate. However, I do want to adhere to their guidelines. That's why I have an official and an unofficial version, which you can toggle with a document class parameter.
+}
+
+\begin{frame}{Distribution and Availability}
+	\begin{block}{Availability}
+    	The code of the Beamer class file and the background images are hosted at github: \url{https://github.com/naiaden/presentations/tree/master/ruhuisstijl/distributed}. There you will always find the newest version. 
+        
+        The template on \textbf{write}\LaTeX{} is updated after every push to github. It may take a couple of days before the administrators of \textbf{write}\LaTeX{} approve the new version of the template.
+    \end{block} 
+
+    \begin{block}{Distribution}
+    	The code is currently licensed as \href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}. The Radboud University holds the right to the background images and to the texts on the slides \cpagerefrange{sl:gvwa,sl:vvet}.
+    \end{block}
+\end{frame}
+\note{
+	I also have a beamer class split in multiple files. Don't use these files, as I cannot garantuee that they are in sync with the updates on the single \texttt{beamerruhuisstijl.cls}.
+    
+    If you don't like the template, tell me. If you like the template, tell others. Feel free to distribute the template, or any derivative. If you do make any change to the template, let me know. Similarly, if you want to be kept up-to-date, let me know.
+}
+
+\begin{frame}{Usage}
+	\begin{block}{How to use this template}
+      To use this template for your own presentation in \textbf{write}\LaTeX{}, perform the next steps:
+      \begin{enumerate}
+          \item remove all frames in the \texttt{tex} file;
+          \item enable only the options that you want to use (because right now it is in handout-mode with 2 slides and their notes on a page, with a departmental layout);
+          \item create frames with your slide's content;
+          \item thoroughly look everything over, and check for overflows, wrong spacing after interpunction, spelling. \emph{everything}.
+      \end{enumerate}
+    \end{block}
+    
+    \begin{block}{Title page}
+      The creators of the official corporate style chose to have only a title and subtitle field on the title page. If you want to put all sorts of extra information there, I don't mind, but you are on your own.
+    \end{block}
+\end{frame}
+\note{
+	Using this template on \textbf{write}\LaTeX{} is easy. But sometimes you want to create a presentation on your local machine. There are multiple ways to do this, of which I will describe three:
+    	\begin{enumerate}
+        	\item Download a zip from \textbf{write}\LaTeX{}, edit \texttt{main.tex}, and compile it into a presentation;
+            \item Clone the github repository \texttt{presentations} from \texttt{naiaden}, and add the directory \texttt{presentations/tree/master/ruhuisstijl/distributed} to TEXINPUTS. Or at least link it such that the \TeX{} preprocessors can find it.
+            \item Download \texttt{beamerruhuisstijl.cls} and the backgrounds to your local machine (keep the directory structure with \texttt{backgrounds/}), and create a new \texttt{tex} file with your presentation.
+        \end{enumerate}
+
+	The title page is one of the things I've grown to like. No distractions such as the affiliation, date, the author. Just the title. On the first slide after the title page there is ample space to put everything you think the user has to know.
+    
+    And seriously. Invest some time in making your presentations. A spelling error can hardly be avoided. But text overflowing into the bottom bar, images of very poor quality, too much spacing after \emph{e.g.}; they all distract from the point you are trying to make.
+}
+
+\begin{frame}{Structure of this Presentation}
+	This presentation consists of three parts:
+    \begin{columns}[T,totalwidth=\linewidth]
+        \begin{column}{0.3\textwidth}
+            \begin{block}{Voorbeeldpresentatie}
+            	Here we recite the rules as stated in the \href{http://www.ru.nl/publish/pages/596464/ru_powerpoint_algemeen_2014_toelichting.ppt}{example presentation}. This section is in Dutch
+            \end{block}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{block}{Examples}
+            	Here we show tricks such as \texttt{uncover}, \texttt{only}, smart references, and nested lists.
+            \end{block}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{block}{Showcase}
+            	Here we demonstrate the possible departmental styles, both the title page and the layout for the slides.
+            \end{block}
+        \end{column}
+    \end{columns}
+    
+    \begin{block}{Additional comments}
+      Each frame (not necessarily each slide) has a note. Pass \texttt{show notes} as an option to the document class to show them, or look in the code. In the notes I will provide some thoughts and explanations.
+	\end{block}
+\end{frame}
+\note{
+	
+}
+
+%%%%%%%%%%          %%%%%%%%%%          %%%%%%%%%%          %%%%%%%%%%%%
+
+\renewcommand{\dept}{none}
+\setbeamercolor{title}{fg=ruhuisstijlzwart}
+
+\begin{tussenpagina}{Voorbeeldpresentatie}{Gebruiksvoorwaarden \& sjablonen (juli 2014)}{tussenpaginabackground.jpg}
+\end{tussenpagina}
+\note{}
 
 \section{Voorwaarden}
 \subsection{Algemeen}
-\begin{frame}
+\begin{frame}\label{sl:gvwa}
     \frametitle{Gebruiksvoorwaarden algemeen}
 
     \begin{block}{Titelpagina's (rood)}
@@ -69,8 +165,40 @@
         \end{itemize}
     \end{block}
 \end{frame} 
+\note{
+	With the option to support grouplogos I violate the second rule which state that no additional text fields or images are to be added on the title page. But for example, I am affiliated with KU Leuven and Radboud University. In some cases you have to have both on your presentation: ``necessity knows no law.''
+    
+    If you chose this presentation to be without any departmental style, then the spacing you see here for the list items is similar to the spacing in the example presentation provided by the RU. If you chose a departmental style, it is not. Unfortunately, the code is not dynamically executed, but only beforehand, during the parsing of all layout stuff. If you choose the style you want to use at the beginning, it all works out.
+}
 
 \subsection{Tekstpagina's}
+\begin{frame}{Gebruiksvoorwaarden titelpagina's (rode achtergrond)}
+	\begin{block}{Maak altijd gebruik van lettertype Arial}
+    	\begin{itemize}
+        	\item Paginatitel: standaard, 50 pt
+            \item Tekst/inhoud: standaard, 25 pt
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Plaats teksten altijd in zwart of wit}
+    	\begin{itemize}
+        	\item Paginatitel: wit
+            \item Inhoud tekst: zwart
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Maak altijd gebruik vastgestelde kantlijn}
+    	\begin{itemize}
+        	\item Titel en tekst/inhoud: horizontaal vanaf links 2,5 cm
+            \item Titel: verticaal vanaf boven 2 cm
+            \item Tekst/inhoud: verticaal vanaf boven 5 cm
+        \end{itemize}
+    \end{block}
+\end{frame}
+\note[itemize]{
+    \item With respect to the margins I have some questions with the designing agency. 2,5cm does not mean anything if you don't know how large a slide is to begin with. It's even worse if you assume 2,5-`projected'-cm.
+}
+
 \begin{frame}
     \frametitle{Gebruiksvoorwaarden tekstpagina's (witte achtergrond)}
 
@@ -84,10 +212,10 @@
     \end{block}
 
     \begin{block}{Plaats teksten altijd in zwart of rood}
-        \begin{description}
-            \item[Paginatitel] RU huisstijl rood \emph{(RGB: 190, 49, 26)}% Ook maar eens even kijken wat er gebeurt als deze regel te lang is.
-            \item[Inhoud tekst en tussenkoppen] zwart
-        \end{description}
+        \begin{itemize}
+            \item Paginatitel: RU huisstijl rood {\color{ruhuisstijlrood} (RGB: 190, 49, 26)}
+            \item Inhoud tekst en tussenkoppen: zwart
+        \end{itemize}
     \end{block}
 
     \begin{block}{Maak altijd gebruik vastgestelde kantlijn}
@@ -100,6 +228,9 @@
     \end{block}
 
 \end{frame}
+\note{
+	Note that the footnotes (although their use is discouraged in presentations in general) are too low. This is because the presentation is loaded with a departmental style, hence the margins adapt to these styles. The official RU style has somewhat different margins. Since these margins are only computed at the beginning, this footnote is positioned as if it were printed on a departmental slide. If you choose the right style at the beginning, this will not be an issue.
+}
 
 \section{Kleuren}
 \begin{frame}
@@ -110,6 +241,7 @@
     \rured{Rood: RGB 190/49/26 (RU huisstijl rood)} \\
     \href{http://google.com/}{Hyperlink: RGB 190/49/26 (RU huisstijl rood)}
 \end{frame}
+\note{}
 
 \section{Sjablonen}
 \begin{frame}
@@ -131,17 +263,20 @@
     \footnotetext{Hierna volgen enkele voorbeeldpagina's, de paginatitels zijn gelijk aan de naam van het sjabloon}
 
 \end{frame}
+\note{
+	This slide makes no sense, I guess it's a Powerpoint thing.
+}
+
 
 \section{Voorbeeldslides}
 \subsection{Tussenpagina}
-\begin{tussenpagina}{Tussenpagina}{Op een tussenpagina mag wel extra beeld toegevoegd worden.}{imagebackground.jpg}
-        %\includegraphics[width=0.5\textwidth]{image.png}
+\begin{tussenpagina}{Tussenpagina}{Op een tussenpagina mag wel extra beeld toegevoegd worden.}{tussenpaginabackground.jpg}
 \end{tussenpagina}
+\note{
+}
 
 \subsection{Blokken}
-\begin{frame}
-    \frametitle{Titel en object}
-
+\begin{frame}{Titel en object}
     \begin{block}{Dit is een tussenkop}
     Rectiatem sunto bla velesti berestrupta conseria quam quae commo et eaquam quo dolent omnistis estion cuptatet duciendae dolorunt ipit, omnimus trumqui ommolor simporuntium fugit eicatem quis autem eatemquiam nissum eatum facerit inciis voluptas quae aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapid.
     \end{block}
@@ -158,10 +293,10 @@
     \end{itemize}
     \end{block}
 \end{frame}
+\note{
+}
 
-\begin{frame}
-    \frametitle{Twee objecten}
-
+\begin{frame}{Twee objecten}
     \begin{columns}[T,totalwidth=\linewidth]
         \begin{column}{0.475\textwidth}
         \begin{block}{Dit sjabloon kunt u gebruiken voor twee tekstkolommen}
@@ -179,10 +314,10 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
         \end{column}
     \end{columns}
 \end{frame}
+\note{
+}
 
-\begin{frame}
-    \frametitle{Twee objecten}
-
+\begin{frame}{Twee objecten}
     \begin{columns}[T,totalwidth=\linewidth]
         \begin{column}{0.475\textwidth}
             \begin{block}{Maar ook voor een tekstkolom en een afbeelding}
@@ -195,12 +330,10 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
         \end{column}
     \end{columns}
 \end{frame}
+\note{}
 
-\begin{frame}
-    \frametitle{Vergelijking}
-        
+\begin{frame}{Vergelijking}  
     \begin{columns}[T,totalwidth=\linewidth]
-        %\begin{column}{0.475\textwidth}
         \begin{column}{0.5\textwidth}
             \begin{block}{Sapienis simet esto ugit voluptatio eseria possimaio opturitatur}
                 \begin{itemize}
@@ -223,6 +356,9 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
         \end{column}
     \end{columns}
 \end{frame}
+\note{
+	If the text of the left column passes the lower bar, you've chosen a departmental style. Yes. The departmental styles use more white space, and can fit less text on a slide. This is on purpose.
+}
 
 \begin{frame}
     \begin{figure}
@@ -231,11 +367,11 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \end{figure}
 \end{frame}
 \note{
-    Haha, dit plaatje!
+    I don't really understand why they chose to have a centred text as caption, but I implemented it anyway.
 }
 
 \subsection{Tabel}
-\begin{frame}
+\begin{frame}\label{sl:vvet}
     \frametitle{Voorbeeld van een tabel}
 
     \begin{tabular}{=l +r +r +r +r }
@@ -248,10 +384,24 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
         \rowstyle{\color{ruhuisstijlrood}}Totaal & 515 & 1015 & 1515 & 2014
     \end{tabular}
 \end{frame}
+\note{
+	Tables are actually quite tricky. By default the rows are alternately coloured. I suggest you follow the rules as described by booktabs. One of their main points is that you shouldn't use vertical lines.
+    
+    For more table wizardry, see my other presentation \href{https://github.com/naiaden/presentations/blob/2b04369db834cdfe90a4e4e3415e90f12bf4be8a/BayesianColibri/baco.tex}{here}.
+}
+
+%%%%%%%%%%          %%%%%%%%%%          %%%%%%%%%%          %%%%%%%%%%%%
+
+\renewcommand{\dept}{cls}
+\setbeamercolor{title}{fg=ruhuisstijlwit}
+
+\begin{tussenpagina}{Examples}{Tips and Tricks}{tussenpaginabackground.jpg}
+\end{tussenpagina}
+\note{}
 
 \subsection{De rest}
 \begin{frame}{Niet alles blootgeven}
-    De \pause tekst \pause verschijnt \pause in \pause stukken.
+    De \pause tekst \pause verschijnt \pause in \pause stukken.\footnote{Voetnoottest.}
 
     \begin{itemize}
          \item<+-> dit verschijnt pas als ``stukken .'' getoond is
@@ -261,6 +411,9 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
          \item<+-> Dit zal er op het einde komen 
       \end{itemize}
 \end{frame}
+\note[itemize]{
+	\item Note that if you toggle the handout parameter for the document class into false, that only each frame has a note. A frame can come up as multiple slides, especially when you incrementally show items on slides.
+}
 
 \begin{frame}{Nog een ander voorbeeld met stappen}
     Alert kan \alert<+->{ook}
@@ -271,8 +424,8 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \only<+->{ leuke}
     trucje
 \end{frame}
-\note[itemize]{
-    \item Hier is nummer drie dan!
+\note{
+    
 }
 
 \begin{frame}{Hebban olla vogala nestas hagunnan hinase hic anda thu?}
@@ -292,6 +445,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
         \item maar hierover bestaat nog controverse.
     \end{itemize}
 \end{frame}
+\note{Nesting}
 
 \begin{frame}{Hier tellen we mee}
     Eerst maar eens de kantlijn bepalen.
@@ -315,6 +469,9 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
         \item[Maar wat nu als] het label van zichzelf wel erg lang is?
     \end{description}
 \end{frame}
+\note{
+	Use \texttt{label} and \texttt{ref} to refer to labels. If you want to refer to slides, I would suggest using the package \texttt{cleveref}, and \texttt{cpageref}. 
+}
 
 \begin{frame}{Opsommingen enzo}
     Eerst even wat normale tekst om de kantlijn te bepalen.
@@ -338,7 +495,12 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
             \item Nested.
         \end{enumerate}
     \end{enumerate}
+\end{frame}
+\note{
+	Testing custom list markers, and nesting of different types of lists.
+}
 
+\begin{frame}{Ander soort van opsomming}
 \[ a+b=4 \]
 
 \begin{equation}
@@ -349,6 +511,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
 \end{equation}
 
 \end{frame}
+\note{}
 
 \begin{frame}{Tips}
     \begin{block}{Handout}
@@ -360,9 +523,16 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \end{block}
 
     \begin{block}{Notities voor op het tweede scherm}
-        Net als de presenter view van PowerPoint, kun je met \texttt{beamer} ook notities maken. In deze presentatie vind je er drie. Zoek in de source code maar op \texttt{\textbackslash note}. Standaard staan ze aan, maar als je na je frame niet aangeeft dat je notes wilt, dan wordt er ook geen pagina voor aangemaakt. 
+        Net als de presenter view van PowerPoint, kun je met \texttt{beamer} ook notities maken. Zoek in de source code maar op \texttt{\textbackslash note}. Standaard staan ze aan, maar als je na je frame niet aangeeft dat je notes wilt, dan wordt er ook geen pagina voor aangemaakt. 
     \end{block}
 \end{frame}
+\note{}
+
+%%%%%%%%%%          %%%%%%%%%%          %%%%%%%%%%          %%%%%%%%%%%%
+
+\begin{tussenpagina}{Showcase}{All supported styles in one go}{tussenpaginabackground.jpg}
+\end{tussenpagina}
+\note{}
 
 \renewcommand{\dept}{none}
 \setbeamercolor{title}{fg=ruhuisstijlzwart}
@@ -370,7 +540,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: none}
-    Radboud University
+	Radboud University
 \end{frame}
 
 \renewcommand{\dept}{cls}
@@ -379,7 +549,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: CLS}
-    Centre for Language Studies
+	Centre for Language Studies
 \end{frame}
 
 \renewcommand{\dept}{hlcs}
@@ -387,7 +557,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: HLCS}
-    Institute for Historical, Literary and Cultural Studies
+	Institute for Historical, Literary and Cultural Studies
 \end{frame}
 
 \renewcommand{\dept}{clst}
@@ -395,7 +565,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: CLST}
-    Centre for Language and Speech Technology
+	Centre for Language and Speech Technology
 \end{frame}
 
 \renewcommand{\dept}{kaski}
@@ -403,7 +573,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: Kaski}
-    Center for Applied Research on Religion
+	Center for Applied Research on Religion
 \end{frame}
 
 \renewcommand{\dept}{ster}
@@ -411,7 +581,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: SteR}
-    Research Centre for State and Law
+	Research Centre for State and Law
 \end{frame}
 
 \renewcommand{\dept}{imr}
@@ -419,7 +589,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: IMR}
-    Institute for Management Research
+	Institute for Management Research
 \end{frame}
 
 \renewcommand{\dept}{ptrs}
@@ -427,7 +597,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: PTRS}
-    Research Institute for Philosophy, Theology and Religious Studies
+	Research Institute for Philosophy, Theology and Religious Studies
 \end{frame}
 
 \renewcommand{\dept}{icis}
@@ -435,7 +605,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: iCIS}
-    Institute for Computing and Information Sciences
+	Institute for Computing and Information Sciences
 \end{frame}
 
 \renewcommand{\dept}{mbsd}
@@ -443,7 +613,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: MBSD}
-    iCIS: Model Based System Development
+	iCIS: Model Based System Development
 \end{frame}
 
 \renewcommand{\dept}{ds}
@@ -451,7 +621,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: DS}
-    iCIS: Digital Security
+	iCIS: Digital Security
 \end{frame}
 
 \renewcommand{\dept}{is}
@@ -459,7 +629,7 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \titlepage
 \end{frame}
 \begin{frame}{Voorbeeld: IS}
-    iCIS: Intelligent Systems
+	iCIS: Intelligent Systems
 \end{frame}
 
 \end{document}
