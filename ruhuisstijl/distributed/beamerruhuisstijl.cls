@@ -228,7 +228,7 @@
 %%% Footnote stuff
 \ifthenelse{\equal{\dept}{none}}{%
     \setbeamertemplate{footline}{%
-        \vspace{1.7cm}
+        \vspace{1.75cm}
     }
 }{%
     \setbeamertemplate{footline}{%
@@ -387,7 +387,7 @@
         }
         \begin{minipage}[t][2.5cm][t]{10cm}%
             \begin{beamercolorbox}{title}%
-                \usebeamerfont{title}{\Huge#1}\par%
+                \usebeamerfont{title}{\Huge#1\par}%
                 \vspace{0.25cm}%
                 \usebeamerfont{subtitle}#2\par%
             \end{beamercolorbox}%
@@ -526,7 +526,7 @@
     \vspace*{-8.5cm}
     \begin{minipage}[t][2.5cm][t]{10cm}%
         \begin{beamercolorbox}{title}%
-            \usebeamerfont{title}{\Huge\inserttitle}\par%
+            \usebeamerfont{title}{\Huge\inserttitle\par}%
             \vspace{0.25cm}%
             \usebeamerfont{subtitle}\insertsubtitle\par%
         \end{beamercolorbox}%
