@@ -1,77 +1,27 @@
-\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
-\usepackage{multirow}
-\usepackage{booktabs}
-\usepackage{tabu}
+ss[department=cls, notes={hide notes}, official=true, grouplogo=lama]{beamerruhuisstijl}
 
-\newcommand{\semitransp}[2][35]{\color{fg!#1}#2}
-
-\colorlet{tableheadcolor}{ruhuisstijlrood} % Table header colour = 25% gray
-\newcommand{\headcol}{\rowcolor{tableheadcolor}} %he
-
-
-\colorlet{tablerowcolorodd}{ruhuisstijlrood!10} % Table row separator colour = 10% gray
-\newcommand{\rowcolodd}{\rowcolor{tablerowcolorodd}} %
-
-\colorlet{tablerowcoloreven}{ruhuisstijlrood!25} % Table row separator colour = 10% gray
-\newcommand{\rowcoleven}{\rowcolor{tablerowcoloreven}} %
-
-
-
-% Command \topline consists of a (slightly modified) \toprule followed by a \heavyrule rule of colour tableheadcolor (hence, 2 separate rules)
-\newcommand{\topline}{\arrayrulecolor{black}\specialrule{0.1em}{\abovetopsep}{0.5pt}%
-            \arrayrulecolor{tableheadcolor}\specialrule{\belowrulesep}{0pt}{-3pt}%
-            \arrayrulecolor{black}
-            }
-    % Command \midline consists of 3 rules (top colour tableheadcolor, middle colour black, bottom colour white)
-\newcommand{\midline}{\arrayrulecolor{tableheadcolor}\specialrule{\aboverulesep}{-1pt}{0pt}%
-            \arrayrulecolor{black}\specialrule{\lightrulewidth}{0pt}{0pt}%
-            \arrayrulecolor{white}\specialrule{\belowrulesep}{0pt}{-3pt}%
-            \arrayrulecolor{black}
-            }
-    % Command \rowmidlinecw consists of 3 rules (top colour tablerowcolorodd, middle colour black, bottom colour white)
-\newcommand{\rowmidlinecw}{\arrayrulecolor{tablerowcolorodd}\specialrule{\aboverulesep}{0pt}{0pt}%
-            \arrayrulecolor{black}\specialrule{\lightrulewidth}{0pt}{0pt}%
-            \arrayrulecolor{white}\specialrule{\belowrulesep}{0pt}{0pt}%
-         \arrayrulecolor{black}}
-    % Command \rowmidlinewc consists of 3 rules (top colour white, middle colour black, bottom colour tablerowcolorodd)
-\newcommand{\rowmidlinewc}{\arrayrulecolor{white}\specialrule{\aboverulesep}{0pt}{0pt}%
-            \arrayrulecolor{black}\specialrule{\lightrulewidth}{0pt}{0pt}%
-            \arrayrulecolor{tablerowcolorodd}\specialrule{\belowrulesep}{0pt}{0pt}%
-            \arrayrulecolor{black}}
-    % Command \rowmidlinew consists of 1 white rule
-\newcommand{\rowmidlinew}{\arrayrulecolor{white}\specialrule{\aboverulesep}{0pt}{0pt}%
-            \arrayrulecolor{black}}
-    % Command \rowmidlinec consists of 1 tablerowcolorodd rule
-\newcommand{\rowmidlinec}{\arrayrulecolor{tablerowcolorodd}\specialrule{\aboverulesep}{0pt}{0pt}%
-            \arrayrulecolor{black}}
-    % Command \bottomline consists of 2 rules (top colour
-\newcommand{\bottomline}{\arrayrulecolor{white}\specialrule{\aboverulesep}{0pt}{-2pt}%
-            \arrayrulecolor{black}\specialrule{\heavyrulewidth}{0pt}{\belowbottomsep}}%
-\newcommand{\bottomlinec}{\arrayrulecolor{tablerowcolorodd}\specialrule{\aboverulesep}{0pt}{0pt}%
-            \arrayrulecolor{black}\specialrule{\heavyrulewidth}{0pt}{\belowbottomsep}}%
-
-
-
-
-
-
-
-
-
-
-\setbeamercovered{highly dynamic}
-
-
-\author{Louis Onrust}
 \title{$p(\text{conclusions} | \text{Skipping \{*2*\}})$}
 \subtitle{Bayesian Language Modelling with Skipgrams}
-\date{}
+\date{\today}
+\author{lama-fan}
+
+\usepackage{cleveref}
+
+\usepackage{tikz}
+\usepackage{tkz-graph}
+\usetikzlibrary[shapes,arrows,positioning,calc,patterns]
+
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.10}
+
 \begin{document}
 
 \begin{frame}
     \titlepage
 \end{frame}
-\note[itemize]{
+\note{
+
 }
 
 \begin{frame}{Bayesian Language Modelling with Skipgrams}
@@ -89,313 +39,475 @@
 \note[itemize]{
 }
 
-\begin{frame}{Scope of the Project}
-    \begin{block}{Scope}
+\begin{frame}{Language Models}
+    \begin{block}{Applications}
         \begin{itemize}
-            \item Language models
-            \item Latent variable models
-            \item Domain-dependence of LVLM
-            \item Intrinsic \& extrinsic evaluation
+            \item Input assists on telephones
+            \item Automatic translation of search results
+            \item Digital court reporting
         \end{itemize}
     \end{block}
-
-    \begin{block}{Goal}
-        \begin{itemize}
-            \item Bring back language modelling in Bayesian language modelling
-            \item Improve cross domain langauge modelling with skipgrams
-        \end{itemize}
+    
+    \uncover<2->{
+    \begin{block}{Flavours}
+      \begin{itemize}
+          \item Frequentist language models
+          \item Bayesian language models
+          \item Neural language models
+          \item \ldots
+      \end{itemize}
     \end{block}
-\end{frame}
-\note[itemize]{
-}
-
-\begin{frame}{Language Model}
-    \begin{block}{Traditional method}
-        The process:
-        \begin{itemize}
-            \item Read $n$-gram $p$
-            \item Increment frequency of $p$
-            \item Repeat, preferably ad infinitum
-        \end{itemize}
-
-        $n$-gram probabilities are then determined by their MLE
-    \end{block}
-
-  \uncover<2>{
-    \begin{block}{Smoothed Traditional Language Model}
-        What to do when the occurrence count of $p$ is 0?
-        \begin{itemize}
-            \item Not assign 0 as probability $\rightarrow$ smoothing
-            \item Fall back to the last $(n-1)$ words of $p$ $\rightarrow$ backoff
-        \end{itemize}
-
-        One of the best methods is still Modified Kneser-Ney: backoff and smoothing
-    \end{block}
-  }
-\end{frame}
-\note[itemize]{
-}
-
-\begin{frame}{Language Model}
-    \begin{block}{Bayesian method}
-        \begin{itemize}
-            \item Assume texts are generated by some process
-            \item Consider the texts to be a sample from the process
-            \item Infer underlying process
-        \end{itemize}
-    \end{block}
-
-  \uncover<2->{
-    \begin{block}{Bayesian Unigram Language Model: Chinese Restaurant Process}
-        \begin{itemize}
-            \item Clusters are tables, unigram tokens are customers
-            \item Initially tokens seat at the same type table
-            \item In the inference step, customers get to choose a new identity
-        \end{itemize}
-    \end{block}
-  }
-  \uncover<3->{
-    \begin{block}{Bayesian $n$-gram Language Model: Nested Chinese Restaurant Process}
-        \begin{itemize}
-            \item Each context is a restaurant
-            \item Each $n$ is a floor
-            \item Each $n$-gram is a table
-            \item Each $(n-1)$-gram sits at a table on the $(n-1)$th floor
-            \item All restaurants share the same global menu
-        \end{itemize}
-    \end{block}
-  }
-\end{frame}
-\note[itemize]{
-    \note word types/tables: 1625150 1.6M
-    \note word tokens/guests: 70310246 70M
-    \note n=4: 31044735 CRPs 31M
-    \note n=3: 11624400 CRPs 12M
-    \note n=2: 1447377 CRPs 1.5M
-    \note n=1: 1 CRP
-    \note 56h, 100iterations
-}
-
-\begin{frame}{Bayesian Language Model: Learning \& Estimating}
-    \begin{block}{Chinese Restaurant Process: Empirical Distribution}
-        \begin{itemize}
-            \item Each $n$-gram enters the restaurant, and goes to the $n$th floor, to the room that represents the context
-            \item There he seeks for the table with other $n$-grams of the same type
-                \begin{itemize}
-                    \item If there is such a table, he joins that table
-                    \item Otherwise he seats himself at an empty table
-                \end{itemize}
-            \item For each new table, a family member of the same $n$-gram but of length $(n-1)$ is sent to represent the family
-                \begin{itemize}
-                    \item This process repeats for $0 < x \leq n$
-                \end{itemize}
-        \end{itemize}
-    \end{block}
-
-  \uncover<2>{
-    \begin{block}{Chinese Restaurant Process: Inference}
-        With $m$ customers in the restaurant, a customer re-enters the restaurant and sits a table $t$ with probability
-        \begin{itemize}
-            \item $\frac{1}{m+1}$ with another $n$-gram $p$, or $\frac{|t|}{m+1}$ at the same table as $p$
-            \item $\frac{1}{m+1}$ at a new table
-        \end{itemize}
-        The number of tables grows logarithmically
-    \end{block}
-  }
-\end{frame}
-
-\begin{frame}{Processes and Priors}
-    \begin{block}{\only<1-2>{The Generative Model}\only<3>{A Suboptimal Unigram Language Model}}
-        We described a Chinese restaurant process mixture model
-        \only<1-2>{
-          \begin{align}
-          \pi_{[M]} &\sim \operatorname{CRP}(M)\label{eq:CRPMMpartition} \\
-          \phi_t | \pi_{[M]} &\sim G_0 && \text{ for }t\in\pi_{[M]},\label{eq:CRPMMlatent} \\
-          x_i|\phi,\pi_{[M]} &\sim F(\phi_t) && \text{ for }t\in\pi_{[M]}\text{ and }i\in t\label{eq:CRPMMdatapoints}
-          \end{align}
-        }
-        \only<3>{
-            \begin{align}
-                G_0 &= \mathcal{U} \\
-                G &\sim \operatorname{CRP}(G_0) \\
-                x_i &\sim G
-            \end{align}
-        }
-    \end{block}
-
-    \only<1-2>{\uncover<2>{
-        \begin{block}{Nested Pitman-Yor Chinese Restaurant Process}
-            \begin{itemize}
-                \item CRP and DPCRP give logarithmic growth
-                \item Language manifests typically in power law growth
-                \item PYCRP as generalisation of CRP and DPCRP
-                    \begin{description}
-                        \item[CRP] No parameters
-                        \item[DPCRP] Concentration parameter $\alpha$
-                        \item[PYCRP] Concentration parameter $\alpha$ and discount parameter $\gamma$
-                    \end{description}
-            \end{itemize}
-        \end{block}
-    }}
-    \only<3>{
-        \begin{block}{Nested Pitman-Yor Chinese Restaurant Process Mixture Model}
-            \begin{align}
-                G_0 &= \mathcal{U} \\
-                G_1 &\sim\operatorname{PYCRP}(\alpha_1,\gamma_1,G_0)\\
-                G_u &\sim\operatorname{PYCRP}(\alpha_{|u|},\gamma_{|u|},G_{\pi(u)})\\                
-                x_i|u_j &\sim G_{u_j}
-            \end{align}
-        \end{block}
     }
 \end{frame}
-\note[itemize]{
+\note{
+
 }
 
-\begin{frame}{Bayesian Language Model: The Implementation}
-    \begin{block}{Motivation}
-        Existing Bayesian language models\ldots
-        \begin{itemize}
-            \item are merely an algorithmic showcase without real language modelling aspirations
-            \item cannot handle really big data sets
-        \end{itemize}
-    \end{block}
+\begin{frame}{The Task at Hand}
+    \begin{center}
+        \emph{After all , tomorrow is another [\ldots]}
+    \end{center}
 
-  \uncover<2>{
-    \begin{block}{Implementation}
-        We use the following software:
-        \begin{description}
-            \item[cpyp] an existing \CC{} framework on BNP with PYP priors
-            \item[colibri] an existing \CC{} framework for pattern modelling
-        \end{description}
-    \end{block}
-
-    \begin{block}{Advantages}
-        \begin{itemize}
-            \item We can now handle many patterns such as $n$-grams, skipgrams, and flexgrams
-            \item Tresholding patterns on many levels
-            %\item Efficient storage of patterns
-        \end{itemize}
-    \end{block}
-  }
-\end{frame}
-\note[itemize]{
-}
-
-\begin{frame}{Results: The Setup}
-    \begin{block}{Data Sets}
-        \begin{itemize}
-            \item JRC-Acquis English
-            \item Google 1 billion words
-            \item EMEA English
-            \item Wikipedia English
-        \end{itemize}
-    \end{block}
-
-  \uncover<2->{
-    \begin{block}{Backoff Methods}
-        \begin{description}
-            \item[ngram] full recursive backoff to shorter $n$-grams
-            \item[limited] recursive backoff to all patterns $\leq n$ until match
-            \item[full] recursive backoff to all patterns $\leq n$
-        \end{description}
-    \end{block}
-  }
-  \uncover<3>{
-    \begin{block}{Evaluation Measure}
-        \begin{itemize}
-            \item Intrinsic evaluation with perplexity
-        \end{itemize}
-    \end{block}
-  }
-\end{frame}
-\note[itemize]{
-}
-
-\begin{frame}{Results: An Overview}
-    \begin{block}{Summary}
-        \begin{itemize}
-            \item Within-domain evaluation yields best performance
-            \item Adding skipgrams increases performance on cross-domain evaluation
-            \item For generic corpora, limited recursive backoff performs best
-            \item Seems to outperform Generalised Language Model
-            \item If significant, perhaps not enough for extrinsic evaluation
-        \end{itemize}
-    \end{block}
-\end{frame}
-\note[itemize]{
-}
-
-\begin{frame}{Results: Domains and Patterns}
-
-    \begin{block}{Observations}
-        \begin{description}
-            \item[domains] Within-domain evaluation yields best performance
-            \item[patterns] Adding skipgrams increases performance on cross-domain evaluation
-        \end{description}
-    \end{block}
-    %\vspace{-1em}
-    {\small
-    \begin{tabular}{rrrrrrrrrr} 
-    & \multicolumn{4}{c}{\cellcolor{ruhuisstijlrood}\color{white} $n$-gram} & & \multicolumn{4}{c}{\cellcolor{ruhuisstijlrood}\color{white} skipgram} \\
-    \headcol & {\color{white} jrc} & {\color{white} 1bw} & {\color{white} emea} & {\color{white} wp} & & {\color{white} jrc} & {\color{white} 1bw} & {\color{white} emea} & {\color{white} wp}\\
-    \rowcolodd jrc & 13  & 1195 & 961 & 1011 & & 13  & {\color{ruhuisstijlrood} 1162} & {\color{ruhuisstijlrood} 939} & {\color{ruhuisstijlrood} 1008}\\
-    \rowcoleven 1bws & 768 & {\color{ruhuisstijlrood} 158}  & 945 & {\color{ruhuisstijlrood} 493} & & {\color{ruhuisstijlrood} 751} & 162  & {\color{ruhuisstijlrood} 921} & 507\\
-    \rowcolodd emea& 600 & {\color{ruhuisstijlrood} 1143} & 4   & 843 & & {\color{ruhuisstijlrood} 581} & 1155 & 4   & {\color{ruhuisstijlrood} 842}\\
-    \rowcoleven wps  & {\color{ruhuisstijlrood} 555} & {\color{ruhuisstijlrood} 455} & 1005 & {\color{ruhuisstijlrood} 217} & & 565 & 470  & {\color{ruhuisstijlrood} 990} & 227\\
-    \end{tabular}
-    }
-\end{frame}
-\note[itemize]{
-}
-
-\begin{frame}{Results: Effect of Different Backoff Methods}
-    \begin{block}{Observations}
-        \begin{description}
-            \item[backoff] For generic corpora, limited recursive backoff performs best
-        \end{description}
-    \end{block}
-    %\vspace{-1em}
-    {\small
-        \begin{tabular}{rrrrrrrrrrr}
-        & & \multicolumn{4}{c}{\cellcolor{ruhuisstijlrood}\color{white} $n$-gram} & & \multicolumn{4}{c}{\cellcolor{ruhuisstijlrood}\color{white} skipgram} \\
-\headcol %\rowfont{\color{white}}
- &  & {\color{white} jrc} & {\color{white} 1bw} & {\color{white} emea} & {\color{white} wp} &  & {\color{white} jrc} & {\color{white} 1bw} & {\color{white} emea} & {\color{white} wp} \\
-\rowcolodd & ngram & {\color{ruhuisstijlrood} 13} & 1510 & 1081 & 1293 &  & {\color{ruhuisstijlrood} 13} & 1843 & 1295 & 1623 \\
-\rowcolodd & limited & 14 & 1477 & 1122 & 1263 &  & {\color{ruhuisstijlrood} 13} & 1542 & 1149 & 1356 \\ 
-\rowcolodd \multirow{-3}{*}{jrc} & full & 69 & {\color{ruhuisstijlrood} 1195} & {\color{ruhuisstijlrood} 961} & {\color{ruhuisstijlrood} 1011} &  & 65 & {\color{ruhuisstijlrood}\bf 1162} & {\color{ruhuisstijlrood}\bf 939} & {\color{ruhuisstijlrood}\bf 1008} \\
-\rowcoleven & ngram & {\color{ruhuisstijlrood} 768} & {\color{ruhuisstijlrood}\bf 158} & {\color{ruhuisstijlrood} 946} & {\color{ruhuisstijlrood}\bf 493} &  & 879 & 163 & 1105 & 550 \\ 
-\rowcoleven & limited & 815 & 185 & 1025 & 563 &  & {\color{ruhuisstijlrood}\bf 751} & {\color{ruhuisstijlrood} 162} & {\color{ruhuisstijlrood}\bf 921} & {\color{ruhuisstijlrood} 507} \\
-\rowcoleven \multirow{-3}{*}{1bws} & full & 800 & 264 & 1039 & 583 &  & 769 & 252 & 988 & 561 \\ 
-\rowcolodd & ngram & 769 & 1552 & {\color{ruhuisstijlrood} 4} & 1097 &  & 969 & 2090 & {\color{ruhuisstijlrood} 4} & 1416 \\ 
-\rowcolodd & limited & 779 & 1385 & {\color{ruhuisstijlrood} 4} & 1018 &  & 838 & 1655 & {\color{ruhuisstijlrood} 4} & 1139 \\ 
-\rowcolodd \multirow{-3}{*}{emea} & full & {\color{ruhuisstijlrood} 600} & {\color{ruhuisstijlrood}\bf 1143} & 32 & {\color{ruhuisstijlrood} 843} &  & {\color{ruhuisstijlrood}\bf 581} & {\color{ruhuisstijlrood} 1155} & 32 & {\color{ruhuisstijlrood}\bf 842} \\  
-\rowcoleven & ngram & {\color{ruhuisstijlrood}\bf 555} & {\color{ruhuisstijlrood}\bf 455} & {\color{ruhuisstijlrood} 1005} & {\color{ruhuisstijlrood}\bf 217} &  & 623 & 504 & 1,132 & 233 \\ 
-\rowcoleven & limited & 629 & 543 & 1168 & 260 &  & {\color{ruhuisstijlrood} 565} & {\color{ruhuisstijlrood} 470} & {\color{ruhuisstijlrood}\bf 990} & {\color{ruhuisstijlrood} 227} \\ 
-\rowcoleven \multirow{-3}{*}{wps} & full & 656 & 579 & 1184 & 357 &  & 625 & 548 & 1,106 & 336 \\
-\end{tabular}
-    }
-\end{frame}
-\note[itemize]{
-}
-
-\begin{frame}{Future Work}
-    \begin{block}{Experiments}
-        \begin{itemize}
-            \item Validate significance by testing on multiple languages
-            \item Investigate influence skipgrams with qualitative analysis
-            \item When we find a more substantial drop in perplexity:
+    \begin{columns}[T] 
+        \uncover<2->{
+        \begin{column}[T]{0.25\textwidth} 
+            \begin{block}{Word prediction}
+                \uncover<3->{
                 \begin{itemize}
-                    \item Machine translation experiments
-                    \item Automated speech recognition experiments
+                    \item day
+                \end{itemize}   
+                }
+            \end{block}
+        \end{column}
+   % }
+   
+        \begin{column}[T]{0.25\textwidth} 
+            \begin{block}{Word probability}
+                 \uncover<4->{
+                \begin{itemize}
+                    \item cow
+                    \item day
+                    \item vegetable
+                    \item \ldots
                 \end{itemize}
-            \item Investigate multi-domain language models (DHPYPLM)
-            \item Generalise skipgrams to flexgrams
-            \item \ldots
+                }
+            \end{block}
+        \end{column}
+        
+        \begin{column}[T]{0.45\textwidth} 
+            \begin{block}{Pattern probability}
+                 \uncover<5->{
+                \begin{itemize}
+                    \item tomorrow is another day
+                    \item tomorrow is another important
+                    \item tomorrow is another race
+                \end{itemize}
+                }
+            \end{block}
+        \end{column}
+    }
+    \end{columns}
+    
+\pgfplotstableread[col sep=comma,header=true,row sep=crcr]{
+word,freq\\
+day,11\\
+important,1\\
+race,1\\
+}\data
+% \begin{center}
+\medskip
+\uncover<4->{
+    \begin{tikzpicture}     
+        \begin{axis}[    
+            width=8cm,
+            height=3.5cm,
+            xbar,                                 
+            xtick={0,5,10,15},    
+            xmin=0,
+            xmax=15,  
+            nodes near coords, nodes near coords align={horizontal},
+            symbolic y coords={day,important,race},
+            xlabel={Observed frequency},
+            y label style={at={(-0.1,0.5)}},
+            enlarge x limits={abs=0},
+            reverse legend,
+        ]
+        \addplot table [x=freq, y=word] {\data};
+        \end{axis}
+    \end{tikzpicture}
+}
+% \end{center}
+\end{frame}
+
+\begin{frame}{Generalising the $n$-gram}
+    \begin{block}{$n$-grams}
+        \begin{itemize}
+            \item Continuous sequence of $n$ words
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Skipgrams}
+        \begin{itemize}
+            \item $n$-gram with at most $n-2$ skips of length 1
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Flexgrams}
+        \begin{itemize}
+            \item $n$-gram with any number of skips of any length
+        \end{itemize}
+    \end{block}
+    \bigskip
+    \begin{block}{Skipgrams in RNN}
+        \begin{itemize}
+            \item Based on embeddings rather than co-occurrence
+            \item Co-occurrence of embeddings
         \end{itemize}
     \end{block}
 \end{frame}
-\note[itemize]{
-}
+
+\begin{frame}{Backoff Patterns with Skipgrams}
+     \begin{tikzpicture}[->,auto, node distance=0.75em,text centered,text height=1.5ex,text depth=1.25ex,line width=0.75mm]
+    \node (abcd) {tomorrow is another day};
+    
+    
+    \node[below = of abcd] (bcd) {is another day}; 
+    \node[right = of bcd] (axcd) {tomorrow \{1\} another day};
+    \node[right = of axcd] (abxd) {tomorrow is \{1\} day};
+    \node[below = of bcd] (cd) {another day};
+    
+    \node[right = of cd] (bxd) {is \{1\} day};
+    \node[below = of cd] (d) {day};
+    \node[below = of d] (empty) {$\varnothing$};
+    
+    \node[xshift=0.6cm,right = of bxd] (axxd) {tomorrow \{2\} day};
+    
+    
+    %%1
+    
+    \draw[red] let \p1 = (abcd.south), \p2 = (bcd.north) in (\x1,\y1) -- (\x2,\y2);
+    \draw[red] let \p1 = (abcd.east), \p2 = (axcd.north) in (\x1,\y1) -| (\x2,\y2);
+    \draw[red] let \p1 = (abcd.east), \p2 = (abxd.north) in (\x1,\y1) -| (\x2,\y2);
+    \draw[red] let \p1 = (abcd.east), \p2 = ([xshift=0.4cm]axxd.north) in (\x1,\y1) -| (\x2,\y2);
+    
+    \draw[green] let \p1 = ([xshift=0.2cm]abcd.south), \p2 = ([xshift=0.2cm]bcd.north) in (\x1,\y1) -- (\x2,\y2);
+    
+%     \draw[blue] let \p1 = ([xshift=-0.2cm]abcd.south), \p2 = ([xshift=-0.2cm]bcd.north) in (\x1,\y1) -- (\x2,\y2);  
+%     \draw[blue] let \p1 = ([yshift=0.2cm]abcd.east), \p2 = ([xshift=-0.2cm]axcd.north) in (\x1,\y1) -| (\x2,\y2);
+%     \draw[blue] let \p1 = ([yshift=0.2cm]abcd.east), \p2 = ([xshift=-0.2cm]abxd.north) in (\x1,\y1) -| (\x2,\y2); 
+%     \draw[blue] let \p1 = ([yshift=0.2cm]abcd.east), \p2 = ([xshift=0.2cm]axxd.north) in (\x1,\y1) -| (\x2,\y2);
+    
+
+    \draw[red] let \p1 = (axxd.south), \p2 = (d.east) in (\x1,\y1) -- (\x2,\y2);    
+    
+    
+%     %%2
+  
+  \draw[red] let        \p1 = (bcd.south), \p2 = (cd.north) in (\x1,\y1) -- (\x2,\y2);
+    \draw[red] let      \p1 = (bcd.south), 
+                    \p2 = (bxd.north) in (\x1,\y1) -- (\x2,\y2);  
+    \draw[red] let      \p1 = (axcd.south), 
+                    \p2 = (cd.north east) in (\x1,\y1) -- (\x2,\y2);    
+    \draw[red] let      \p1 = (abxd.south), 
+                    \p2 = (bxd.north east)
+                        in (\x1,\y1) -- (\x2,\y2);
+%     \draw[red] let    \p1 = (bcd.south), \p2 = (cd.north) in (\x1,\y1) -- (\x2,\y2);
+%     \draw[red] let    \p1 = (bcd.south), 
+%                               \p2 = (bxd.north), 
+%                     \p3 = ([yshift=-0.35cm]bcd.south), 
+%                     \p4 = ([yshift=0.15cm]bxd.north) 
+%                       in (\x1,\y1) -| (\x3,\y3) -| (\x4,\y4) -| (\x2,\y2);  
+%     \draw[red] let    \p1 = ([xshift=-0.1cm]axcd.south), 
+%                               \p2 = ([xshift=0.4cm]cd.north), 
+%                     \p3 = ([xshift=-0.1cm,yshift=-0.15cm]axcd.south), 
+%                     \p4 = ([xshift=0.4cm,yshift=0.15cm]cd.north) 
+%                       in (\x1,\y1) -| (\x3,\y3) -| (\x4,\y4) -| (\x2,\y2);    
+%     \draw[red] let    \p1 = (abxd.south), 
+%                               \p2 = (bxd.east)
+%                       in (\x1,\y1) |- (\x2,\y2);    
+    
+%     \draw[blue] let \p1 = ([xshift=-0.2cm]abxd.south), 
+%                               \p2 = ([yshift=0.2cm]bxd.east)
+%                       in (\x1,\y1) |- (\x2,\y2);
+%     \draw[blue] let \p1 = ([xshift=-0.2cm]bcd.south), 
+%                               \p2 = ([xshift=-0.2cm]bxd.north), 
+%                     \p3 = ([xshift=-0.2cm,yshift=-0.27cm]bcd.south), 
+%                     \p4 = ([xshift=-0.2cm,yshift=0.27cm]bxd.north) 
+%                       in (\x1,\y1) -| (\x3,\y3) -| (\x4,\y4) -| (\x2,\y2);
+                        
+    \draw[red] let      \p1 = (axcd.south), 
+                    \p2 = (axxd.north west) in (\x1,\y1) -- (\x2,\y2);
+                        
+    \draw[red] let      \p1 = (abxd.south), 
+                    \p2 = (axxd.north east) in (\x1,\y1) -- (\x2,\y2);    
+                        
+%     \draw[blue] let \p1 = ([xshift=0.3cm]abxd.south), 
+%                               \p2 = ([xshift=-0.2cm]axxd.north), 
+%                     \p3 = ([xshift=0.3cm,yshift=-0.15cm]abxd.south), 
+%                     \p4 = ([yshift=0.3cm,xshift=-0.2cm]axxd.north) 
+%                       in (\x1,\y1) -| (\x3,\y3) -| (\x4,\y4) -| (\x2,\y2);                     
+    
+    
+    \draw[green] let \p1 = ([xshift=0.2cm]bcd.south), \p2 = ([xshift=0.2cm]cd.north) in (\x1,\y1) -- (\x2,\y2);
+%     \draw[blue] let \p1 = ([xshift=-0.2cm]bcd.south), \p2 = ([xshift=-0.2cm]cd.north) in (\x1,\y1) -- (\x2,\y2);
+
+%  %%3 
+   
+   
+     \draw[green] let \p1 = ([xshift=0.2cm]cd.south), \p2 = ([xshift=0.2cm]d.north) in (\x1,\y1) -- (\x2,\y2); 
+     \draw[red] let \p1 = (cd.south), \p2 = (d.north) in (\x1,\y1) -- (\x2,\y2); 
+     \draw[red] let  \p1 = (bxd.south), 
+                     \p2 = (d.east)
+                            in (\x1,\y1) -- (\x2,\y2);
+%      \draw[blue] let \p1 = ([xshift=-0.2cm]bxd.south), 
+%                                \p2 = ([yshift=0.2cm]d.east)
+%                                               in (\x1,\y1) |- (\x2,\y2);
+   
+%    %%4
+   
+   
+     \draw[green] let \p1 = ([xshift=0.2cm]d.south), \p2 = ([xshift=0.2cm]empty.north) in (\x1,\y1) -- (\x2,\y2);   
+   \draw[red] let \p1 = (d.south), \p2 = (empty.north) in (\x1,\y1) -- (\x2,\y2);
+   
+   
+   %%5
+    
+    
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Probability Estimation}
+    \begin{block}{Maximum Likelihood Estimate}
+        \[ p_{\text{ML}}(w_i | w_{i-N+1},\ldots,w_{i-1}) = \frac{C(w_{i-N+1},\ldots,w_{i-1})}{C(w_{i-N+1},\ldots,w_{i})} \]
+        \begin{itemize}
+        \item Parameter estimation is impossible for $N>2$
+        \item Na\"ive priors assuming independent parameters fail as well
+        \end{itemize}
+    \end{block}
+    
+    \uncover<2->{
+    \begin{block}{Smoothing}
+        \[ p_{\text{SM}}(w_i | w_{i-N+1},\ldots,w_{i-1}) = \sum_{n=1}^N\lambda(n)Q_n(w_i | w_{i-N+1},\ldots,w_{i-1}) \]
+        \begin{itemize}
+            \item Chen and Goodman found that interpolated and modified
+Kneser-Ney are best under virtually all circumstances
+        \end{itemize}
+    \end{block}
+    }
+\end{frame}
+
+\begin{frame}{Bayesian Probability Estimation}
+    \begin{block}{Parametrise conditional probabilities}
+    \vspace*{-1em}
+        \[ p(w_i = w | w_{i-N+1},\ldots,w_{i-1} = u) = G_u(w)\]
+        \[ G_u = [G_u(w)]_{w\in W} \] 
+        \[ \pi(w_{i-N+1},\ldots,w_{i-1}) = w_{i-N+2},\ldots,w_{i-1} \] \vspace*{-1em}
+        \begin{itemize}
+            \item $G_u$ is a probability vector associated with context $u$
+        \end{itemize}
+    \end{block}
+    
+    \uncover<2->{
+    \begin{block}{Hierarchical Dirichlet language model}
+        \begin{itemize}
+            \item What is $p(G_u|G_{\pi(u)})$?
+            \item Standard Dirichlet distribution over probability vectors: does not outperform ikn and mkn (MacKay and Peto, 1994)
+        \end{itemize}
+    \end{block}
+    }
+
+    \uncover<3->{
+    \begin{block}{Hierarchical Pitman-Yor process}
+        \begin{itemize}
+            \item Two-parameter extension of the Dirichlet distribution
+            \item PYP produces power-law distributions
+            \item Outperforms ikn and mkn (Teh, 2006)
+        \end{itemize}
+    \end{block}
+    }
+\end{frame}
+
+\begin{frame}{Everlasting feud}
+    \begin{columns}[T]
+    \begin{column}[T]{0.45\textwidth}
+    \begin{block}{Frequentists}
+        \begin{itemize}
+            \item Unconditional perspective: inferential methods should give good answers in repeated use
+            \item ``pessimist'': let's protect ourselves against bad decisions given that our inferential procedure is inevitably based on a simplification of reality
+            \item $R(\theta) = \mathbb{E}_\theta l(\delta(X),\theta)$
+        \end{itemize}
+    \end{block}
+    \end{column}
+    \begin{column}[T]{0.45\textwidth}
+    \begin{block}{Bayesians}
+    \begin{itemize}
+            \item Conditional perspective: inferences should be made conditional on the current data
+            \item ``optimistic'': let's make the best possible use of our sophisticated inferential tool
+            \item $\rho(X) = \mathbb{E}[l(\delta(X),\theta)|X]$
+        \end{itemize}
+        
+    \end{block}
+    \end{column}
+    \end{columns}
+    
+%     \begin{block}{Non-conformists}
+%       \begin{itemize}
+%               \item Choose the best solution given a problem
+%         \end{itemize}
+%     \end{block}
+
+\end{frame}
+
+\begin{frame}{Comparing HPYLM to MKN: the Numbers}
+        The reported values are entropy values
+        
+        \begin{columns}[b]
+            \begin{column}[b]{0.45\textwidth}
+                \begin{block}{HPYLM}
+                \begin{tabular}{lllllllll}
+                         & jrc  & 1bw   & emea  & wp        \\
+                    jrc  & 3.65 & 10.56 & 10.08 & 10.34     \\
+                    1bws & 9.58 & 7.31  & 9.89  & 8.94      \\  
+                    emea & 9.59 & 10.60 & 1.88  & 10.10     \\ 
+                    wps  & 9.12 & 8.83  & 9.97  & 7.76      \\
+                \end{tabular}
+                \end{block}
+                \vspace{0pt}
+            \end{column}
+            \quad
+            \begin{column}[b]{0.45\textwidth}
+                \begin{block}{Modified Kneser-Ney}
+                \begin{tabular}{llll}
+                    jrc   & 1bw   & emea  & wp    \\
+                    4.43  & 10.70 & 10.35 & 10.84 \\
+                    10.51 & 7.72  & 10.57 & 9.96  \\
+                    10.12 & 10.77 & 3.28  & 10.70 \\
+                    9.72  & 9.23  & 10.63 & 8.81  \\
+                \end{tabular}
+                \end{block}
+                \vspace{0pt}
+            \end{column}            
+        \end{columns}
+ 
+        \begin{columns}[b]
+            \begin{column}[b]{0.45\textwidth}
+                \begin{block}{Relative reduction in entropy (in \%)}
+                \begin{tabular}{lllll}
+                    jrc  & 17.66 & 1.31 & 2.67  & 4.67  \\
+                    1bws & 8.82  & 5.37 & 6.44  & 10.19 \\
+                    emea & 5.30  & 1.57 & 42.51 & 5.65  \\
+                    wps  & 6.20  & 4.28 & 6.23  & 11.92 \\
+                \end{tabular}
+                \end{block}
+                \vspace{0pt}
+            \end{column}
+            \quad
+            \begin{column}[b]{0.45\textwidth}
+                \begin{block}{Relative reduction in perplexity (in \%)}
+                \begin{tabular}{llll}
+                    41.87 & 9.25  & 17.43 & 29.63 \\
+                    47.41 & 24.99 & 37.62 & 50.51 \\
+                    31.04 & 11.08 & 61.92 & 34.27 \\
+                    34.14 & 23.95 & 36.81 & 51.72 \\ 
+                \end{tabular}
+                \end{block}
+                \vspace{0pt}
+            \end{column}            
+        \end{columns}
+
+\end{frame}
+
+\begin{frame}{Comparing HPYLM to MKN: the Figure}
+    \includegraphics[width=0.95\textwidth]{ngramdata.pdf}
+\end{frame}
+
+\begin{frame}{Adding skipgram features alongside $n$-grams}
+
+\begin{columns}[b]
+            \begin{column}[b]{0.45\textwidth}
+                \begin{block}{HPYLM}
+                \begin{tabular}{lllllllll}
+                         & jrc  & 1bw   & emea & wp   \\
+                    jrc  & 3.65 & 10.22 & 9.91 & 9.98 \\
+                    1bws & 9.58 & 7.31  & 9.89 & 8.94 \\
+                    emea & 9.23 & 10.16 & 1.88 & 9.72 \\
+                    wps  & 9.12 & 8.83  & 9.97 & 7.76 \\
+                \end{tabular}
+                \end{block}
+                \vspace{0pt}
+            \end{column}
+            \quad
+            \begin{column}[b]{0.45\textwidth}
+                \begin{block}{Modified Kneser-Ney}
+                \begin{tabular}{llll}
+                    jrc  & 1bw   & emea & wp   \\
+                    3.68 & 10.18 & 9.87 & 9.98 \\
+                    9.55 & 7.34  & 9.85 & 8.98 \\
+                    9.18 & 10.17 & 1.89 & 9.72 \\
+                    9.14 & 8.88  & 9.95 & 7.82 \\
+                \end{tabular}
+                \end{block}
+                \vspace{0pt}
+            \end{column}            
+        \end{columns}
+ 
+        \begin{columns}[b]
+            \begin{column}[b]{0.45\textwidth}
+                \begin{block}{Relative reduction in entropy (in \%)}
+                \begin{tabular}{lllll}
+                    jrc  & -0.81 & 0.40  & 0.34  & 0.03  \\
+                    1bws & 0.34  & -0.47 & 0.39  & -0.45 \\
+                    emea & 0.51  & -0.15 & -0.41 & 0.01  \\
+                    wps  & -0.31 & -0.53 & 0.21  & -0.82 \\
+                \end{tabular}
+                
+                \end{block}
+                \vspace{0pt}
+            \end{column}
+            \quad
+            \begin{column}[b]{0.45\textwidth}
+                \begin{block}{Relative reduction in perplexity (in \%)}
+                \begin{tabular}{llll}
+                    -2.07 & 2.80  & 2.3   & 0.23  \\
+                    2.23  & -2.38 & 2.63  & -2.81 \\
+                    3.20  & -1.09 & -0.54 & 0.08  \\
+                    -1.98 & -3.30 & 1.43  & -4.48 \\
+                \end{tabular}
+                \end{block}
+                \vspace{0pt}
+            \end{column}            
+        \end{columns}
+
+\end{frame}
+
+\begin{frame}{Comparing HPYLM to MKN: the Figure}
+    \includegraphics[width=0.95\textwidth]{sgramdata.pdf}
+\end{frame}
+
+
+\begin{frame}{Choosing a Language Model}
+    \begin{block}{Quick turnaround}
+        \begin{itemize}
+        \item Modified Kneser-Ney (Kneser and Ney, 1995)
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Best results}
+        \begin{itemize}
+        \item Hierarchical Pitman-Yor process language model (Teh, 2006)
+        \item Recurrent neural network language model (Mikolov et al., 2010)
+        \end{itemize}
+\end{block}
+    
+    \begin{block}{Newest}
+        \begin{itemize}
+          \item Sparse non-negative matrix language models (Shazeer, Pelemans, and Chelba, 2014)
+          \item Power low rank ensembles (Parikh et al., 2014), Gaussian embedding (Vilnis and MacCallum, under review), \ldots
+       \end{itemize}
+    \end{block}
+
+\end{frame}
 
 \end{document}
 
+%http://stats.stackexchange.com/questions/22/bayesian-and-frequentist-reasoning-in-plain-english
