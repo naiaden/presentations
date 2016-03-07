@@ -17,16 +17,29 @@
 %% 20 October 2014: HLCS template added
 %% 28 October 2014: Kaski, PTRS, IMR, SteR templates added
 %% 11 November 2014: Group logo added for Language Machines (lama)
-%% 25 November 2014: DS, iCIS, IS, MBSD templates added
+%% 25 November 2014: DS, iCIS, IS, MBSD templates 
+%% 20 February 2015: Many unoffical options added (thanks Bart Jacobs)
+%% 07 March 2016: iCIS Data Science and Software Science added, and small fixes
 
-\documentclass[department=ds, notes={show notes}, slidesperpage=4, handout, official=true]{beamerruhuisstijl}
+\documentclass[department=softwarescience, notes={show notes}, slidesperpage=4, handout, official=true]{beamerruhuisstijl}
 %% The class takes the following optional arguments:
 %% notes: {show notes}, {hide notes}, {show only notes} (default = hide notes)
 %% official: true, false (default = false)
-%% department: clst, cls, hlcs, kaski, ptrs, imr, ster, ds, is, mbsd, icis (default = RU)
+%% department: datascience, clst, cls, hlcs, kaski, ptrs, imr, ster, ds, is, mbsd, icis (default = RU)
 %% grouplogo: lama (default = no group logo)
 %% handout
 %% slidesperpage: 1, 2, 3, 4, 6 (default = 1)
+%%
+%% Furthermore, there are some options that do not follow the design
+%% or its philosophy. Anyway:
+%% slidenumbers: none, slide, relative (default = none)
+%% tablecolours: false, true (default = true)
+%% alwaysshowauthor: false, true (default = false)
+%% alwaysshowdate: false, true (default = false)
+%% tocatsectionstart: false, true (default = false)
+%% tocatsectionstarttitle: [any string] (default = Overview)
+%% showinstitute: false, true (default = false)
+%% showdate: false, true (default = false)
 
 \title{The Beamer version of the Radboud University Corporate Style Powerpoint Template}
 \subtitle{An Introduction and Showcase}
@@ -41,7 +54,11 @@
     \titlepage
 \end{frame}
 \note{
-
+	Hi, here is a quick overview on how to proceed:
+    \begin{itemize}
+    	\item On the left are the slides, on the right (this page) we have the notes
+        \item Please read both the slide and the notes
+    \end{itemize}
 }
 
 \begin{frame}{Disclaimer}
@@ -71,7 +88,7 @@
     \end{block} 
 
     \begin{block}{Distribution}
-    	The code is currently licensed as \href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}. The Radboud University holds the right to the background images and to the texts on the slides \cpagerefrange{sl:gvwa,sl:vvet}.
+    	The code is currently licensed as \href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}. The Radboud University holds the right to the background images and to the texts on the slides \cpageref{sl:gvwa,sl:vvet}.
     \end{block}
 \end{frame}
 \note{
@@ -385,7 +402,11 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
     \end{tabular}
 \end{frame}
 \note{
-	Tables are actually quite tricky. By default the rows are alternately coloured. I suggest you follow the rules as described by booktabs. One of their main points is that you shouldn't use vertical lines.
+	Tables are actually quite tricky. By default the rows are alternately coloured. You can change this behaviour by removing the tablecolours parameter, or setting it to \texttt{tablecolours=false}.
+    
+    The background colour of a row can be changed with \texttt{rowcolor}, and its foreground colour with \texttt{rowstyle}. Each new tabular instantiation will reset the alternating pattern.
+    
+    suggest you follow the rules as described by booktabs. One of their main points is that you shouldn't use vertical lines.
     
     For more table wizardry, see my other presentation \href{https://github.com/naiaden/presentations/blob/2b04369db834cdfe90a4e4e3415e90f12bf4be8a/BayesianColibri/baco.tex}{here}.
 }
@@ -401,10 +422,10 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
 
 \subsection{De rest}
 \begin{frame}{Niet alles blootgeven}
-    De \pause tekst \pause verschijnt \pause in \pause stukken.\footnote{Voetnoottest.}
+    De \pause tekst \pause verschijnt \pause in \pause stukken.\footnote{Voetnoottest.}\footnote{Soms zijn er meerdere voetnoten.}
 
     \begin{itemize}
-         \item<+-> dit verschijnt pas als ``stukken .'' getoond is
+         \item<+-> dit verschijnt pas als ``stukken.'' getoond is
          \item<+-> dit verschijnt van de tweede actie tot het einde
          \item<+-+> dit verschijnt eenmalig van de derde tot de vierde actie
          \item<-+> Dit zal er staan vanaf het begin tot de vijfde actie.
@@ -528,6 +549,25 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
 \end{frame}
 \note{}
 
+\begin{frame}{De \'echt onoffi\"ele opties}
+\begin{block}{Tabellen}
+	\texttt{tablecolours}: false, true. Als true, dan alterneren de rijen van kleur.
+\end{block}
+
+\begin{block}{Titelpagina}
+	\texttt{showinstitute}: false, true (default = false). Als true dan wordt ook je institute opgenomen op de titelpagina.
+    \texttt{showdate}: false, true (default = false). Als true dan wordt ook de datum opgenomen op de titelpagina.
+\end{block}
+
+\begin{block}{Overzicht}
+	\texttt{slidenumbers}: none, slide, relative (default = none). Toon slidenummer in voetlijn; relatief is bijvoorbeeld 4/21.
+	\texttt{alwaysshowauthor}: false, true (default = false). Toon auteur in voetlijn.
+	\texttt{alwaysshowdate}: false, true (default = false). Toon datum in voetlijn.
+	\texttt{tocatsectionstart}: false, true (default = false). Begin elke section met een inhoudsopgave met de titel \texttt{tocatsectionstarttitle}.
+\end{block}
+\end{frame}
+\note{}
+
 %%%%%%%%%%          %%%%%%%%%%          %%%%%%%%%%          %%%%%%%%%%%%
 
 \begin{tussenpagina}{Showcase}{All supported styles in one go}{tussenpaginabackground.jpg}
@@ -630,6 +670,22 @@ aut et es dellab ipsum, ium alis aboriandunt ea sinverios sequo ea consedi psapi
 \end{frame}
 \begin{frame}{Voorbeeld: IS}
 	iCIS: Intelligent Systems
+\end{frame}
+
+\renewcommand{\dept}{softwarescience}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{Voorbeeld: softwarescience}
+	iCIS: Software Science
+\end{frame}
+
+\renewcommand{\dept}{datascience}
+\begin{frame}
+    \titlepage
+\end{frame}
+\begin{frame}{Voorbeeld: datascience}
+	iCIS: Data Science
 \end{frame}
 
 \end{document}

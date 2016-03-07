@@ -42,6 +42,31 @@
 \newcommand{\spp}{1}
 \DeclareOptionBeamer{slidesperpage}{\renewcommand{\spp}{#1}}
 
+\newcommand{\tablecolours}{false}
+\DeclareOptionBeamer{tablecolours}{\renewcommand{\tablecolours}{#1}}
+
+\newcommand{\slidenumbers}{none}
+\DeclareOptionBeamer{slidenumbers}{\renewcommand{\slidenumbers}{#1}}
+
+\newcommand{\alwaysshowauthor}{false}
+\DeclareOptionBeamer{alwaysshowauthor}{\renewcommand{\alwaysshowauthor}{#1}}
+
+\newcommand{\alwaysshowdate}{false}
+\DeclareOptionBeamer{alwaysshowdate}{\renewcommand{\alwaysshowdate}{#1}}
+
+\newcommand{\tocatsectionstart}{false}
+\DeclareOptionBeamer{tocatsectionstart}{\renewcommand{\tocatsectionstart}{#1}}
+
+\newcommand{\tocatsectionstarttitle}{Overview}
+\DeclareOptionBeamer{tocatsectionstarttitle}{\renewcommand{\tocatsectionstarttitle}{#1}}
+
+\newcommand{\showinstitute}{false}
+\DeclareOptionBeamer{showinstitute}{\renewcommand{\showinstitute}{#1}}
+
+\newcommand{\showdate}{false}
+\DeclareOptionBeamer{showdate}{\renewcommand{\showdate}{#1}}
+
+
 \only<handout>{
     \renewcommand{\spp}{2}
 }
@@ -223,18 +248,54 @@
 \ifthenelse{\equal{\spp}{4}}{\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]}{}
 \ifthenelse{\equal{\spp}{6}}{\pgfpagesuselayout{6 on 1}[a4paper,border shrink=5mm]}{}
 
+\setbeamertemplate{background}[grid][step=10]
+
 \mode<presentation>
 
+\setbeamerfont{page number in head/foot}{size=\footnotesize}
+\setbeamercolor*{page number in head/foot}{fg=ruhuisstijlzwart}
+\setbeamerfont{author in head/foot}{size=\footnotesize}
+\setbeamercolor*{author in head/foot}{fg=ruhuisstijlzwart}
+
 %%% Footnote stuff
+% Cannot get it working to skip the title page when extra information
+% is displayed in the footline. In the next version hopefully...
 \ifthenelse{\equal{\dept}{none}}{%
     \setbeamertemplate{footline}{%
         \vspace{1.75cm}
     }
 }{%
     \setbeamertemplate{footline}{%
-        \vspace{1.25cm}
+        \ifthenelse{\equal{\slidenumbers}{slide} \OR \equal{\slidenumbers}{relative}}{%
+        	\vspace{0.5cm}
+            \hspace{1cm}%
+            \begin{beamercolorbox}[wd=.08\paperwidth,ht=2.25ex,dp=1ex]{page number in head/foot}%
+    			\usebeamerfont{page number in head/foot}\insertframenumber
+                  \ifthenelse{\equal{\slidenumbers}{relative}}{%
+    				/\inserttotalframenumber
+				  }
+                  {}
+  			\end{beamercolorbox}
+            \ifthenelse{\equal{\alwaysshowauthor}{true}}{%
+        	\begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex]{author in head/foot}%
+    			\usebeamerfont{author in head/foot}\insertshortauthor
+  			\end{beamercolorbox}
+        	}{}
+            \ifthenelse{\equal{\alwaysshowdate}{true}}{%
+        	\begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex]{author in head/foot}%
+    			\usebeamerfont{author in head/foot}\insertshortdate
+  			\end{beamercolorbox}
+        	}{}
+            \vspace{0.5cm}
+        }{%
+        	\vspace{1.25cm}
+        }
+        
     }
 }
+
+
+
 
 \setbeamertemplate{footnote}{%
     \makebox[1em][l]{\insertfootnotemark}\footnotesize\insertfootnotetext\par%
@@ -396,6 +457,16 @@
     \end{frame}
 }%
 
+\ifthenelse{\equal{\tocatsectionstart}{true}}{%
+	\AtBeginSection{
+		\begin{frame}[c,plain,noframenumbering]
+        	\frametitle{\tocatsectionstarttitle}
+        	\tableofcontents[currentsection,hideothersubsections]
+    	\end{frame}
+    }%
+}{%
+}
+
 \setbeamertemplate{background}{
     \ifthenelse{\equal{\dept}{clst}}{%
         \ifnum\thepage>1\relax%
@@ -452,10 +523,20 @@
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ster_2014-43-slide.pdf}
         \fi
     }{%
+    \ifthenelse{\equal{\dept}{datascience}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ds_2016_43-slide.pdf}
+        \fi
+    }{%
+    \ifthenelse{\equal{\dept}{softwarescience}}{%
+        \ifnum\thepage>1\relax%
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ss_2016_43-slide.pdf}
+        \fi
+    }{%
         \ifnum\thepage>1\relax%
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-slide.pdf}
         \fi
-    }}}}}}}}}}}%
+    }}}}}}}}}}}}}%
     \ifthenelse{\equal{\grouplogo}{lama}}{%
         %\vspace*{-0.8cm}
         \hspace*{-12.5cm}
@@ -496,6 +577,14 @@
 			\vspace*{-0.25cm}\hspace*{-1.08cm}
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_is_2014-43-front.pdf}
     }{%
+    \ifthenelse{\equal{\dept}{datascience}}{%
+			\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ds_2016_43-front.pdf}
+    }{%
+    \ifthenelse{\equal{\dept}{softwarescience}}{%
+			\vspace*{-0.25cm}\hspace*{-1.08cm}
+            \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_ss_2016_43-front.pdf}
+    }{%
     \ifthenelse{\equal{\dept}{icis}}{%
 			\vspace*{-0.25cm}\hspace*{-1.08cm}
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl_icis_2014-43-front.pdf}
@@ -514,7 +603,7 @@
     }{%
 			\vspace*{-0.23cm}\hspace*{-1.08cm}
             \includegraphics[width=1\paperwidth]{backgrounds/ruhuisstijl2014-43-front.pdf}
-    }}}}}}}}}}}%
+    }}}}}}}}}}}}}%
     \ifthenelse{\equal{\grouplogo}{lama}}{%
     	%\vspace*{-0.8cm}
         \hspace*{-12.5cm}
@@ -530,9 +619,18 @@
             \vspace{0.25cm}%
             \usebeamerfont{subtitle}\insertsubtitle\par%
         \end{beamercolorbox}%
+        \ifthenelse{\equal{\showinstitute}{true}}{
+        \begin{beamercolorbox}{institute}%
+            \usebeamerfont{institute}{\insertinstitute\par}%
+        \end{beamercolorbox}%
+        }{}
+        \ifthenelse{\equal{\showdate}{true}}{
+        \begin{beamercolorbox}{date}%
+            \usebeamerfont{date}{\insertdate\par}%
+        \end{beamercolorbox}%
+        }{}
     \end{minipage}%
 }
-
 
 \setbeameroption{\notes}
 \setbeamertemplate{note page}[plain]
@@ -556,13 +654,26 @@
 \setbeamercolor{frametitle}{fg=ruhuisstijlrood}
 \setbeamercolor{alerted text}{fg=ruhuisstijlrood}
 
+\setbeamerfont{page number in head/foot}{size=\footnotesize}
+\setbeamerfont{author in head/foot}{size=\footnotesize}
+
 \ifthenelse{\equal{\dept}{none}}{%
     \setbeamercolor{title}{fg=ruhuisstijlzwart}
+    \setbeamercolor{date}{fg=ruhuisstijlzwart}
+    \setbeamercolor{institute}{fg=ruhuisstijlzwart}
+    \setbeamercolor*{page number in head/foot}{fg=ruhuisstijlwit}
+	\setbeamercolor*{author in head/foot}{fg=ruhuisstijlwit}
 }{%
     \setbeamercolor{title}{fg=ruhuisstijlwit}
+    \setbeamercolor{date}{fg=ruhuisstijlwit}
+    \setbeamercolor{institute}{fg=ruhuisstijlwit}
+    \setbeamercolor*{page number in head/foot}{fg=ruhuisstijlzwart}
+	\setbeamercolor*{author in head/foot}{fg=ruhuisstijlzwart}
 }
 
 \mode<all>
+
+
 
 % http://tex.stackexchange.com/questions/26360/how-to-color-the-font-of-a-single-row-in-a-table
 \newcommand*{\@rowstyle}{}
@@ -585,6 +696,12 @@
 \definecolor{ruhuisstijlwit}{rgb}{0.98,0.98,0.98}
 
 \newcommand{\rured}[1]{\textcolor{ruhuisstijlrood}{#1}}
-\rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+
+
+\ifthenelse{\equal{\tablecolours}{false}}{%
+%
+}{%
+    \rowcolors{1}{ruhuisstijlrood!12}{ruhuisstijlrood!25}
+}
 
 \endinput
