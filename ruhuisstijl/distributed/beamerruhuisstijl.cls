@@ -446,6 +446,7 @@
             \vspace*{-0.25cm}\hspace*{-1cm}\includegraphics[width=12.8cm,height=8.34cm]{#3}
             \vspace*{-7.5cm}
         }
+
         \begin{minipage}[t][2.5cm][t]{10cm}%
             \begin{beamercolorbox}{title}%
                 \usebeamerfont{title}{\Huge#1\par}%
@@ -613,6 +614,7 @@
     }{%
     }%    
     \vspace*{-8.5cm}
+
     \begin{minipage}[t][2.5cm][t]{10cm}%
         \begin{beamercolorbox}{title}%
             \usebeamerfont{title}{\Huge\inserttitle\par}%
